@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-commerce Tracking Demo - GA4/GTM</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D86M4T5XCY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-D86M4T5XCY');
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); min-height: 100vh; padding: 20px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { text-align: center; color: white; margin-bottom: 30px; }
+    header h1 { font-size: 2rem; margin-bottom: 10px; }
+    .card { background: white; border-radius: 16px; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); margin-bottom: 20px; }
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-bottom: 15px; background: #cce5ff; color: #004085; }
+    .info-box { background: #e8f8f5; border-left: 4px solid #11998e; padding: 12px 15px; margin-bottom: 20px; border-radius: 0 8px 8px 0; font-size: 0.9rem; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+    .product-card { border: 2px solid #e0e0e0; border-radius: 12px; padding: 15px; text-align: center; transition: all 0.3s; cursor: pointer; }
+    .product-card:hover { border-color: #11998e; transform: translateY(-3px); }
+    .product-card .emoji { font-size: 3rem; margin-bottom: 10px; }
+    .product-card h4 { font-size: 0.95rem; margin-bottom: 5px; }
+    .product-card .price { color: #11998e; font-weight: 600; font-size: 1.1rem; }
+    .btn { display: inline-block; padding: 10px 20px; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s; background: linear-gradient(135deg, #11998e, #38ef7d); color: white; margin-top: 10px; }
+    .btn:hover { transform: translateY(-2px); }
+    .cart-summary { background: #f8f9fa; border-radius: 12px; padding: 15px; margin-top: 15px; }
+    .cart-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e0e0e0; }
+    .cart-total { display: flex; justify-content: space-between; padding-top: 12px; font-weight: 600; }
+    .datalayer-output { margin-top: 20px; background: #1e1e1e; border-radius: 8px; overflow: hidden; }
+    .datalayer-output h4 { background: #333; color: white; padding: 10px 15px; font-size: 0.85rem; }
+    .datalayer-output pre { padding: 12px 15px; color: #9cdcfe; font-family: monospace; font-size: 0.8rem; overflow-x: auto; max-height: 300px; white-space: pre-wrap; }
+    .status { margin-top: 12px; padding: 10px; border-radius: 8px; background: #d4edda; color: #155724; display: none; }
+    .nav { text-align: center; margin-bottom: 20px; }
+    .nav a { color: white; margin: 0 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🛒 E-commerce Tracking Demo</h1>
+      <p>GA4 Enhanced E-commerce Events</p>
+    </header>
+    <nav class="nav"><a href="index.html">← Back to Form Demo</a></nav>
+    
+    <div class="card">
+      <h2>🛍️ Product Listing</h2>
+      <span class="badge">view_item_list + view_item + add_to_cart</span>
+      <div class="info-box">
+        <strong>Events demonstrated:</strong>
+        <ul style="margin-left:20px;margin-top:5px;">
+          <li><code>view_item_list</code> - fires on page load</li>
+          <li><code>view_item</code> - fires when clicking a product</li>
+          <li><code>add_to_cart</code> - fires when adding to cart</li>
+          <li><code>begin_checkout</code> - fires on checkout</li>
+          <li><code>purchase</code> - fires on purchase completion</li>
+        </ul>
+      </div>
+      
+      <div class="product-grid" id="products">
+        <div class="product-card" data-id="SKU001" data-name="Analytics Pro" data-price="99.00" data-category="software">
+          <div class="emoji">📊</div>
+          <h4>Analytics Pro</h4>
+          <div class="price">$99.00</div>
+          <button class="btn add-to-cart">Add to Cart</button>
+        </div>
+        <div class="product-card" data-id="SKU002" data-name="Tag Manager Plus" data-price="149.00" data-category="software">
+          <div class="emoji">🏷️</div>
+          <h4>Tag Manager Plus</h4>
+          <div class="price">$149.00</div>
+          <button class="btn add-to-cart">Add to Cart</button>
+        </div>
+        <div class="product-card" data-id="SKU003" data-name="Data Studio Kit" data-price="79.00" data-category="software">
+          <div class="emoji">📈</div>
+          <h4>Data Studio Kit</h4>
+          <div class="price">$79.00</div>
+          <button class="btn add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+      
+      <div class="cart-summary" id="cart-summary" style="display:none;">
+        <h4>🛒 Cart</h4>
+        <div id="cart-items"></div>
+        <div class="cart-total"><span>Total:</span><span id="cart-total">$0.00</span></div>
+        <button class="btn" id="checkout-btn" style="width:100%;margin-top:15px;">Begin Checkout</button>
+        <button class="btn" id="purchase-btn" style="width:100%;margin-top:10px;background:linear-gradient(135deg,#667eea,#764ba2);">Complete Purchase</button>
+      </div>
+      
+      <div id="purchase-status" class="status"></div>
+      
+      <div class="datalayer-output">
+        <h4>📦 dataLayer Events</h4>
+        <pre id="ecom-output">Page loaded - view_item_list fired...</pre>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Cart state
+    let cart = [];
+    let eventLog = [];
+    
+    // Log event to display
+    function logEvent(eventName, data) {
+      eventLog.push({event: eventName, ...data});
+      document.getElementById('ecom-output').textContent = JSON.stringify(eventLog, null, 2);
+    }
+    
+    // Products data
+    const products = [
+      {item_id: 'SKU001', item_name: 'Analytics Pro', price: 99.00, item_category: 'software', index: 0},
+      {item_id: 'SKU002', item_name: 'Tag Manager Plus', price: 149.00, item_category: 'software', index: 1},
+      {item_id: 'SKU003', item_name: 'Data Studio Kit', price: 79.00, item_category: 'software', index: 2}
+    ];
+    
+    // Fire view_item_list on page load
+    window.dataLayer.push({ecommerce: null});
+    window.dataLayer.push({
+      event: 'view_item_list',
+      ecommerce: {
+        item_list_id: 'product_gallery',
+        item_list_name: 'Product Gallery',
+        items: products
+      }
+    });
+    gtag('event', 'view_item_list', {item_list_id: 'product_gallery', item_list_name: 'Product Gallery', items: products});
+    logEvent('view_item_list', {item_list_id: 'product_gallery', items: products.length + ' items'});
+    
+    // Product click - view_item
+    document.querySelectorAll('.product-card').forEach((card, idx) => {
+      card.addEventListener('click', (e) => {
+        if (e.target.classList.contains('add-to-cart')) return;
+        const item = products[idx];
+        window.dataLayer.push({ecommerce: null});
+        window.dataLayer.push({event: 'view_item', ecommerce: {currency: 'USD', value: item.price, items: [item]}});
+        gtag('event', 'view_item', {currency: 'USD', value: item.price, items: [item]});
+        logEvent('view_item', {item_id: item.item_id, item_name: item.item_name, price: item.price});
+      });
+    });
+    
+    // Add to cart
+    document.querySelectorAll('.add-to-cart').forEach((btn, idx) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const item = {...products[idx], quantity: 1};
+        cart.push(item);
+        window.dataLayer.push({ecommerce: null});
+        window.dataLayer.push({event: 'add_to_cart', ecommerce: {currency: 'USD', value: item.price, items: [item]}});
+        gtag('event', 'add_to_cart', {currency: 'USD', value: item.price, items: [item]});
+        logEvent('add_to_cart', {item_id: item.item_id, item_name: item.item_name, price: item.price});
+        updateCartDisplay();
+      });
+    });
+    
+    function updateCartDisplay() {
+      if (cart.length === 0) {
+        document.getElementById('cart-summary').style.display = 'none';
+        return;
+      }
+      document.getElementById('cart-summary').style.display = 'block';
+      const itemsHtml = cart.map(i => `<div class="cart-item"><span>${i.item_name}</span><span>$${i.price.toFixed(2)}</span></div>`).join('');
+      document.getElementById('cart-items').innerHTML = itemsHtml;
+      const total = cart.reduce((sum, i) => sum + i.price, 0);
+      document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
+    }
+    
+    // Begin checkout
+    document.getElementById('checkout-btn').addEventListener('click', () => {
+      const total = cart.reduce((sum, i) => sum + i.price, 0);
+      window.dataLayer.push({ecommerce: null});
+      window.dataLayer.push({event: 'begin_checkout', ecommerce: {currency: 'USD', value: total, items: cart}});
+      gtag('event', 'begin_checkout', {currency: 'USD', value: total, items: cart});
+      logEvent('begin_checkout', {value: total, items: cart.length + ' items'});
+    });
+    
+    // Purchase
+    document.getElementById('purchase-btn').addEventListener('click', () => {
+      const total = cart.reduce((sum, i) => sum + i.price, 0);
+      const txnId = 'TXN' + Date.now();
+      window.dataLayer.push({ecommerce: null});
+      window.dataLayer.push({event: 'purchase', ecommerce: {transaction_id: txnId, currency: 'USD', value: total, items: cart}});
+      gtag('event', 'purchase', {transaction_id: txnId, currency: 'USD', value: total, items: cart});
+      logEvent('purchase', {transaction_id: txnId, value: total, items: cart.length + ' items'});
+      document.getElementById('purchase-status').style.display = 'block';
+      document.getElementById('purchase-status').innerHTML = '✅ Purchase completed! Transaction ID: ' + txnId;
+      cart = [];
+      updateCartDisplay();
+    });
+  </script>
+</body>
+</html>
