@@ -124,39 +124,84 @@ dataLayer.push({
 
 ## 4. GTM CONTAINER SETUP
 
+### Real GTM Implementation
+
+This demo now uses **actual Google Tag Manager** (not gtag.js simulation). See [GTM-CONTAINER-SETUP.md](GTM-CONTAINER-SETUP.md) for complete setup instructions.
+
+### Container Architecture
+
+```
+┌─────────────────────────────────────────────┐
+│           Browser / Website                  │
+│  ┌────────────────────────────────────────┐ │
+│  │  dataLayer.push({                      │ │
+│  │    event: 'form_submission_success'   │ │
+│  │  })                                    │ │
+│  └────────────────────────────────────────┘ │
+│                    ↓                         │
+│  ┌────────────────────────────────────────┐ │
+│  │   Google Tag Manager Container        │ │
+│  │  ┌──────────────────────────────────┐ │ │
+│  │  │  Trigger: form_submission_success│ │ │
+│  │  └──────────────────────────────────┘ │ │
+│  │              ↓                         │ │
+│  │  ┌──────────────────────────────────┐ │ │
+│  │  │  Variables: Extract form_id,     │ │ │
+│  │  │             form_topic, etc.     │ │ │
+│  │  └──────────────────────────────────┘ │ │
+│  │              ↓                         │ │
+│  │  ┌──────────────────────────────────┐ │ │
+│  │  │  Tag: GA4 Event - generate_lead  │ │ │
+│  │  │  Sends to GA4 with parameters    │ │ │
+│  │  └──────────────────────────────────┘ │ │
+│  └────────────────────────────────────────┘ │
+└─────────────────────────────────────────────┘
+                    ↓
+        ┌───────────────────────┐
+        │   Google Analytics 4   │
+        │  (G-XXXXXXXXX)        │
+        └───────────────────────┘
+                    ↓
+        ┌───────────────────────┐
+        │      BigQuery          │
+        │  analytics_XXXXXX     │
+        └───────────────────────┘
+```
+
 ### Tags vs Triggers vs Variables
 
-**Variables** (The Data)
-```
-Data Layer Variable: event_name
-Data Layer Variable: form_type  
-Page View Variable: {{Page Path}}
-Custom JavaScript Variable: {{getSessionID}}
-```
+**Variables** (Read dataLayer values)
+- `DLV - form_id` → reads `form_id` from dataLayer
+- `DLV - form_topic` → reads `form_fields.topic`
+- `DLV - ecommerce.items` → reads entire items array
 
-**Triggers** (When to Fire)
-```
-Trigger: "Form Submission" 
-  Condition: Event equals form_submission_success
+**Triggers** (When to fire tags)
+- Custom Event trigger listens for `event: 'form_submission_success'`
+- Fires when specific event name appears in dataLayer
+- Can add conditions (e.g., only fire if `form_id` equals `contact_us`)
 
-Trigger: "Page View"
-  Condition: Trigger Type = Page View
+**Tags** (What to send)
+- GA4 Event tag sends `generate_lead` to Analytics
+- Maps variables to GA4 event parameters
+- Example: `form_topic` parameter = `{{DLV - form_topic}}` variable
 
-Trigger: "Purchase Event"
-  Condition: Event equals purchase
-```
+### GTM vs gtag.js (Important for Jobs)
 
-**Tags** (What to Send)
-```
-Tag: GA4 - generate_lead
-  Type: Google Analytics: GA4 Event
-  Measurement ID: G-XXXXXXX
-  Event Name: {{Event Name}}
-  Trigger: Form Submission
-```
+| Feature | gtag.js | GTM |
+|---------|---------|-----|
+| Setup complexity | Simple | Moderate |
+| No-code changes | ❌ Need code changes | ✅ All changes in UI |
+| Multi-tag support | Google only | 100+ vendors |
+| Version control | ❌ None | ✅ Built-in |
+| Debugging tools | Limited | Advanced Preview Mode |
+| Team collaboration | ❌ Code-based | ✅ UI-based with permissions |
+| **Use for Upwork jobs** | Small sites | Professional sites |
 
----
-
+**For Upwork proposals:**
+- ✅ Always recommend GTM for client sites
+- ✅ Show you understand both approaches
+- ✅ Explain GTM benefits (no developer needed for changes)
+- ✅ Mention GTM enables easy addition of Facebook Pixel, LinkedIn tags, etc.
 ## 5. SERVER-SIDE TAGGING (Job #2)
 
 ### Architecture
