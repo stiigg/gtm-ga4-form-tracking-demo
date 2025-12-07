@@ -9,8 +9,8 @@
  *   4. begin_checkout - User starts checkout process
  *   5. purchase - User completes purchase
  * 
- * Project: gtm-ga4-analytics
- * Dataset: analytics_514638991
+ * Project: demo-tracking-project
+ * Dataset: analytics_398765432
  * 
  * Output: Conversion rates between each funnel stage
  * Use case: Identify where users drop off in purchase funnel
@@ -26,7 +26,7 @@ WITH funnel_stages AS (
     COUNTIF(event_name = 'add_to_cart') as added_to_cart,
     COUNTIF(event_name = 'begin_checkout') as began_checkout,
     COUNTIF(event_name = 'purchase') as purchased
-  FROM `gtm-ga4-analytics.analytics_514638991.events_*`
+FROM `demo-tracking-project.analytics_398765432.events_*`
   WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
     AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
     AND event_name IN ('view_item_list', 'view_item', 'add_to_cart', 'begin_checkout', 'purchase')

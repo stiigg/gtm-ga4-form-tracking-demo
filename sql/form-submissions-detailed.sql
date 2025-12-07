@@ -4,8 +4,8 @@
  * Purpose: Comprehensive form analysis including topic and plan selection
  * Use case: Understand which form configurations drive most conversions
  * 
- * Project: gtm-ga4-analytics
- * Property: G-S9SRF7GGHW (514638991)
+ * Project: demo-tracking-project
+ * Property: G-9P3KQ2WZM7 (398765432)
  * 
  * Custom parameters analyzed:
  * - form_id: Form identifier
@@ -38,7 +38,7 @@ SELECT
   COUNT(*) as submissions,
   COUNT(DISTINCT user_pseudo_id) as unique_users,
   ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) as percentage_of_total
-FROM `gtm-ga4-analytics.analytics_514638991.events_*`
+FROM `demo-tracking-project.analytics_398765432.events_*`
 WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY))
   AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
   AND event_name = 'generate_lead'
