@@ -4,9 +4,19 @@ This guide shows how to configure your Google Tag Manager container to work with
 
 ## Prerequisites
 
-- Google Tag Manager account ([tagmanager.google.com](https://tagmanager.google.com))
-- Google Analytics 4 property (Measurement ID: G-XXXXXXXXX)
-- Access to edit GTM container
+Before starting this guide, ensure you have:
+
+- [ ] Google Tag Manager account ([tagmanager.google.com](https://tagmanager.google.com))
+- [ ] Google Analytics 4 property created
+- [ ] Your GA4 Measurement ID ready (format: `G-XXXXXXXXX`)
+  - Find it in GA4: Admin → Data Streams → Select stream → Measurement ID
+- [ ] Access to edit GTM container (at least "Edit" permission)
+- [ ] Basic understanding of dataLayer and event tracking
+
+**Example IDs:**
+- ✅ GA4 Measurement ID: `G-S9SRF7GGHW` (this is YOUR actual ID from the screenshot)
+- ✅ GTM Container ID: `GTM-XXXXXXX` (you need to find yours in GTM interface)
+- ❌ **Don't use** `GTM-N4B8K7P` - this is a placeholder!
 
 ---
 
@@ -120,18 +130,51 @@ In GTM, go to **Triggers** → **New**
 
 ## Step 5: Create GA4 Configuration Tag
 
-This tag initializes GA4 on every page.
+This tag initializes GA4 on every page and must fire before any event tags.
+
+### Method 1: Using Google Tag (Recommended - Newer Format)
+
+1. Go to **Tags** → **New**
+2. **Tag Name:** `Google Tag - GA4 Configuration`
+3. **Tag Type:** Click **Tag Configuration** → Search "Google Tag" → Select **Google Tag**
+4. **Tag ID:** `G-S9SRF7GGHW` (your actual Measurement ID)
+   - ⚠️ **Important**: Replace with YOUR actual GA4 Measurement ID
+   - Format must be `G-XXXXXXXXX` (starts with G-, not GT-)
+5. **Configuration Settings (Optional):**
+   - Enable "Send an event when this configuration loads" ✅ (recommended)
+   - Add **Fields to Set** (optional):
+     - Field Name: `send_page_view` → Value: `true`
+     - Field Name: `anonymize_ip` → Value: `true` (for GDPR compliance)
+6. **Triggering:** Select **All Pages - Page View**
+7. **Tag firing options:** "Once per page" (recommended)
+8. Click **Save**
+
+### Method 2: Using GA4 Configuration (Legacy Format)
+
+**If "Google Tag" is not available in your GTM, use this:**
 
 1. Go to **Tags** → **New**
 2. **Tag Name:** `GA4 - Configuration`
 3. **Tag Type:** Google Analytics: GA4 Configuration
-4. **Measurement ID:** `G-XXXXXXXXX` (your GA4 property ID)
-5. **Configuration Settings:**
-   - Enable "Send a page view event when this configuration loads"
-   - (Optional) Add fields to set:
-     - Field Name: `anonymize_ip` → Value: `true`
+4. **Measurement ID:** `G-S9SRF7GGHW`
+5. Enable: "Send a page view event when this configuration loads" ✅
 6. **Triggering:** All Pages
 7. **Save**
+
+### Verification
+
+After creating the tag:
+1. Click **Preview**
+2. Load your demo page
+3. Verify in Tag Assistant:
+   - Tag fires on page load
+   - Shows as "Succeeded" status
+   - Measurement ID displays correctly
+
+**Common Errors:**
+- ❌ "Tag not firing" → Check trigger is set to "All Pages"
+- ❌ "Invalid Measurement ID" → Verify format is `G-XXXXXXXXX` (no spaces, correct ID)
+- ❌ "Multiple configuration tags" → Only one configuration tag should exist per GA4 property
 
 ---
 

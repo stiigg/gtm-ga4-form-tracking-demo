@@ -13,7 +13,7 @@
       "accountId": "ACCOUNT_ID",
       "containerId": "CONTAINER_ID",
       "name": "gtm-ga4-form-tracking-demo",
-      "publicId": "GTM-XXXXXXX",
+      "publicId": "GTM-NNS86ML",
       "usageContext": ["WEB"],
       "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/ACCOUNT_ID/containers/CONTAINER_ID/workspaces"
     },
@@ -28,7 +28,7 @@
           {
             "type": "TEMPLATE",
             "key": "measurementId",
-            "value": "G-XXXXXXXXX"
+            "value": "G-S9SRF7GGHW"
           },
           {
             "type": "BOOLEAN",
