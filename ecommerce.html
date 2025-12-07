@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>E-commerce Tracking Demo - GA4/GTM</title>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S9SRF7GGHW"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-S9SRF7GGHW');
-  </script>
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+  <!-- End Google Tag Manager -->
+  
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); min-height: 100vh; padding: 20px; }
@@ -36,14 +38,19 @@
     .datalayer-output pre { padding: 12px 15px; color: #9cdcfe; font-family: monospace; font-size: 0.8rem; overflow-x: auto; max-height: 300px; white-space: pre-wrap; }
     .status { margin-top: 12px; padding: 10px; border-radius: 8px; background: #d4edda; color: #155724; display: none; }
     .nav { text-align: center; margin-bottom: 20px; }
-    .nav a { color: white; margin: 0 10px; }
+    .nav a { color: white; margin: 0 10px; text-decoration: none; }
   </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  
   <div class="container">
     <header>
-      <h1>🛒 E-commerce Tracking Demo</h1>
-      <p>GA4 Enhanced E-commerce Events</p>
+      <h1>🛍️ E-commerce Tracking Demo</h1>
+      <p>GA4 Enhanced E-commerce Events via GTM</p>
     </header>
     <nav class="nav"><a href="index.html">← Back to Form Demo</a></nav>
     
@@ -83,7 +90,7 @@
       </div>
       
       <div class="cart-summary" id="cart-summary" style="display:none;">
-        <h4>🛒 Cart</h4>
+        <h4>🛍️ Cart</h4>
         <div id="cart-items"></div>
         <div class="cart-total"><span>Total:</span><span id="cart-total">$0.00</span></div>
         <button class="btn" id="checkout-btn" style="width:100%;margin-top:15px;">Begin Checkout</button>
@@ -93,13 +100,16 @@
       <div id="purchase-status" class="status"></div>
       
       <div class="datalayer-output">
-        <h4>📦 dataLayer Events</h4>
-        <pre id="ecom-output">Page loaded - view_item_list fired...</pre>
+        <h4>📦 dataLayer Events (GTM will process these)</h4>
+        <pre id="ecom-output">Page loaded - view_item_list will fire...</pre>
       </div>
     </div>
   </div>
   
   <script>
+    // Initialize dataLayer
+    window.dataLayer = window.dataLayer || [];
+    
     // Cart state
     let cart = [];
     let eventLog = [];
@@ -118,7 +128,7 @@
     ];
     
     // Fire view_item_list on page load
-    window.dataLayer.push({ecommerce: null});
+    window.dataLayer.push({ecommerce: null});  // Clear previous ecommerce object
     window.dataLayer.push({
       event: 'view_item_list',
       ecommerce: {
@@ -127,7 +137,6 @@
         items: products
       }
     });
-    gtag('event', 'view_item_list', {item_list_id: 'product_gallery', item_list_name: 'Product Gallery', items: products});
     logEvent('view_item_list', {item_list_id: 'product_gallery', items: products.length + ' items'});
     
     // Product click - view_item
@@ -136,8 +145,14 @@
         if (e.target.classList.contains('add-to-cart')) return;
         const item = products[idx];
         window.dataLayer.push({ecommerce: null});
-        window.dataLayer.push({event: 'view_item', ecommerce: {currency: 'USD', value: item.price, items: [item]}});
-        gtag('event', 'view_item', {currency: 'USD', value: item.price, items: [item]});
+        window.dataLayer.push({
+          event: 'view_item',
+          ecommerce: {
+            currency: 'USD',
+            value: item.price,
+            items: [item]
+          }
+        });
         logEvent('view_item', {item_id: item.item_id, item_name: item.item_name, price: item.price});
       });
     });
@@ -149,8 +164,14 @@
         const item = {...products[idx], quantity: 1};
         cart.push(item);
         window.dataLayer.push({ecommerce: null});
-        window.dataLayer.push({event: 'add_to_cart', ecommerce: {currency: 'USD', value: item.price, items: [item]}});
-        gtag('event', 'add_to_cart', {currency: 'USD', value: item.price, items: [item]});
+        window.dataLayer.push({
+          event: 'add_to_cart',
+          ecommerce: {
+            currency: 'USD',
+            value: item.price,
+            items: [item]
+          }
+        });
         logEvent('add_to_cart', {item_id: item.item_id, item_name: item.item_name, price: item.price});
         updateCartDisplay();
       });
@@ -172,8 +193,14 @@
     document.getElementById('checkout-btn').addEventListener('click', () => {
       const total = cart.reduce((sum, i) => sum + i.price, 0);
       window.dataLayer.push({ecommerce: null});
-      window.dataLayer.push({event: 'begin_checkout', ecommerce: {currency: 'USD', value: total, items: cart}});
-      gtag('event', 'begin_checkout', {currency: 'USD', value: total, items: cart});
+      window.dataLayer.push({
+        event: 'begin_checkout',
+        ecommerce: {
+          currency: 'USD',
+          value: total,
+          items: cart
+        }
+      });
       logEvent('begin_checkout', {value: total, items: cart.length + ' items'});
     });
     
@@ -182,8 +209,15 @@
       const total = cart.reduce((sum, i) => sum + i.price, 0);
       const txnId = 'TXN' + Date.now();
       window.dataLayer.push({ecommerce: null});
-      window.dataLayer.push({event: 'purchase', ecommerce: {transaction_id: txnId, currency: 'USD', value: total, items: cart}});
-      gtag('event', 'purchase', {transaction_id: txnId, currency: 'USD', value: total, items: cart});
+      window.dataLayer.push({
+        event: 'purchase',
+        ecommerce: {
+          transaction_id: txnId,
+          currency: 'USD',
+          value: total,
+          items: cart
+        }
+      });
       logEvent('purchase', {transaction_id: txnId, value: total, items: cart.length + ' items'});
       document.getElementById('purchase-status').style.display = 'block';
       document.getElementById('purchase-status').innerHTML = '✅ Purchase completed! Transaction ID: ' + txnId;
