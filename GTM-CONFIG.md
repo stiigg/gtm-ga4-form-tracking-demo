@@ -1,5 +1,12 @@
 # GTM Configuration Guide
 
+> **⚠️ IMPORTANT:** This demo now uses **Google Tag Manager** (not gtag.js). 
+> Follow [GTM-CONTAINER-SETUP.md](GTM-CONTAINER-SETUP.md) for step-by-step container setup.
+> 
+> **Quick Start:** Import `gtm-container-export.json` to skip manual configuration.
+
+---
+
 This document provides the GTM (Google Tag Manager) configuration needed to capture the dataLayer events from this demo.
 
 ## Data Layer Variables
@@ -78,32 +85,23 @@ Trigger: Corresponding custom event trigger
 
 ### Custom Dimensions
 
-In GA4 Admin > Custom definitions, create event-scoped dimensions:
+| Dimension Name | Scope | Event Parameter |
+|----------------|-------|-----------------|
+| form_id | Event | form_id |
+| form_type | Event | form_type |
+| form_location | Event | form_location |
+| form_topic | Event | form_topic |
+| form_plan | Event | form_plan |
 
-| Dimension Name | Event Parameter | Scope |
-|----------------|-----------------|-------|
-| Form ID | `form_id` | Event |
-| Form Type | `form_type` | Event |
-| Form Topic | `form_topic` | Event |
-| Form Plan | `form_plan` | Event |
+### Suggested GA4 Conversions
 
-### Key Events (Conversions)
-
-Mark these as key events in GA4:
+Mark these as conversions in GA4:
 - `generate_lead`
 - `purchase`
+- (Optional) `begin_checkout`
 
-## Testing Checklist
+## Validation Tips
 
-- [ ] GTM Preview shows `form_submission_success` event on valid form submit
-- [ ] GTM Preview shows NO event on failed validation
-- [ ] Data Layer tab shows all expected parameters
-- [ ] Variables tab shows resolved values (not undefined)
-- [ ] GA4 DebugView shows `generate_lead` event
-- [ ] GA4 DebugView shows correct parameters
-- [ ] E-commerce events fire in correct sequence
-
-## Live Demo
-
-- Form Tracking: https://stiigg.github.io/gtm-ga4-form-tracking-demo/
-- E-commerce: https://stiigg.github.io/gtm-ga4-form-tracking-demo/ecommerce.html
+1. Use GTM Preview mode to verify triggers fire and variables resolve
+2. Use GA4 DebugView to confirm events and parameters arrive
+3. Avoid high-cardinality fields (e.g., free-text message bodies)
