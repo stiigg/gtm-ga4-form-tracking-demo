@@ -4,8 +4,8 @@
  * Purpose: Analyze which marketing channels drive form submissions
  * Uses: traffic_source.source, traffic_source.medium, traffic_source.name
  * 
- * Project: gtm-ga4-analytics
- * Dataset: analytics_514638991
+ * Project: demo-tracking-project
+ * Dataset: analytics_398765432
  * 
  * Output: Submissions and purchases by UTM parameters
  * Filters: Minimum 5 users to exclude noise
@@ -24,7 +24,7 @@ SELECT
   COUNTIF(event_name = 'purchase') as total_purchases,
   ROUND(COUNTIF(event_name = 'generate_lead') * 100.0 / COUNT(DISTINCT user_pseudo_id), 2) as lead_conversion_rate,
   ROUND(COUNTIF(event_name = 'purchase') * 100.0 / COUNT(DISTINCT user_pseudo_id), 2) as purchase_conversion_rate
-FROM `gtm-ga4-analytics.analytics_514638991.events_*`
+FROM `demo-tracking-project.analytics_398765432.events_*`
 WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY))
   AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
 GROUP BY traffic_source.source, traffic_source.medium, campaign

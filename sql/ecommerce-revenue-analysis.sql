@@ -4,8 +4,8 @@
  * Purpose: Analyze revenue contribution by product
  * Data source: items array in purchase events
  * 
- * Project: gtm-ga4-analytics (179616959118)
- * Property: G-S9SRF7GGHW
+ * Project: demo-tracking-project (179616959118)
+ * Property: G-9P3KQ2WZM7
  * 
  * Metrics calculated:
  * - Total revenue per product (in USD)
@@ -29,7 +29,7 @@ SELECT
   ROUND(SUM(item.item_revenue_in_usd), 2) as total_revenue_usd,
   ROUND(AVG(item.price_in_usd), 2) as avg_price_usd,
   ROUND(SUM(item.item_revenue_in_usd) * 100.0 / SUM(SUM(item.item_revenue_in_usd)) OVER(), 2) as revenue_percentage
-FROM `gtm-ga4-analytics.analytics_514638991.events_*`,
+FROM `demo-tracking-project.analytics_398765432.events_*`,
   UNNEST(items) as item
 WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY))
   AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())

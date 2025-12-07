@@ -5,12 +5,12 @@
  * Events: generate_lead
  * Parameters: form_id, form_type, form_location
  * 
- * Project: gtm-ga4-analytics (179616959118)
- * Dataset: analytics_514638991
- * Property: G-S9SRF7GGHW
+ * Project: demo-tracking-project (179616959118)
+ * Dataset: analytics_398765432
+ * Property: G-9P3KQ2WZM7
  * 
  * Usage: 
- * 1. Open BigQuery console: https://console.cloud.google.com/bigquery?project=gtm-ga4-analytics
+ * 1. Open BigQuery console: https://console.cloud.google.com/bigquery?project=demo-tracking-project
  * 2. Copy and paste this query
  * 3. Click "Run"
  * 
@@ -34,7 +34,7 @@ SELECT
   COUNT(*) as total_submissions,
   COUNT(DISTINCT user_pseudo_id) as unique_users,
   ROUND(COUNT(*) * 1.0 / COUNT(DISTINCT user_pseudo_id), 2) as submissions_per_user
-FROM `gtm-ga4-analytics.analytics_514638991.events_*`
+FROM `demo-tracking-project.analytics_398765432.events_*`
 WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
   AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
   AND event_name = 'generate_lead'
