@@ -1,0 +1,53 @@
+{
+  "container": {
+    "name": "CLIENT_BASE_CONTAINER",
+    "publicId": "GTM-XXXXXXX",
+    "usageContext": ["WEB"],
+    "notes": "Standard web container with GA4 configuration, form tracking, and ecommerce event tags. Replace Measurement ID and CSS selectors for client site."
+  },
+  "tags": [
+    {
+      "name": "GA4 - Configuration",
+      "type": "ga4Configuration",
+      "parameter": [
+        {"key": "measurementId", "value": "G-XXXXXXXXX"},
+        {"key": "sendPageView", "value": "true"}
+      ],
+      "firingTriggerId": ["2147483647"]
+    },
+    {
+      "name": "GA4 - Event - generate_lead",
+      "type": "ga4Event",
+      "parameter": [
+        {"key": "eventName", "value": "generate_lead"},
+        {"key": "eventParameters", "list": [
+          {"type": "map", "map": [{"key": "form_id", "value": "{{DLV - form_id}}"}]},
+          {"type": "map", "map": [{"key": "form_type", "value": "{{DLV - form_type}}"}]},
+          {"type": "map", "map": [{"key": "form_location", "value": "{{DLV - form_location}}"}]}
+        ]}
+      ],
+      "firingTriggerId": ["{{CE - form_submission_success}}"],
+      "notes": "Fires on successful form submission dataLayer event"
+    }
+  ],
+  "triggers": [
+    {
+      "name": "CE - form_submission_success",
+      "type": "CUSTOM_EVENT",
+      "customEventFilter": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {"key": "arg0", "value": "event"},
+            {"key": "arg1", "value": "form_submission_success"}
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": [
+    {"name": "DLV - form_id", "type": "Data Layer Variable", "parameter": [{"key": "dataLayerVersion", "value": "2"}, {"key": "name", "value": "form_id"}]},
+    {"name": "DLV - form_type", "type": "Data Layer Variable", "parameter": [{"key": "dataLayerVersion", "value": "2"}, {"key": "name", "value": "form_type"}]},
+    {"name": "DLV - form_location", "type": "Data Layer Variable", "parameter": [{"key": "dataLayerVersion", "value": "2"}, {"key": "name", "value": "form_location"}]}
+  ]
+}
