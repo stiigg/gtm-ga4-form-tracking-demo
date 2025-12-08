@@ -1,0 +1,23 @@
+<?php
+/**
+ * Magento 2 DataLayer Implementation
+ * Place in app/design/frontend/[Vendor]/[Theme]/Magento_Catalog/templates/product/view/datalayer.phtml
+ */
+?>
+<script>
+dataLayer.push({ecommerce: null});
+dataLayer.push({
+    event: 'view_item',
+    ecommerce: {
+        currency: '<?php echo $block->getCurrentCurrencyCode(); ?>',
+        value: <?php echo $block->getProduct()->getFinalPrice(); ?>,
+        items: [{
+            item_id: '<?php echo $block->getProduct()->getSku(); ?>',
+            item_name: '<?php echo $block->escapeJs($block->getProduct()->getName()); ?>',
+            item_brand: '<?php echo $block->getProduct()->getAttributeText("manufacturer"); ?>',
+            price: <?php echo $block->getProduct()->getFinalPrice(); ?>,
+            quantity: 1
+        }]
+    }
+});
+</script>
