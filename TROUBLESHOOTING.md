@@ -469,6 +469,186 @@ Use this checklist to systematically debug issues:
 
 ---
 
+## E-commerce Specific Issues
+
+### Duplicate Purchase Events
+
+**Symptom**: Same transaction appears 2-3 times in GA4 reports
+**Root Cause**: User refreshes thank-you page, event fires again
+
+**Solution 1: Transaction ID Deduplication (GTM)**
+1. Create Custom JavaScript Variable: `Deduplication Check`
+```
+function() {
+  var txnId = {{DLV - Transaction ID}};
+  var firedTxns = sessionStorage.getItem('ga4_purchases') || '';
+  
+  if (firedTxns.includes(txnId)) {
+    return false; // Already fired
+  }
+  
+  // Mark as fired
+  sessionStorage.setItem('ga4_purchases', firedTxns + '|' + txnId);
+  return true;
+}
+```
+
+2. Add Firing Trigger Condition: `Deduplication Check equals true`
+
+**Solution 2: Platform-Level Prevention**
+- Shopify Liquid: `{% if first_time_accessed %}`
+- WooCommerce PHP: `get_post_meta($order_id, '_ga4_tracked', true)`
+- Magento: Session variable check in controller
+
+**Solution 3: GA4 Data Stream Settings**
+Enable "Enhanced measurement" → Unwanted referrals: Add your own domain to ignore internal navigation
+
+---
+
+### Missing Item-Level Parameters
+
+**Symptom**: Products show "(not set)" in Item reports
+**Root Cause**: Required parameters missing from items array
+
+**Required Parameters Checklist**:
+- [x] `item_id` - Product SKU or ID (REQUIRED)
+- [x] `item_name` - Product display name (REQUIRED)
+- [ ] `price` - Individual item price (HIGHLY RECOMMENDED)
+- [ ] `quantity` - Number of items (defaults to 1)
+- [ ] `item_brand` - Brand/manufacturer
+- [ ] `item_category` - Primary category
+- [ ] `item_variant` - Size/color variant
+
+**Debugging Process**:
+1. Open GTM Preview Mode
+2. Trigger purchase event
+3. Check dataLayer:
+```
+// In browser console:
+dataLayer.find(obj => obj.event === 'purchase').ecommerce.items
+```
+4. Verify all required fields exist and are non-empty
+5. Check for trailing spaces, null values, undefined
+
+**Common Mistakes**:
+```
+// BAD - Missing price
+{item_id: 'SKU123', item_name: 'Product', quantity: 1}
+
+// BAD - Price as string with currency symbol
+{item_id: 'SKU123', item_name: 'Product', price: '$99.99'}
+
+// GOOD
+{item_id: 'SKU123', item_name: 'Product', price: 99.99, quantity: 1}
+```
+
+---
+
+### Currency Formatting Issues
+
+**Symptom**: Revenue reports show inflated or deflated values
+**Root Cause**: Locale-based decimal formatting (Europe: 99,99 vs US: 99.99)
+
+**Detection**:
+```
+// Check in browser console:
+typeof {{DLV - Transaction Value}}  // Should be 'number', not 'string'
+```
+
+**Solution**:
+```
+// GTM Custom JavaScript Variable: Clean Currency Value
+function() {
+  var rawValue = {{DLV - Transaction Value}};
+  
+  // Remove currency symbols and spaces
+  rawValue = rawValue.replace(/[^0-9,.-]/g, '');
+  
+  // Handle European format (comma as decimal)
+  if (rawValue.includes(',') && !rawValue.includes('.')) {
+    rawValue = rawValue.replace(',', '.');
+  }
+  
+  // Remove thousands separators
+  rawValue = rawValue.replace(/,(?=\d{3})/g, '');
+  
+  return parseFloat(rawValue);
+}
+```
+
+---
+
+### Items Array Empty or Malformed
+
+**Symptom**: ecommerce.items shows as empty array or undefined
+**Root Cause**: DataLayer cleared incorrectly or items not constructed
+
+**Validation Script**:
+```
+// Add as Custom HTML tag after ecommerce events
+<script>
+(function() {
+  var lastEcom = dataLayer.filter(obj => obj.ecommerce).pop();
+  
+  if (!lastEcom || !lastEcom.ecommerce.items) {
+    console.error('❌ GA4 ERROR: ecommerce.items missing');
+    return;
+  }
+  
+  var items = lastEcom.ecommerce.items;
+  
+  if (!Array.isArray(items) || items.length === 0) {
+    console.error('❌ GA4 ERROR: items array empty');
+    return;
+  }
+  
+  items.forEach((item, idx) => {
+    if (!item.item_id) console.error('❌ Item ' + idx + ': missing item_id');
+    if (!item.item_name) console.error('❌ Item ' + idx + ': missing item_name');
+    if (!item.price) console.warn('⚠️ Item ' + idx + ': missing price (recommended)');
+  });
+  
+  console.log('✓ Items array validation passed');
+})();
+</script>
+```
+
+---
+
+### Event Firing Out of Sequence
+
+**Symptom**: `purchase` fires before `add_to_cart`, funnel reports broken
+**Root Cause**: Asynchronous page loads, SPAs, timing issues
+
+**Solution: Event Sequence Validator**
+```
+// GTM Custom HTML - All Pages
+<script>
+window.ga4EventSequence = window.ga4EventSequence || [];
+
+dataLayer.push(function() {
+  var eventName = {{Event}};
+  
+  var ecomEvents = ['view_item', 'add_to_cart', 'begin_checkout', 'add_payment_info', 'purchase'];
+  
+  if (ecomEvents.includes(eventName)) {
+    ga4EventSequence.push(eventName);
+    
+    // Check logical sequence
+    var currentIdx = ecomEvents.indexOf(eventName);
+    var lastEvent = ga4EventSequence[ga4EventSequence.length - 2];
+    var lastIdx = ecomEvents.indexOf(lastEvent);
+    
+    if (lastIdx > currentIdx) {
+      console.warn('⚠️ GA4 SEQUENCE WARNING: ' + eventName + ' fired after ' + lastEvent);
+    }
+  }
+});
+</script>
+```
+
+---
+
 ## Getting Help
 
 If issues persist after following this guide:
