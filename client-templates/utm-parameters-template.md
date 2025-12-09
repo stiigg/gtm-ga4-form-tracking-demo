@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # UTM Parameters Template (Dropdown-Ready)
 
 Use these tables as validation sources in Google Sheets or Excel Data Validation. Copy each column into its own sheet or range to enable dropdowns for consistent tagging.

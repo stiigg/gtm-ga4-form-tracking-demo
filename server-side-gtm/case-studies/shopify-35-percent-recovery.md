@@ -1,25 +1,41 @@
-# Health & Beauty Shopify Store - 35% Conversion Recovery
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
 
-## Challenge
+# ⚠️ SIMULATED CASE STUDY - NO ACTUAL CLIENT
+
+This represents a **realistic scenario** based on:
+- WebKit ITP documentation (7-day cookie limitation)
+- Meta Business Help Center (Conversions API benchmarks)
+- Stape.io published case studies
+- My own ROI calculator using industry averages
+
+**I am seeking a real client matching this profile to validate these projections.**
+
+## Scenario: Health & Beauty Shopify Store - Projected 35% Conversion Recovery
+
+**Challenge (modeled):**
 - 42% iOS/Safari traffic constrained by ITP cookie limits
-- Meta Pixel missing 38% of purchase events
+- Meta Pixel missing ~38% of purchase events (benchmarks)
 - Returning customer attribution broken
-- Duplicate purchases inflating revenue by 25%
+- Duplicate purchases inflating revenue by ~25%
 
-## Solution Implemented
-- Server-side GTM via Stape ($40/month hosting)
+**Planned Solution:**
+- Server-side GTM via Stape ($40/month hosting assumption)
 - Meta Conversions API with event_id deduplication
 - Shopify webhook integration (orders/create)
-- Extended cookie lifespan to 2 years
+- Extended cookie lifespan strategies (server-managed cookies)
 
-## Results
-- Purchase tracking accuracy: 68% → 95% (+27 pp)
-- Meta ROAS improved: 2.6x → 3.1x (+19%)
-- Duplicate purchases eliminated (25% revenue inflation fixed)
-- Monthly recovered attribution: $8,400
-- **ROI: 210x first month** ($8,400 benefit / $40 cost)
+**Projected Results (to be validated):**
+- Purchase tracking accuracy: 68% → ~95% (+27 pp modeled)
+- Meta ROAS improvement: 2.6x → ~3.1x (based on better signal quality)
+- Duplicate purchase suppression eliminating ~25% revenue inflation
+- Monthly recovered attribution: ~$8,400 (modeled from spend/revenue ratios)
 
-## Lessons Learned
-- Deduplication must be enabled from day 1 to avoid inflated revenue
-- Stape logs are invaluable for webhook validation
-- Client-side event_id generation must be consistent across themes
+**Validation Plan:**
+- Compare GA4 purchases vs Shopify orders over 7-day validation
+- Monitor Conversions API vs Pixel deduplication rates
+- Publish anonymized findings once first client engagement completes

@@ -1,35 +1,82 @@
-# Dashboard Add-Ons (Post-Delivery)
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
 
-## Standard Add-Ons
-| Service | Price | Delivery Time |
-|---------|-------|---------------|
-| Additional platform integration (Facebook Ads, Google Ads, etc.) | $40 | 2-3 days |
-| Custom calculated field (ROI, LTV, custom ratio) | $15 | Same day |
-| Additional dashboard page (platform deep-dive) | $20 | 1-2 days |
-| Historical data backfill (beyond connector default 90 days) | $25 | 2-3 days |
-| Automated email delivery (PDF sent weekly to stakeholders) | $30 setup + $10/month | 1 day |
-| BigQuery export setup + custom SQL queries | $75 | 3-5 days |
+## 💰 Portfolio-Building Pricing (First 3 Clients Only)
 
-## Monthly Retainer Services
-| Tier | Price/Month | Includes |
-|------|-------------|----------|
-| **Monitoring** | $100/month | - Monthly variance review<br>- Connector health checks<br>- Email alerts if data stops flowing<br>- 1 hour consultation/month |
-| **Active Management** | $300/month | - Everything in Monitoring<br>- Monthly dashboard optimization<br>- New campaign UTM setup assistance<br>- Quarterly reporting for executives<br>- 4 hours support/month |
-| **Full Service** | $750/month | - Everything in Active Management<br>- Weekly data QA<br>- Custom report generation<br>- Ad-hoc analysis requests<br>- Unlimited support hours |
+### Current Status
+- **Completed client projects:** 0
+- **Demo implementations:** 1 (this repository)
+- **Available slots:** 3 portfolio-building opportunities
 
-## Enterprise Packages
-**Multi-site deployment**: $500 setup + $200/month per additional site  
-**Agency white-label**: $1,000 setup + $150/client/month  
-**Custom development**: $100/hour (API integrations, custom connectors, etc.)
+### Why Offer 60% Discount?
 
-## Payment Terms
-- Add-ons: 50% upfront, 50% on delivery
-- Retainers: Monthly via Stripe/PayPal, cancel anytime
-- Enterprise: Net-30 invoicing available
+**Honest answer:** I'm transitioning careers and need:
+1. Video testimonials for Upwork profile
+2. Real case studies with actual metrics
+3. Production troubleshooting experience
+4. LinkedIn recommendations
 
-## How to Order
-Email [YOUR EMAIL] with:
-- Client name
-- Which add-on(s) you need
-- Preferred delivery date
-- I'll send Upwork milestone or invoice within 24 hours
+**What you get:**
+- Same methodology/quality as full-price (systematic QA is my strength)
+- Priority attention (you're helping build my portfolio)
+- Detailed documentation (I'll over-deliver)
+- Milestone payments (you control risk)
+
+**What I get:**
+- 60-second video testimonial (recorded after successful validation)
+- Permission to publish case study with anonymized metrics
+- LinkedIn recommendation
+- GitHub star
+
+---
+
+### 📊 Discovery Audit - $500 → $300 (Portfolio Rate)
+
+**Deliverables:**
+- Current GA4/GTM audit with screenshots
+- Data loss assessment 
+- Prioritized recommendations report
+
+**Note:** This is my first 3 audits - I'm offering below-market rate to gain experience presenting findings to non-technical clients. Technical audit capability is high (pharma data validation background); business communication skills being developed.
+
+---
+
+### 📈 Standard eCommerce Implementation - $2,500 → $1,200 (Portfolio Rate)
+
+**Includes:**
+- All 8+ GA4 eCommerce events (view_item → purchase)
+- GTM web container setup (25+ tags/triggers/variables)
+- Platform integration (Shopify Liquid, WooCommerce PHP, or Magento)
+- Purchase deduplication logic
+- 7-day validation + revenue reconciliation
+- Basic Looker Studio dashboard (1-page executive summary)
+- Documentation + 1-hour training
+
+**Timeline:** 4-5 weeks (may extend if I encounter unexpected platform limitations - you only pay on milestone completion)
+
+**Risk mitigation:**
+- Milestone 1 (30%): After audit + implementation plan approval
+- Milestone 2 (40%): After GTM deployment + initial testing
+- Milestone 3 (30%): After 7-day validation shows ≥90% accuracy vs order data
+
+**Refund policy:** If final validation shows <90% tracking accuracy, full refund of Milestone 3.
+
+---
+
+### 🚀 Server-Side Tracking Package - $3,500 → $1,750 (Portfolio Rate)
+
+**Transparency:** I have not deployed server-side GTM in production yet. This represents:
+- Extensive research (40+ hours studying documentation)
+- Sandbox testing (GCP Cloud Run with demo data)
+- Methodology adapted from Stape.io/Simo Ahava guides
+
+**Why still offer it:**
+- Technical capability is high (Cloud infrastructure comfortable from previous work)
+- Willing to absorb learning curve time (won't bill for self-education)
+- Industry guidance is comprehensive (well-documented implementations exist)
+
+**Risk mitigation:** If server-side deployment fails technical validation, you only pay for standard implementation portion ($1,200).

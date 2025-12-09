@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # Shopify + Stape Server-Side GTM Implementation
 
 Comprehensive guide to deploy server-side tagging on Shopify using Stape managed hosting. This abridged version highlights the critical pieces: prerequisites, setup steps, deduplication, validation, troubleshooting, and cost analysis.

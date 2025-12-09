@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # GTM Events Not Firing - Quick Fixes
 
 1. **Check Preview Mode**: Does Tag Assistant show the custom event? If not, dataLayer push may be missing.

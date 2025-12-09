@@ -1,4 +1,25 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # Server-Side GTM for eCommerce: Complete Implementation Toolkit
+
+## Documentation Status
+
+**Implementation methodology:** Based on official Google Cloud documentation, Stape.io guides, and Simo Ahava tutorials  
+**Production experience:** 0 live deployments (documentation prepared pre-client acquisition)  
+**Testing status:** Validated in GCP sandbox environment with demo store data
+
+**This documentation represents:**
+- ✅ Technical research and planning
+- ✅ Cost calculations from actual GCP/Stape pricing
+- ✅ Architecture diagrams for standard implementations
+- ⚠️ No production troubleshooting experience yet
+
+**Using this guide:** Treat as a starting template, not battle-tested SOP. I will update based on real client implementations.
 
 ## Critical Problem This Solves
 

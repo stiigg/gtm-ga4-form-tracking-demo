@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # HubSpot API Quota Exceeded
 
 1. **Identify Offending App**: HubSpot → Settings → Integrations → API Usage; note which app is over limit.
