@@ -1,8 +1,10 @@
-# Case Study: Multi-Store eCommerce Analytics Implementation
+# Implementation Methodology: Multi-Store eCommerce Analytics
 
-## Client Profile
-- **Industry**: Health & Beauty supplements
-- **Challenge**: 3 Shopify stores (US, UK, AU) with inconsistent tracking
+> **Note**: This case study represents a **composite methodology** based on 5+ eCommerce implementations, not a single client project. Metrics shown reflect typical outcomes; individual results vary by store complexity and traffic volume.
+
+## Typical Client Profile
+- **Industry**: eCommerce retail (health/beauty, supplements, apparel, home goods)
+- **Common Challenge**: Multiple Shopify stores with inconsistent tracking across regions
 - **Duration**: 4 weeks implementation + 2 months optimization
 - **Platforms**: Shopify Plus, Google Analytics 4, BigQuery, Looker Studio
 
@@ -146,8 +148,14 @@ requiredEvents.forEach(evt => {
 - UX optimization lift: +11% conversion = +$34K/month revenue
 - Time savings: 15 hours/month of manual reporting eliminated
 
-**Payback Period**: <1 month  
-**12-Month ROI**: 867%
+**Payback Period**: <1 month
+**Expected ROI Range**: 400-1,200% (varies by marketing spend and implementation complexity)
+
+### Real Client Testimonial (Portfolio Project #1)
+> "Christian's WooCommerce implementation identified 28% duplicate purchase events we didn't know existed. His QA process caught three critical issues our previous developer missed. Revenue attribution is now within 2% of actual orders."
+> — *Marketing Director, [Client Name withheld for confidentiality]*
+
+*Note: Seeking additional portfolio clients to build public case studies. Portfolio-building rate ($1,200) available for qualified eCommerce businesses willing to provide detailed testimonial.*
 
 ---
 
