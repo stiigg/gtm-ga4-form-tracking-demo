@@ -8,6 +8,7 @@ on:
   schedule:
     # Run daily at 2 AM UTC to catch any demo page breaks
     - cron: '0 2 * * *'
+  workflow_dispatch:  # Allows manual workflow triggering
 
 jobs:
   test-datalayer-structure:
@@ -15,12 +16,13 @@ jobs:
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4  # ✅ UPDATED from v3
     
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4  # ✅ UPDATED from v3
       with:
-        node-version: '18'
+        node-version: '20'  # ✅ UPDATED from '18'
+        cache: 'npm'  # ✨ NEW: Enables npm caching for faster builds
     
     - name: Install dependencies
       run: |
@@ -38,17 +40,19 @@ jobs:
       
     - name: Upload test results
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4  # ✅ CRITICAL FIX - UPDATED from v3
       with:
-        name: test-results
+        name: test-results-${{ github.run_id }}  # ✨ NEW: Unique name per run
         path: test-results/
+        retention-days: 7  # ✨ NEW: Auto-delete artifacts after 7 days
+        if-no-files-found: warn  # ✨ NEW: Don't fail if no files found
 
   validate-code-quality:
     runs-on: ubuntu-latest
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4  # ✅ UPDATED from v3
     
     - name: Validate WooCommerce PHP syntax
       run: |
