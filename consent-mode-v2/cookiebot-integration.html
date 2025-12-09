@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consent Mode v2 Example - Cookiebot</title>
+  
+  <!-- Consent Mode v2 - MUST load before GTM -->
+  <script data-cookieconsent="ignore">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    
+    // Set default consent to 'denied' as a placeholder
+    // This will be updated by Cookiebot
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'functionality_storage': 'denied',
+      'personalization_storage': 'denied',
+      'security_storage': 'granted',
+      'wait_for_update': 500
+    });
+  </script>
+  
+  <!-- Cookiebot CMP -->
+  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" 
+    data-cbid="YOUR-COOKIEBOT-ID" data-blockingmode="auto" type="text/javascript"></script>
+  
+  <!-- Google Tag Manager - AFTER Consent Mode initialization -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MM6H8SQW');</script>
+  <!-- End Google Tag Manager -->
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MM6H8SQW"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  
+  <div style="max-width: 800px; margin: 40px auto; padding: 20px; font-family: sans-serif;">
+    <h1>Consent Mode v2 Implementation Example</h1>
+    
+    <div style="background: #e7f3ff; border-left: 4px solid #2196F3; padding: 15px; margin: 20px 0;">
+      <h3>What This Demonstrates</h3>
+      <ul>
+        <li>✅ Consent Mode v2 default state (denied until user approves)</li>
+        <li>✅ Cookiebot CMP integration</li>
+        <li>✅ GTM tag blocking based on consent</li>
+        <li>✅ Dynamic consent updates when user accepts/rejects</li>
+      </ul>
+    </div>
+    
+    <h2>Testing Instructions</h2>
+    <ol>
+      <li>Open browser DevTools → Console</li>
+      <li>Check initial consent state: <code>dataLayer</code></li>
+      <li>Accept/reject cookies in the banner</li>
+      <li>Observe consent state updates in dataLayer</li>
+      <li>Verify GTM tags fire (or don't fire) based on consent</li>
+    </ol>
+    
+    <h2>Current Consent Status</h2>
+    <div id="consent-status" style="background: #f5f5f5; padding: 15px; border-radius: 8px; font-family: monospace;">
+      Loading consent state...
+    </div>
+    
+    <button onclick="window.Cookiebot.show()" style="margin-top: 20px; padding: 10px 20px; background: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer;">
+      Manage Cookie Preferences
+    </button>
+  </div>
+  
+  <script>
+    // Display current consent state
+    function displayConsentStatus() {
+      const consentDiv = document.getElementById('consent-status');
+      const consentState = {
+        ad_storage: window.Cookiebot?.consent?.marketing ? 'granted' : 'denied',
+        analytics_storage: window.Cookiebot?.consent?.statistics ? 'granted' : 'denied',
+        functionality_storage: window.Cookiebot?.consent?.preferences ? 'granted' : 'denied',
+        security_storage: 'granted',
+        Cookiebot_API_available: typeof window.Cookiebot !== 'undefined'
+      };
+      
+      consentDiv.innerHTML = '<pre>' + JSON.stringify(consentState, null, 2) + '</pre>';
+    }
+    
+    // Update display when consent changes
+    window.addEventListener('CookiebotOnAccept', displayConsentStatus);
+    window.addEventListener('CookiebotOnDecline', displayConsentStatus);
+    window.addEventListener('CookiebotOnDialogDisplay', displayConsentStatus);
+    
+    // Initial display
+    setTimeout(displayConsentStatus, 1000);
+  </script>
+</body>
+</html>

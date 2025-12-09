@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consent Mode v2 - Manual Implementation</title>
+  
+  <!-- Consent Mode v2 Default -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    
+    // Check if user has previously consented
+    const storedConsent = localStorage.getItem('user_consent_preferences');
+    
+    if (storedConsent) {
+      // Load stored consent
+      const consent = JSON.parse(storedConsent);
+      gtag('consent', 'default', consent);
+    } else {
+      // No stored consent - default to denied
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'functionality_storage': 'denied',
+        'personalization_storage': 'denied',
+        'security_storage': 'granted'
+      });
+    }
+  </script>
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MM6H8SQW');</script>
+  
+  <style>
+    #consent-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #2c3e50;
+      color: white;
+      padding: 20px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+      z-index: 9999;
+      display: none;
+    }
+    #consent-banner.show { display: block; }
+    .consent-buttons { margin-top: 15px; }
+    .consent-buttons button {
+      margin-right: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .accept { background: #27ae60; color: white; }
+    .reject { background: #e74c3c; color: white; }
+    .customize { background: #95a5a6; color: white; }
+  </style>
+</head>
+<body>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MM6H8SQW"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  
+  <div style="max-width: 800px; margin: 40px auto; padding: 20px; font-family: sans-serif;">
+    <h1>Manual Consent Mode v2 Implementation</h1>
+    
+    <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0;">
+      <h3>⚠️ Production Note</h3>
+      <p>This manual implementation is for demonstration. For production, use a certified CMP like Cookiebot, OneTrust, or Osano to ensure GDPR/CCPA compliance.</p>
+    </div>
+    
+    <h2>Current Consent State</h2>
+    <div id="status" style="background: #f5f5f5; padding: 15px; border-radius: 8px; font-family: monospace;">
+      Loading...
+    </div>
+    
+    <button onclick="showBanner()" style="margin-top: 20px; padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">
+      Open Cookie Preferences
+    </button>
+  </div>
+  
+  <!-- Consent Banner -->
+  <div id="consent-banner">
+    <h3>🍪 Cookie Consent</h3>
+    <p>We use cookies to improve your experience. Choose your preferences:</p>
+    <div class="consent-buttons">
+      <button class="accept" onclick="acceptAll()">Accept All</button>
+      <button class="reject" onclick="rejectAll()">Reject All</button>
+      <button class="customize" onclick="customizeConsent()">Customize</button>
+    </div>
+  </div>
+  
+  <script>
+    // Show banner if no consent stored
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!localStorage.getItem('user_consent_preferences')) {
+        showBanner();
+      }
+      updateConsentDisplay();
+    });
+    
+    function showBanner() {
+      document.getElementById('consent-banner').classList.add('show');
+    }
+    
+    function hideBanner() {
+      document.getElementById('consent-banner').classList.remove('show');
+    }
+    
+    function acceptAll() {
+      const consent = {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted',
+        'functionality_storage': 'granted',
+        'personalization_storage': 'granted',
+        'security_storage': 'granted'
+      };
+      
+      updateConsent(consent);
+    }
+    
+    function rejectAll() {
+      const consent = {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'functionality_storage': 'denied',
+        'personalization_storage': 'denied',
+        'security_storage': 'granted'
+      };
+      
+      updateConsent(consent);
+    }
+    
+    function customizeConsent() {
+      // In production, show a detailed modal here
+      const analyticsOnly = {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'granted',
+        'functionality_storage': 'granted',
+        'personalization_storage': 'denied',
+        'security_storage': 'granted'
+      };
+      
+      updateConsent(analyticsOnly);
+    }
+    
+    function updateConsent(consentState) {
+      // Update consent in GTM
+      gtag('consent', 'update', consentState);
+      
+      // Store consent preference
+      localStorage.setItem('user_consent_preferences', JSON.stringify(consentState));
+      localStorage.setItem('consent_timestamp', Date.now());
+      
+      // Hide banner
+      hideBanner();
+      
+      // Update display
+      updateConsentDisplay();
+      
+      // Push event to dataLayer for tracking consent changes
+      window.dataLayer.push({
+        event: 'consent_update',
+        consent_state: consentState
+      });
+    }
+    
+    function updateConsentDisplay() {
+      const stored = localStorage.getItem('user_consent_preferences');
+      const timestamp = localStorage.getItem('consent_timestamp');
+      
+      let html = '<h4>Consent Preferences:</h4>';
+      
+      if (stored) {
+        const consent = JSON.parse(stored);
+        const date = timestamp ? new Date(parseInt(timestamp)).toLocaleString() : 'Unknown';
+        
+        html += '<pre>' + JSON.stringify(consent, null, 2) + '</pre>';
+        html += '<p><small>Last updated: ' + date + '</small></p>';
+      } else {
+        html += '<p>No consent preferences stored yet.</p>';
+      }
+      
+      document.getElementById('status').innerHTML = html;
+    }
+  </script>
+</body>
+</html>
