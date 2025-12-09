@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # Credentials Needed
 
 Send these via secure channel (1Password/Bitwarden/ProtonMail). Do not send passwords in plain email.

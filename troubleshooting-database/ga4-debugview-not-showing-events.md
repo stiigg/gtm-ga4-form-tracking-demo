@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # GA4 DebugView Not Showing Events
 
 1. **Debug Mode**: Enable debug mode via GTM preview or `gtm_debug=x` URL param.

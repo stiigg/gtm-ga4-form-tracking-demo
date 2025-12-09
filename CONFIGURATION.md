@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # Configuration Guide - Required Setup
 
 This guide shows you how to configure the demo with your own Google Tag Manager and Google Analytics 4 credentials.

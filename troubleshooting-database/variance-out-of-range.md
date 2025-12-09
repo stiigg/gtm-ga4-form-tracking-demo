@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # When Variance Exceeds Acceptable Range
 
 **Situation**: GA4 shows 450 conversions, HubSpot shows 387 conversions (14% difference, expected is 0-5%)

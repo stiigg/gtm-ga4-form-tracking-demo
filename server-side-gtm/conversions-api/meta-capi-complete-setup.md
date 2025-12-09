@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # Meta Conversions API: Complete Server-Side Setup
 
 This guide walks through configuring Meta CAPI inside a server-side GTM container with proper deduplication and validation.

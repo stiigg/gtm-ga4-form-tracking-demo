@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # Looker Studio Dashboard Setup Guide
 
 This guide shows how to connect your GA4 BigQuery export to Looker Studio and build dashboards.

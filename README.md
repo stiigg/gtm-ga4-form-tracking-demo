@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # GA4 eCommerce Analytics Specialist Toolkit
 
 [![Google Analytics Certified](https://img.shields.io/badge/Google%20Analytics-Certified-4285F4?style=flat&logo=google-analytics&logoColor=white)](https://skillshop.credential.net/)
@@ -6,29 +13,42 @@
 [![GA4 Tests](https://github.com/stiigg/gtm-ga4-form-tracking-demo/actions/workflows/ga4-validation.yml/badge.svg)](https://github.com/stiigg/gtm-ga4-form-tracking-demo/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> **For eCommerce businesses**: Production-ready Google Analytics 4 tracking that eliminates duplicate purchases, tracks cart abandonment, and attributes revenue to correct marketing channels.
+## ⚠️ Repository Status: Pre-Client Portfolio
 
-✅ **Repository Status**: Production-ready templates | Seeking portfolio clients  
-✅ **Implementation Methodology**: Based on 5+ eCommerce analytics projects  
-✅ **Current Availability**: 3 portfolio-building slots at $1,200 (regular $2,500)
+**Current Status:** Technical demonstration and methodology showcase  
+**Client Projects Completed:** 0 (transitioning from clinical statistical programming)  
+**Purpose:** Demonstrate implementation capability to secure first 3 portfolio clients
+
+**What's Real:**
+- ✅ Working GTM/GA4 code (tested in demo environment)
+- ✅ Implementation methodology (adapted from clinical trial QA)
+- ✅ Technical documentation (80+ pages)
+- ✅ Theoretical impact models (based on industry research)
+
+**What's Simulated:**
+- ⚠️ Case studies (realistic scenarios, not actual client projects)
+- ⚠️ ROI calculations (based on published benchmarks)
+- ⚠️ Testimonials (placeholder content to be replaced)
+
+**Seeking:** 2-3 portfolio-building clients at $1,200 (60% off standard rate) in exchange for video testimonial + detailed case study participation.
 
 ## 👋 [Business Owners: Start Here](CLIENTS-START-HERE.md)
 
 ## 🎯 What This Repository Is
 
-Production-ready Google Analytics 4 implementation templates for **multi-store eCommerce analytics**. Built for Shopify, WooCommerce, Magento, and custom platforms.
+Technical demonstration of a GA4/GTM eCommerce implementation designed to showcase methodology and QA discipline for Shopify, WooCommerce, and Magento. This codebase and documentation illustrate how I plan to deliver production-grade analytics as I transition from clinical statistical programming to digital marketing analytics.
 
-**If you're a freelancer/developer**: Fork and adapt this for your own projects (MIT licensed).
+**If you're a freelancer/developer**: Fork and adapt this for your own projects (MIT licensed). Everything here is transparent and open for review.
 
 ## 🎯 For Business Owners
 
-This repository demonstrates my **systematic approach** to GA4/GTM implementation for Shopify, WooCommerce, and Magento stores. If your analytics shows duplicate purchases or missing cart data, these templates solve it.
+This repository demonstrates my **planned approach** to GA4/GTM implementation for Shopify, WooCommerce, and Magento stores. If your analytics shows duplicate purchases or missing cart data, these templates illustrate how I'd address it.
 
 ### What You Get
-- **Working code**: Battle-tested WooCommerce/Shopify tracking implementations
+- **Working code**: Demo implementations for Shopify/WooCommerce tracking
 - **Complete documentation**: 80+ pages of setup guides, troubleshooting, SOPs
-- **Real methodology**: The exact process I use for client implementations
-- **Quality assurance**: Automated testing + validation checklists
+- **Implementation methodology**: Adapted from 5+ years of clinical data validation
+- **Quality assurance plan**: Automated testing + validation checklists
 
 ### Current Project Openings
 I'm accepting **3 portfolio-building projects** at heavily discounted rates ($1,200 vs. $2,500 standard) in exchange for:
@@ -37,10 +57,10 @@ I'm accepting **3 portfolio-building projects** at heavily discounted rates ($1,
 - LinkedIn recommendation
 - GitHub repository star
 
-**Ideal clients**: eCommerce stores doing $50K-500K annual revenue with existing GA4 needing proper event tracking.
+**Ideal clients**: eCommerce stores doing $20K-150K monthly revenue with existing GA4 needing proper event tracking.
 
 ### Portfolio-Building Special
-Full "Essential Implementation" scope (normally $1,800) at 33% discount for stores doing $5K-50K/month willing to provide testimonial + case study participation.
+Full "Essential Implementation" scope at 60% discount for stores willing to provide testimonial + case study participation. Pricing details below.
 
 ## 🛍️ eCommerce Specializations
 
@@ -60,7 +80,7 @@ Full "Essential Implementation" scope (normally $1,800) at 33% discount for stor
 - Cart abandonment tracking
 - Customer lifetime value calculations
 
-## 🚀 Server-Side Tracking Specialist (2025 Competitive Advantage)
+## 🚀 Server-Side Tracking Research Focus
 
 ### The Critical Problem Facing Your Store
 
@@ -75,132 +95,40 @@ Traditional client-side GA4 tracking now captures only **60-70% of actual conver
 - Broken multi-session attribution (cookies expire too quickly)
 - Inflated duplicate purchases (same transaction counted multiple times)
 
-### Server-Side Tracking Solutions
+### Server-Side Tracking Plan
 
-I implement **production-ready server-side GTM** for Shopify, WooCommerce, and Magento stores, recovering 25-35% of lost conversion data.
+I'm preparing **server-side GTM** playbooks for Shopify, WooCommerce, and Magento stores to recover conversion data loss.
 
-**Technology Stack:**
+**Technology Stack (researched and demo-tested):**
 - ✅ **Stape.io** - Managed hosting ($20-40/month, recommended for Shopify)
 - ✅ **Google Cloud Platform** - Self-hosted Cloud Run ($120-180/month, full control)
 - ✅ **Cloudflare Workers** - Cost-effective alternative
 - ✅ **Meta Conversions API** - Required for accurate Facebook/Instagram attribution
 - ✅ **Google Enhanced Conversions** - Improved Google Ads matching
 
-**Platform Expertise:**
-- Shopify webhooks + Custom Pixel integration
-- WooCommerce PHP action hooks
-- Magento 2 event observers
+**Platform Experience Status:**
+- Shopify webhooks + Custom Pixel exploration
+- WooCommerce PHP action hooks (demo)
+- Magento 2 event observers (demo)
 - Generic webhook patterns for custom platforms
 
 [→ View complete server-side documentation](server-side-gtm/README.md)
-[→ Calculate your ROI](server-side-gtm/COST-BENEFIT-CALCULATOR.md)
-[→ Shopify implementation guide](server-side-gtm/platform-implementations/shopify-stape-setup.md)
+[→ Calculate projected ROI](server-side-gtm/COST-BENEFIT-CALCULATOR.md)
+[→ Shopify implementation plan](server-side-gtm/platform-implementations/shopify-stape-setup.md)
 
 ## 📁 Repository Structure
 
 ```
-├── ecommerce-platforms/          # Platform-specific implementations
-│   ├── shopify-complete-tracking.liquid
-│   ├── woocommerce-tracking.php
-│   ├── magento-datalayer.phtml
-│   └── PLATFORM-COMPARISON.md
-│
-├── case-studies/                  # Real client implementations
-│   ├── multi-store-implementation.md
-│   └── conversion-optimization-results.md
-│
-├── config/                        # GTM container exports
-│   ├── gtm-ecommerce-container.json
-│   └── variable-reference.md
-│
+├── ecommerce-platforms/          # Platform-specific demo implementations
+├── case-studies/                 # Simulated case studies (seeking real data)
+├── config/                       # GTM container exports and references
 ├── sql/                          # BigQuery analysis queries
-│   ├── ecommerce-analysis-queries.sql
-│   ├── revenue-reconciliation.sql
-│   └── README.md
-│
-├── qa-checklists/                # Testing & validation
-│   ├── ecommerce-qa-checklist.md
-│   ├── cross-domain-test.js
-│   └── data-quality-checks.md
-│
+├── qa-checklists/                # Testing & validation plans
 ├── client-templates/             # Deliverable templates
-│   ├── implementation-proposal.md
-│   ├── analytics-audit-template.xlsx
-│   └── dashboard-requirements.md
-│
-└── sops/                         # Standard procedures
-    ├── shopify-implementation-sop.md
-    ├── woocommerce-setup-guide.md
-    └── maintenance-checklist.md
+└── sops/                         # Standard procedures and runbooks
 ```
 
-## 🎥 Live Demonstrations
-
-### Interactive Demos
-- **Basic eCommerce Flow**: [View Demo →](https://stiigg.github.io/gtm-ga4-form-tracking-demo/ecommerce.html)
-  - Product listing with view_item_list events
-  - Add to cart with proper item arrays
-  - Complete checkout flow
-  - Real-time dataLayer validation display
-
-### Video Walkthroughs
-- **"5-Minute GTM/GA4 Setup Overview"**: [Watch on YouTube →](#)
-- **"Fixing Duplicate Purchases"**: [Watch on YouTube →](#)
-- **"Server-Side Tracking Explained"**: [Watch on YouTube →](#)
-
-*Video content creation in progress - Subscribe to be notified*
-
-### Code Examples
-- [Shopify Liquid Implementation →](ecommerce-platforms/shopify-complete-tracking.liquid)
-- [WooCommerce PHP Hooks →](ecommerce-platforms/woocommerce-tracking.php)
-- [GTM Container Export →](gtm-container-export.json)
-- [BigQuery Analysis Queries →](sql/ecommerce-analysis-queries.sql)
-
-## 💼 Typical eCommerce Project Scope
-
-### Discovery Phase (Week 1)
-- Platform audit (GTM, GA4, existing tracking)
-- Data quality assessment
-- Requirements gathering (KPIs, reporting needs)
-- Technical feasibility review (theme access, checkout customization limits)
-
-### Implementation Phase (Weeks 2-3)
-- GTM container build (tags, triggers, variables)
-- DataLayer implementation (theme files, checkout scripts)
-- Cross-domain setup (if multi-domain checkout)
-- QA testing (manual + automated)
-
-### Validation Phase (Week 4)
-- 7-day data collection verification
-- Revenue reconciliation vs order system
-- Funnel report validation
-- Stakeholder preview
-
-### Delivery (Week 5)
-- Looker Studio dashboard handoff
-- Documentation package
-- Training session (1 hour)
-- 30-day support period
-
-**Timeline**: 4-5 weeks from kickoff to production  
-**Typical Budget**: $2,500-5,000 (varies by store complexity)
-
-## 🛠️ Technical Stack
-
-**Core Technologies**:
-- Google Analytics 4 (GA4) - Enhanced eCommerce measurement
-- Google Tag Manager (GTM) - Tag orchestration
-- BigQuery (optional) - Advanced analysis and data warehousing
-- Looker Studio - Dashboard and reporting
-
-**Platform Integrations**:
-- Shopify Liquid templates
-- WooCommerce PHP hooks
-- Magento 2 observers & PHTML
-- BigCommerce Stencil framework
-- REST APIs for order reconciliation
-
-## 📊 Key Deliverables
+## 📊 Key Deliverables (Demo)
 
 ### 1. Complete Event Tracking
 All GA4 recommended eCommerce events:
@@ -238,21 +166,80 @@ Production SQL for:
 - Customer lifetime value
 - Funnel optimization
 
-## 💰 Service Offerings & Pricing
+## 💼 Proposed Project Methodology
 
-### 🔍 Discovery Audit - $500 (2-3 hours)
-**Deliverables:**
-- Current GA4/GTM audit with screenshots
-- Data loss assessment (client-side vs actual orders)
-- Server-side ROI calculation specific to your store
-- Infrastructure recommendation (Stape vs GCP vs wait)
-- Prioritized recommendations report
+**Note:** This represents my planned approach based on clinical programming project management experience. Timeline estimates are based on complexity analysis, not actual project history.
 
-**Best for:** Stores unsure if investment justified
+### Discovery Phase (Week 1)
+- Platform audit (GTM, GA4, existing tracking)
+- Data quality assessment
+- Requirements gathering (KPIs, reporting needs)
+- Technical feasibility review (theme access, checkout customization limits)
+
+**Confidence Level:** High (directly analogous to clinical trial data validation procedures I've performed for 5+ years)
+
+### Implementation Phase (Weeks 2-3)
+- GTM container build (tags, triggers, variables)
+- DataLayer implementation (theme files, checkout scripts)
+- Cross-domain setup (if multi-domain checkout)
+- QA testing (manual + automated)
+
+**Confidence Level:** Medium-High (technical skills verified through demo repository, production deployment experience pending)
+
+### Validation Phase (Week 4)
+- 7-day data collection verification
+- Revenue reconciliation vs order system
+- Funnel report validation
+- Stakeholder preview
+
+**Confidence Level:** Very High (this is my core strength - systematic QA and data reconciliation from pharma background)
+
+**Estimated Timeline:** 4-5 weeks  
+**Portfolio Pricing:** $1,200 (standard will be $2,500 after first 3 clients)  
+**Risk Mitigation:** Milestone-based payment; full refund if validation shows <90% tracking accuracy
+
+## 💰 Portfolio-Building Pricing (First 3 Clients Only)
+
+### Current Status
+- **Completed client projects:** 0
+- **Demo implementations:** 1 (this repository)
+- **Available slots:** 3 portfolio-building opportunities
+
+### Why Offer 60% Discount?
+
+**Honest answer:** I'm transitioning careers and need:
+1. Video testimonials for Upwork profile
+2. Real case studies with actual metrics
+3. Production troubleshooting experience
+4. LinkedIn recommendations
+
+**What you get:**
+- Same methodology/quality as full-price (systematic QA is my strength)
+- Priority attention (you're helping build my portfolio)
+- Detailed documentation (I'll over-deliver)
+- Milestone payments (you control risk)
+
+**What I get:**
+- 60-second video testimonial (recorded after successful validation)
+- Permission to publish case study with anonymized metrics
+- LinkedIn recommendation
+- GitHub star
 
 ---
 
-### 📊 Standard eCommerce Implementation - $2,500
+### 📊 Discovery Audit - $500 → $300 (Portfolio Rate)
+
+**Deliverables:**
+- Current GA4/GTM audit with screenshots
+- Data loss assessment 
+- Prioritized recommendations report
+
+**Note:** This is my first 3 audits - I'm offering below-market rate to gain experience presenting findings to non-technical clients. Technical audit capability is high (pharma data validation background); business communication skills being developed.
+
+---
+
+### 📈 Standard eCommerce Implementation - $2,500 → $1,200 (Portfolio Rate)
+
 **Includes:**
 - All 8+ GA4 eCommerce events (view_item → purchase)
 - GTM web container setup (25+ tags/triggers/variables)
@@ -262,197 +249,107 @@ Production SQL for:
 - Basic Looker Studio dashboard (1-page executive summary)
 - Documentation + 1-hour training
 
-**Timeline:** 3-4 weeks
-**Best for:** Standard eCommerce tracking needs, no server-side
+**Timeline:** 4-5 weeks (may extend if I encounter unexpected platform limitations - you only pay on milestone completion)
+
+**Risk mitigation:**
+- Milestone 1 (30%): After audit + implementation plan approval
+- Milestone 2 (40%): After GTM deployment + initial testing
+- Milestone 3 (30%): After 7-day validation shows ≥90% accuracy vs order data
+
+**Refund policy:** If final validation shows <90% tracking accuracy, full refund of Milestone 3.
 
 ---
 
-### 🚀 Server-Side Tracking Package - $3,500
-**Includes:**
-- Everything in Standard Implementation
-- **Server-side GTM setup** (Stape or GCP)
-- **Meta Conversions API** with deduplication
-- **Google Enhanced Conversions**
-- Webhook configuration (platform-specific)
-- Extended cookie lifespan (7 days → 2 years Safari)
-- Advanced validation (duplicate detection, event matching)
-- 30-day priority support
+### 🚀 Server-Side Tracking Package - $3,500 → $1,750 (Portfolio Rate)
 
-**Timeline:** 4-5 weeks
-**Best for:** Stores with >30% iOS traffic, spending $5K+/month on ads
+**Transparency:** I have not deployed server-side GTM in production yet. This represents:
+- Extensive research (40+ hours studying documentation)
+- Sandbox testing (GCP Cloud Run with demo data)
+- Methodology adapted from Stape.io/Simo Ahava guides
 
-**Expected ROI:** 25-35% improvement in conversion tracking accuracy
-**Break-even:** Typically 2-4 months for stores spending $5K+/month ads
+**Why still offer it:**
+- Technical capability is high (Cloud infrastructure comfortable from previous work)
+- Willing to absorb learning curve time (won't bill for self-education)
+- Industry guidance is comprehensive (well-documented implementations exist)
+
+**Risk mitigation:** If server-side deployment fails technical validation, you only pay for standard implementation portion ($1,200).
+
+## 📊 Expected Outcomes (Based on Industry Research)
+
+### Typical Problem Patterns (Documented in GA4 Community Forums)
+
+**Duplicate Purchase Events:**
+- Industry prevalence: 20-40% of Shopify/WooCommerce stores ([source](https://www.simoahava.com/analytics/common-mistakes-setting-up-google-tag-manager/))
+- Root cause: Thank-you page refresh, multiple tracking methods, no deduplication logic
+- **My solution:** Session-based guard flags + transaction_id validation
+
+**iOS Tracking Loss (ITP Impact):**
+- Published research: 25-35% conversion signal loss on Safari ([WebKit ITP documentation](https://webkit.org/blog/9521/intelligent-tracking-prevention-2-3/))
+- Affects stores with >30% mobile iOS traffic
+- **My solution:** Server-side GTM implementation via Stape.io or GCP
+
+**Missing Funnel Visibility:**
+- Common gap: Only tracking pageview + purchase (missing 6 intermediate events)
+- Impact: Cannot identify checkout abandonment points
+- **My solution:** Complete 8-event eCommerce implementation
+
+### Projected Impact Models
+
+**Scenario 1: $50K/month Shopify Store (typical small business)**
+
+*Current state assumptions (industry benchmarks):*
+- 30% duplicate purchases (common without deduplication)
+- 35% iOS traffic with 30% signal loss
+- $10K monthly ad spend with 2.5x ROAS
+
+*After implementation (conservative estimates):*
+- Duplicate elimination: Corrects 30% revenue inflation ($15K monthly false reporting)
+- iOS recovery: +10-12% conversion visibility (1,200 → 1,350 tracked purchases/month)
+- Improved attribution: 15-20% ROAS improvement (2.5x → 2.9x) = $4K additional monthly revenue
+
+**Projected ROI:** 8-12x first year  
+**Break-even:** 30-45 days
 
 ---
 
-### 🎯 Complete Analytics Package - $5,200
-**Includes:**
-- Everything in Server-Side Package
-- **BigQuery export setup** + 20+ analysis queries
-- **3-page Looker Studio dashboard** (executive, product, funnel)
-- **Data enrichment** (CLV, product margins, CRM integration)
-- **Consent Mode V2** (GDPR/CCPA compliance)
-- Quarterly health checks (first 3 months included)
-- Priority Slack support
+**Scenario 2: $200K/month WooCommerce Store (established business)**
 
-**Timeline:** 5-6 weeks
-**Best for:** Stores >$100K/month revenue, sophisticated analytics needs
+[Similar format with scaled numbers]
 
 ---
 
-### 🛠️ Add-On Services
+### 🎯 Validation Commitment
 
-**Per-Service Pricing:**
-- Additional store (using templates): +$800
-- Cross-domain tracking: +$600
-- TikTok/Pinterest Conversions API: +$400 each
-- Advanced dashboard page: +$500
-- Monthly monitoring retainer: $300/month (2-4 hours support)
+**I will validate these models with first 3 portfolio clients.** If actual results deviate >20% from projections, I will:
+1. Publish updated benchmark data
+2. Refund project difference if underperformance
+3. Document learnings publicly
 
-**Hourly Rate:** $150/hour (for custom work beyond packages)
+**Why trust theoretical models?**
+- Based on published GA4/GTM research (Simo Ahava, Measureschool, Google documentation)
+- Conservative assumptions (using lower-bound estimates)
+- Grounded in 5+ years of clinical trial data validation (same systematic approach)
+- Open-source methodology (you can audit the code before hiring)
 
----
+### Seeking Portfolio Clients
 
-### 🎁 Portfolio-Building Discount (2 slots remaining)
+**Ideal fit:**
+- Shopify/WooCommerce store doing $20-150K monthly revenue
+- Existing GA4 with suspected data quality issues
+- Willing to share anonymized metrics for case study
+- Comfortable with 4-5 week timeline
 
-**Eligibility:**
-- Store revenue $20-150K/month
-- Existing GA4 needing fixes (not greenfield)
-- Willing to provide video testimonial + case study
-- 4-5 week timeline (no rush)
-
-**Discount:** 30% off Standard or Server-Side packages
-- Standard Implementation: $2,500 → **$1,750**
-- Server-Side Package: $3,500 → **$2,450**
-
-**In exchange for:**
-- 60-second video testimonial (I provide questions)
-- Detailed case study with anonymized metrics
+**In exchange for 60% discount ($1,200 vs $2,500):**
+- 60-second video testimonial (I provide script/questions)
+- Detailed case study participation (metrics + screenshots)
 - LinkedIn recommendation
 - GitHub repository star
 
-**Apply:** [Book a discovery call](https://calendly.com/christian-baghai/discovery-30)
-
-## 🎓 Using This Repository
-
-### For Client Projects
-1. Clone repository
-2. Choose platform template from `/ecommerce-platforms/`
-3. Customize GTM container from `/config/`
-4. Follow implementation SOP from `/sops/`
-5. Run QA checklist from `/qa-checklists/`
-6. Deliver dashboard + documentation
-
-### For Learning
-- Study `ecommerce.html` for dataLayer structure
-- Review case studies for implementation patterns
-- Practice with GTM container export
-- Run SQL queries on sample BigQuery data
-
-## 🔧 Configuration Required
-
-**Before Using**:
-1. Replace GTM Container ID (`GTM-XXXXXXX`) with your own
-2. Update GA4 Measurement ID (`G-XXXXXXXXXX`)
-3. Customize product catalog (item_id, categories)
-4. Set currency codes for international stores
-
-See [CONFIGURATION.md](CONFIGURATION.md) for detailed setup.
-
-## 💬 Client Results & Testimonials
-
-### "Eliminated $18K in false revenue reporting"
-> "Christian's WooCommerce implementation identified duplicate purchase events we didn't know existed. His QA process caught three issues our previous developer missed. Revenue attribution now matches actual orders within 2%."
-> 
-> **— Marketing Director, Health & Beauty eCommerce ($2M ARR)**
-
-*Additional testimonials being collected from portfolio projects. [Become a case study →](#-portfolio-builder-special)*
-
----
-
-### Typical Project Outcomes
-
-**After 3-4 weeks implementation, clients can answer**:
-- ✅ Which marketing channel generated $12K in sales last month?
-- ✅ What % of users abandon checkout at shipping calculator step?
-- ✅ Which product has highest add-to-cart but lowest purchase rate?
-- ✅ What's average order value by traffic source for returning customers?
-
-**Before implementation**, these questions were impossible to answer with confidence due to:
-- ❌ Duplicate purchase events (20-40% revenue inflation)
-- ❌ Missing cart abandonment data (no funnel visibility)
-- ❌ Generic product tracking (can't optimize by item performance)
-- ❌ Incorrect source attribution (marketing budget waste)
-
----
-
-## 📈 Case Studies & Results
-
-### Health & Beauty Shopify Store - 35% Conversion Recovery
-
-**Challenge:**
-- 42% iOS/Safari traffic experiencing ITP cookie limits
-- Meta Pixel missing 38% of purchase events
-- Returning customer attribution completely broken
-- Duplicate purchases inflating revenue by 25%
-
-**Solution Implemented:**
-- Server-side GTM via Stape ($40/month hosting)
-- Meta Conversions API with event_id deduplication
-- Shopify webhook integration (orders/create)
-- Extended cookie lifespan to 2 years
-
-**Results:**
-- Purchase tracking accuracy: 68% → 95% (+27 percentage points)
-- Meta ROAS improved: 2.6x → 3.1x (+19%)
-- Duplicate purchases eliminated (25% revenue inflation fixed)
-- Monthly recovered attribution: $8,400
-- **ROI: 210x first month** ($8,400 benefit / $40 cost)
-
-[Read full case study →](server-side-gtm/case-studies/shopify-35-percent-recovery.md)
-
----
-
-### WooCommerce Store - Multi-Region Server Deployment
-
-**Challenge:**
-- Global customer base (US, EU, APAC)
-- 300-500ms latency to single GCP region degrading UX
-- GDPR requirements for EU data residency
-- $180K/month revenue, 45% international
-
-**Solution Implemented:**
-- Multi-region Cloud Run deployment (us-central1, europe-west1, asia-east1)
-- Global load balancer with geolocation routing
-- PII filtering for GDPR compliance
-- Product margin enrichment (profitability tracking)
-
-**Results:**
-- Average latency: 420ms → 85ms (80% improvement)
-- 99.7% webhook delivery success rate
-- EU data residency compliance achieved
-- Product-level profitability insights enabled
-
-[Read full case study →](server-side-gtm/case-studies/multi-region-latency-improvement.md)
-
----
-
-### Testimonials
-
-> "Christian's server-side implementation recovered $8,400 in monthly attribution we didn't even know we were losing. His deduplication logic eliminated the 25% revenue inflation from duplicate purchases our previous Shopify app created. Worth every penny."
-> 
-> **— Marketing Director, $80K/month Health & Beauty Store**
-
-> "We were skeptical about spending $3,500 on analytics infrastructure, but the ROI was evident within 3 weeks. Our Facebook ROAS improved 19% just from better conversion signals. Christian's systematic approach and clinical-trial-level QA gave us confidence."
-> 
-> **— Founder, $200K/month WooCommerce Outdoor Gear Store**
-
-*Additional testimonials being collected from active projects*
+[Book discovery call →](your-calendly-link)
 
 ## 🔍 Quality Assurance
 
-Every implementation includes:
+Every implementation plan includes:
 - ✅ GTM Preview Mode validation
 - ✅ GA4 DebugView testing
 - ✅ Revenue reconciliation vs source system
@@ -463,23 +360,21 @@ See [qa-checklists/](qa-checklists/) for complete testing procedures.
 
 ## 📞 Hire Me
 
-**Specializations**:
+**Specializations (planned):**
 - Multi-store eCommerce analytics setup
 - GA4 migration from Universal Analytics
 - Conversion rate optimization analysis
 - Dashboard development (Looker Studio, Tableau)
 
-**Contact**:
+**Contact:**
 - Upwork: https://www.upwork.com/freelancers/~01c8f9b7c437535b68
 - Email: christian.baghai@outlook.fr
 - Portfolio: https://github.com/stiigg
 - Response Time: 24-48 hours
 
-**Recent Projects**: 5+ eCommerce implementations (Shopify, WooCommerce, custom)
 **Current Availability**: 3 portfolio-building slots at $1,200 (standard $2,500)
-**Typical Turnaround**: 4-5 weeks
+**Typical Turnaround**: 4-5 weeks (first client timelines may extend as I refine processes)
 
 ## 📄 License
 
-MIT License - Free to use in your own client projects. Attribution appreciated but not required.
-
+MIT License - Free to use in your own projects. Attribution appreciated but not required.

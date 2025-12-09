@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # Expected Variance Ranges
 
 Use these ranges when clients ask why numbers differ across platforms. Document any deviations in the reconciliation workbook.

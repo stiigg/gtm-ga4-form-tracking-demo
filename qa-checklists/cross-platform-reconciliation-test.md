@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # Cross-Platform Reconciliation Test
 
 - [ ] Date ranges aligned across GA4, HubSpot, LinkedIn, Instantly

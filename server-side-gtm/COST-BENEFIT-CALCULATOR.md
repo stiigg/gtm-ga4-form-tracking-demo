@@ -1,3 +1,10 @@
+---
+**Document Status:** Pre-client validation  
+**Last Updated:** December 9, 2024  
+**Client Projects Referenced:** 0 (theoretical scenarios)  
+**Methodology Source:** Industry research + clinical QA adaptation  
+---
+
 # Server-Side Tagging Cost-Benefit Calculator
 
 Use this worksheet to model the ROI of implementing server-side GTM. Pair the assumptions here with the interactive CSV template in `infrastructure/sgtm-roi-calculator.csv`.
