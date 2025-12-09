@@ -1,0 +1,49 @@
+name: GTM/GA4 Testing
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Install dependencies
+      working-directory: ./tests
+      run: npm install
+    
+    - name: Run dataLayer tests
+      working-directory: ./tests
+      run: npm run test:datalayer
+    
+    - name: Run form tracking tests
+      working-directory: ./tests
+      run: npm test -- form-tracking.test.js
+    
+    - name: Run ecommerce tests
+      working-directory: ./tests
+      run: npm test -- ecommerce-events.test.js
+    
+    - name: Check GA4 limits
+      working-directory: ./tests
+      run: npm run test:limits
+    
+    - name: Generate coverage report
+      working-directory: ./tests
+      run: npm run test:coverage
+    
+    - name: Upload coverage to artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: tests/coverage/

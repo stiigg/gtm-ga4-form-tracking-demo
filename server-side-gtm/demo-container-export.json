@@ -1,0 +1,228 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2024-12-09 16:00:00",
+  "containerVersion": {
+    "path": "accounts/ACCOUNT_ID/containers/SERVER_CONTAINER_ID/versions/1",
+    "accountId": "ACCOUNT_ID",
+    "containerId": "SERVER_CONTAINER_ID",
+    "containerVersionId": "1",
+    "name": "Server-Side GTM - Demo Configuration",
+    "description": "Example server-side container for Shopify webhook processing",
+    "container": {
+      "path": "accounts/ACCOUNT_ID/containers/SERVER_CONTAINER_ID",
+      "accountId": "ACCOUNT_ID",
+      "containerId": "SERVER_CONTAINER_ID",
+      "name": "gtm-ga4-server-demo",
+      "publicId": "GTM-XXXXXX",
+      "usageContext": ["SERVER"],
+      "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/ACCOUNT_ID/containers/SERVER_CONTAINER_ID/workspaces"
+    },
+    "client": [
+      {
+        "accountId": "ACCOUNT_ID",
+        "containerId": "SERVER_CONTAINER_ID",
+        "clientId": "1",
+        "name": "GA4 Client",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "enableRedaction",
+            "value": "true"
+          }
+        ],
+        "fingerprint": "1"
+      },
+      {
+        "accountId": "ACCOUNT_ID",
+        "containerId": "SERVER_CONTAINER_ID",
+        "clientId": "2",
+        "name": "Webhook Client - Shopify Orders",
+        "type": "WEBHOOK",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "path",
+            "value": "/shopify/orders"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "allowedMethods",
+            "value": "POST"
+          }
+        ],
+        "fingerprint": "2"
+      }
+    ],
+    "tag": [
+      {
+        "accountId": "ACCOUNT_ID",
+        "containerId": "SERVER_CONTAINER_ID",
+        "tagId": "1",
+        "name": "GA4 - Purchase Event",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "measurementId",
+            "value": "G-S9SRF7GGHW"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "purchase"
+          },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  {"type": "TEMPLATE", "key": "name", "value": "transaction_id"},
+                  {"type": "TEMPLATE", "key": "value", "value": "{{Webhook - Order ID}}"}
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {"type": "TEMPLATE", "key": "name", "value": "currency"},
+                  {"type": "TEMPLATE", "key": "value", "value": "{{Webhook - Currency}}"}
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {"type": "TEMPLATE", "key": "name", "value": "value"},
+                  {"type": "TEMPLATE", "key": "value", "value": "{{Webhook - Total Price}}"}
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {"type": "TEMPLATE", "key": "name", "value": "items"},
+                  {"type": "TEMPLATE", "key": "value", "value": "{{Webhook - Line Items}}"}
+                ]
+              }
+            ]
+          }
+        ],
+        "fingerprint": "1",
+        "firingTriggerId": ["1"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "ACCOUNT_ID",
+        "containerId": "SERVER_CONTAINER_ID",
+        "tagId": "2",
+        "name": "Meta Conversions API - Purchase",
+        "type": "META_CONVERSION",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "pixelId",
+            "value": "YOUR_PIXEL_ID"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "accessToken",
+            "value": "{{Meta Access Token}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "Purchase"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "eventId",
+            "value": "{{Webhook - Order ID}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "value",
+            "value": "{{Webhook - Total Price}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "currency",
+            "value": "{{Webhook - Currency}}"
+          }
+        ],
+        "fingerprint": "2",
+        "firingTriggerId": ["1"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "ACCOUNT_ID",
+        "containerId": "SERVER_CONTAINER_ID",
+        "triggerId": "1",
+        "name": "Shopify Order Created",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              {"type": "TEMPLATE", "key": "arg0", "value": "{{Event Name}}"},
+              {"type": "TEMPLATE", "key": "arg1", "value": "shopify_order_created"}
+            ]
+          }
+        ]
+      }
+    ],
+    "variable": [
+      {
+        "accountId": "ACCOUNT_ID",
+        "containerId": "SERVER_CONTAINER_ID",
+        "variableId": "1",
+        "name": "Webhook - Order ID",
+        "type": "WEBHOOK_DATA",
+        "parameter": [
+          {"type": "TEMPLATE", "key": "path", "value": "order.id"}
+        ]
+      },
+      {
+        "accountId": "ACCOUNT_ID",
+        "containerId": "SERVER_CONTAINER_ID",
+        "variableId": "2",
+        "name": "Webhook - Total Price",
+        "type": "WEBHOOK_DATA",
+        "parameter": [
+          {"type": "TEMPLATE", "key": "path", "value": "order.total_price"}
+        ]
+      },
+      {
+        "accountId": "ACCOUNT_ID",
+        "containerId": "SERVER_CONTAINER_ID",
+        "variableId": "3",
+        "name": "Webhook - Currency",
+        "type": "WEBHOOK_DATA",
+        "parameter": [
+          {"type": "TEMPLATE", "key": "path", "value": "order.currency"}
+        ]
+      },
+      {
+        "accountId": "ACCOUNT_ID",
+        "containerId": "SERVER_CONTAINER_ID",
+        "variableId": "4",
+        "name": "Webhook - Line Items",
+        "type": "WEBHOOK_DATA",
+        "parameter": [
+          {"type": "TEMPLATE", "key": "path", "value": "order.line_items"}
+        ]
+      },
+      {
+        "accountId": "ACCOUNT_ID",
+        "containerId": "SERVER_CONTAINER_ID",
+        "variableId": "5",
+        "name": "Meta Access Token",
+        "type": "GOOGLE_CLOUD_SECRET",
+        "parameter": [
+          {"type": "TEMPLATE", "key": "secretName", "value": "meta-conversions-api-token"}
+        ]
+      }
+    ]
+  }
+}
