@@ -1,0 +1,53 @@
+{
+  "exportFormatVersion": 2,
+  "containerVersion": {
+    "container": {
+      "publicId": "GTM-XXXXXXX",
+      "containerId": "server-container",
+      "name": "Server-Side Base",
+      "usageContext": ["SERVER"]
+    },
+    "tag": [
+      {
+        "name": "GA4 Measurement Protocol",
+        "type": "mpm",
+        "parameter": [
+          {"type": "template", "key": "measurementId", "value": "G-XXXXXXXXXX"},
+          {"type": "template", "key": "apiSecret", "value": "YOUR_SECRET"},
+          {"type": "template", "key": "eventName", "value": "{{Event Name}}"},
+          {"type": "template", "key": "eventParams", "value": "{{Event Parameters}}"},
+          {"type": "template", "key": "eventId", "value": "{{Event ID}}"}
+        ],
+        "tagId": "1"
+      },
+      {
+        "name": "Meta Conversions API",
+        "type": "capi",
+        "parameter": [
+          {"type": "template", "key": "pixelId", "value": "YOUR_PIXEL_ID"},
+          {"type": "template", "key": "accessToken", "value": "YOUR_TOKEN"},
+          {"type": "template", "key": "eventName", "value": "{{Event Name}}"},
+          {"type": "template", "key": "eventTime", "value": "{{Event Time}}"},
+          {"type": "template", "key": "userData", "value": "{{User Data}}"},
+          {"type": "template", "key": "customData", "value": "{{Custom Data}}"},
+          {"type": "template", "key": "eventId", "value": "{{Event ID}}"}
+        ],
+        "tagId": "2"
+      }
+    ],
+    "variable": [
+      {"name": "Event Name", "type": "v", "parameter": [{"key": "name", "type": "template", "value": "event_name"}]},
+      {"name": "Event Parameters", "type": "v", "parameter": [{"key": "name", "type": "template", "value": "event_params"}]},
+      {"name": "Event ID", "type": "v", "parameter": [{"key": "name", "type": "template", "value": "event_id"}]},
+      {"name": "Event Time", "type": "v", "parameter": [{"key": "name", "type": "template", "value": "event_timestamp"}]},
+      {"name": "User Data", "type": "v", "parameter": [{"key": "name", "type": "template", "value": "user_data"}]},
+      {"name": "Custom Data", "type": "v", "parameter": [{"key": "name", "type": "template", "value": "custom_data"}]}
+    ],
+    "client": [
+      {"name": "GA4", "type": "ga4", "clientId": "100"},
+      {"name": "Webhook", "type": "http_api", "clientId": "101"}
+    ],
+    "fingerprint": "base-template",
+    "path": "accounts/0/containers/server-container/versions/1"
+  }
+}

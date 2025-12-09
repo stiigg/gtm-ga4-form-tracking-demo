@@ -1,0 +1,4 @@
+Current monthly revenue,Current tracking accuracy %,iOS traffic %,Ad spend,Current ROAS,Estimated improvement %,Monthly benefit calculation,Implementation cost,Break-even months,12-month ROI
+30000,65,35,10000,2.6,27,"=(1-Current tracking accuracy %/100)*Current monthly revenue*Estimated improvement %/100",3500,"=Implementation cost/(Monthly benefit calculation/12)","=(Monthly benefit calculation*12-Implementation cost)/Implementation cost"
+80000,70,42,18000,3.1,25,"=(1-Current tracking accuracy %/100)*Current monthly revenue*Estimated improvement %/100",3500,"=Implementation cost/(Monthly benefit calculation/12)","=(Monthly benefit calculation*12-Implementation cost)/Implementation cost"
+200000,68,45,45000,3.4,28,"=(1-Current tracking accuracy %/100)*Current monthly revenue*Estimated improvement %/100",5200,"=Implementation cost/(Monthly benefit calculation/12)","=(Monthly benefit calculation*12-Implementation cost)/Implementation cost"

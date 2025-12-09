@@ -101,6 +101,40 @@ Right now, your GA4 probably can't answer these. After implementation, it can.
 
 ---
 
+### Option 4: Server-Side Tracking Upgrade - $3,500 (4-5 weeks)
+**Best if**: You have >30% iOS traffic, spending $5K+/month on ads, want to recover lost conversions
+
+**What's included**:
+- Everything in Essential Implementation ($1,800 value)
+- **Server-side GTM setup** (Stape managed hosting or GCP self-hosted)
+- **Meta Conversions API** with duplicate purchase prevention
+- **Google Enhanced Conversions** for improved matching
+- Extended Safari cookie lifespan (7 days → 2 years)
+- Webhook configuration + validation
+- 30-day priority support
+
+**Why you need this**:
+Your current client-side tracking loses 30-40% of conversions to:
+- Ad blockers (30% of users)
+- Safari Intelligent Tracking Prevention (7-day cookie death)
+- Firefox Enhanced Tracking Protection
+
+**Expected outcome**: 
+- 25-35% improvement in conversion capture
+- 15-20% Meta/Google Ads ROAS improvement
+- Elimination of duplicate purchase problem
+- Multi-session attribution recovery
+
+**ROI Example**: 
+$50K/month store spending $10K ads
+→ Recover $8K-12K monthly attribution
+→ Break-even in 2-4 months
+→ 12-month benefit: $90K-140K
+
+[Calculate your specific ROI →](server-side-gtm/COST-BENEFIT-CALCULATOR.md)
+
+---
+
 ### 🎯 Portfolio Builder Special - $1,200 (Limited to 3 clients)
 
 **This is for you if**:
@@ -126,7 +160,7 @@ Right now, your GA4 probably can't answer these. After implementation, it can.
 ## How It Works (Step-by-Step)
 
 ### Step 1: Discovery Call (30 min, free)
-[**Book here: [Insert Calendly link]**]
+[**Book here: calendly.com/christian-baghai/discovery-30**](https://calendly.com/christian-baghai/discovery-30)
 
 We'll discuss:
 - Current GA4 setup and pain points
@@ -188,6 +222,71 @@ A: Yes, for basic tracking. But plugins have limitations:
 - No custom parameters (can't track loyalty tier, product margin, custom attributes)
 
 If you're spending $5K+/month on ads, custom implementation pays for itself in 1-2 months through better attribution.
+
+**Q: What is server-side tracking and do I need it?**
+
+A: Server-side GTM routes your tracking data through YOUR server before sending to Google/Facebook/etc.
+
+**You need it if:**
+- >30% of traffic is iOS/Safari (check GA4 → Tech → Operating System)
+- You spend >$5K/month on Meta or Google Ads
+- Your GA4 purchase count is 20-40% lower than actual orders
+- You see duplicate transactions in GA4 reports
+
+**Benefits:**
+- Recover 25-35% lost conversions (ad blockers, ITP)
+- Extend Safari cookie lifespan from 7 days → 2 years
+- Improve Meta/Google Ads ROAS by 15-20%
+- Eliminate duplicate purchase events
+
+**Cost:** $3,500 implementation + $40-180/month hosting (depending on self-hosted vs managed)
+
+[See detailed cost-benefit calculator →](server-side-gtm/COST-BENEFIT-CALCULATOR.md)
+
+---
+
+**Q: I already have Facebook Pixel, why do I need Conversions API?**
+
+A: Facebook Pixel is JavaScript that runs in the browser. iOS 14.5+ App Tracking Transparency (ATT) and Safari ITP severely limit it:
+- Only 30-50% of iOS users opt-in to tracking
+- Pixel events often don't fire before page redirect
+- Attribution window reduced to 7 days (from 28 days)
+
+Conversions API sends events from YOUR SERVER (not user's browser):
+- ✅ Not affected by iOS ATT or Safari ITP
+- ✅ 100% delivery (no browser blocking)
+- ✅ Better event matching (you control data sent)
+- ✅ Deduplication with Pixel (prevents double-counting)
+
+Meta now **requires CAPI** for accurate attribution post-iOS 14.5. Pixel alone gives you 50-70% accuracy; Pixel + CAPI gives 90-95%.
+
+---
+
+**Q: What's the difference between Stape and Google Cloud Platform for hosting?**
+
+A: Both host your server-side GTM container. Key differences:
+
+**Stape (Managed):**
+- ✅ One-click Shopify app installation
+- ✅ Pre-built integrations (automatic webhook setup)
+- ✅ No cloud expertise required
+- ✅ $20-40/month for most stores
+- ❌ Less customization control
+- ❌ Can't use if you need specific data residency
+
+**Google Cloud Platform (Self-Hosted):**
+- ✅ Full infrastructure control
+- ✅ Can meet data residency requirements (EU servers for GDPR)
+- ✅ Multi-region deployment (better global performance)
+- ✅ Use existing GCP credits
+- ❌ Requires cloud expertise (or pay me to set up)
+- ❌ $120-180/month minimum
+- ❌ 10-15 hours setup time if DIY
+
+**My recommendation**: 
+- Shopify/BigCommerce → Stape (easier)
+- WooCommerce/Magento + GDPR requirements → GCP
+- Stores >$500K/month revenue → GCP (cost-effective at scale)
 
 **Q: How do I know it's working?**
 
@@ -252,17 +351,17 @@ Most implementation work doesn't require real-time calls. I record screen-shares
 ### Option A: Start with Discovery Audit ($400)
 **Best if**: You're unsure what you need or want expert opinion before committing
 
-👉 **[Book 30-min discovery call - Free]** [Insert Calendly link]
+👉 **[Book 30-min discovery call - Free](https://calendly.com/christian-baghai/discovery-30)**
 
 ### Option B: Go Straight to Implementation ($1,800)
 **Best if**: You know your GA4 is broken and want it fixed properly
 
-👉 **[Book implementation kickoff call]** [Insert Calendly link]
+👉 **[Book implementation kickoff call](https://calendly.com/christian-baghai/implementation-kickoff-60)**
 
 ### Option C: Portfolio Builder Special ($1,200)
 **Best if**: You meet criteria and want premium work at pilot pricing
 
-👉 **[Apply for portfolio slot]** [Insert Calendly link with screening questions]
+👉 **[Apply for portfolio slot](https://calendly.com/christian-baghai/portfolio-application-15)**
 
 ### Option D: Just Explore the Code First
 **Best if**: You're technical and want to see the implementation quality
@@ -302,7 +401,7 @@ I bring the same systematic rigor to GA4 implementations that I applied to clini
 - 📧 Email: christian.baghai@outlook.fr
 - 💼 LinkedIn: [linkedin.com/in/christian-baghai-236399a5](https://fr.linkedin.com/in/christian-baghai-236399a5)
 - 🐙 GitHub: [@stiigg](https://github.com/stiigg)
-- 📅 Book call: [Calendly link]
+- 📅 Book call: [https://calendly.com/christian-baghai/discovery-30](https://calendly.com/christian-baghai/discovery-30)
 
 ---
 
