@@ -1,14 +1,24 @@
 {
-  "name": "ga4-validation-tests",
+  "name": "gtm-ga4-tests",
   "version": "1.0.0",
-  "description": "Automated GA4 dataLayer validation tests",
+  "description": "Automated testing for GTM/GA4 implementation",
   "scripts": {
-    "test": "jest --verbose",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:datalayer": "node datalayer.test.js",
     "test:ecommerce": "node validate-ecommerce-demo.js",
-    "test:limits": "node check-ga4-limits.js"
+    "test:limits": "node check-ga4-limits.js",
+    "test:all": "npm run test:datalayer && npm run test:ecommerce && npm run test:limits"
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "puppeteer": "^21.6.0"
+    "puppeteer": "^21.5.0",
+    "@jest/globals": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout": 30000,
+    "verbose": true
   }
 }

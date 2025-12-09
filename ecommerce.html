@@ -4,7 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>E-commerce Tracking Demo - GA4/GTM</title>
-  
+
+  <!-- Consent Mode v2 Default -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    // Check for stored consent
+    const storedConsent = localStorage.getItem('user_consent_preferences');
+
+    if (storedConsent) {
+      gtag('consent', 'default', JSON.parse(storedConsent));
+    } else {
+      // Default to denied (GDPR compliant)
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 500
+      });
+    }
+  </script>
+
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -109,24 +131,88 @@
   <script>
     // Initialize dataLayer
     window.dataLayer = window.dataLayer || [];
-    
+
+    // Debounce helper to prevent rapid-fire clicks
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
     // Cart state
     let cart = [];
     let eventLog = [];
-    
+
     // Log event to display
     function logEvent(eventName, data) {
       eventLog.push({event: eventName, ...data});
       document.getElementById('ecom-output').textContent = JSON.stringify(eventLog, null, 2);
     }
-    
-    // Products data
+
+    // Enhanced product data with all GA4 recommended parameters
     const products = [
-      {item_id: 'SKU001', item_name: 'Analytics Pro', price: 99.00, item_category: 'software', index: 0},
-      {item_id: 'SKU002', item_name: 'Tag Manager Plus', price: 149.00, item_category: 'software', index: 1},
-      {item_id: 'SKU003', item_name: 'Data Studio Kit', price: 79.00, item_category: 'software', index: 2}
+      {
+        item_id: 'SKU001',
+        item_name: 'Analytics Pro',
+        item_brand: 'YourBrand',
+        item_category: 'software',
+        item_category2: 'analytics',
+        item_category3: 'data_tools',
+        item_variant: 'annual_subscription',
+        item_list_name: 'Product Gallery',
+        item_list_id: 'product_gallery',
+        price: 99.00,
+        quantity: 1,
+        index: 0,
+        affiliation: 'Online Store',
+        discount: 0,
+        coupon: '',
+        currency: 'USD'
+      },
+      {
+        item_id: 'SKU002',
+        item_name: 'Tag Manager Plus',
+        item_brand: 'YourBrand',
+        item_category: 'software',
+        item_category2: 'tag_management',
+        item_category3: 'marketing_tools',
+        item_variant: 'annual_subscription',
+        item_list_name: 'Product Gallery',
+        item_list_id: 'product_gallery',
+        price: 149.00,
+        quantity: 1,
+        index: 1,
+        affiliation: 'Online Store',
+        discount: 0,
+        coupon: '',
+        currency: 'USD'
+      },
+      {
+        item_id: 'SKU003',
+        item_name: 'Data Studio Kit',
+        item_brand: 'YourBrand',
+        item_category: 'software',
+        item_category2: 'visualization',
+        item_category3: 'reporting_tools',
+        item_variant: 'annual_subscription',
+        item_list_name: 'Product Gallery',
+        item_list_id: 'product_gallery',
+        price: 79.00,
+        quantity: 1,
+        index: 2,
+        affiliation: 'Online Store',
+        discount: 0,
+        coupon: '',
+        currency: 'USD'
+      }
     ];
-    
+
     // Fire view_item_list on page load
     window.dataLayer.push({ecommerce: null});  // Clear previous ecommerce object
     window.dataLayer.push({
@@ -138,7 +224,7 @@
       }
     });
     logEvent('view_item_list', {item_list_id: 'product_gallery', items: products.length + ' items'});
-    
+
     // Product click - view_item
     document.querySelectorAll('.product-card').forEach((card, idx) => {
       card.addEventListener('click', (e) => {
@@ -156,7 +242,7 @@
         logEvent('view_item', {item_id: item.item_id, item_name: item.item_name, price: item.price});
       });
     });
-    
+
     // Add to cart
     document.querySelectorAll('.add-to-cart').forEach((btn, idx) => {
       btn.addEventListener('click', (e) => {
@@ -176,7 +262,7 @@
         updateCartDisplay();
       });
     });
-    
+
     function updateCartDisplay() {
       if (cart.length === 0) {
         document.getElementById('cart-summary').style.display = 'none';
@@ -188,7 +274,7 @@
       const total = cart.reduce((sum, i) => sum + i.price, 0);
       document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
     }
-    
+
     // Begin checkout
     document.getElementById('checkout-btn').addEventListener('click', () => {
       const total = cart.reduce((sum, i) => sum + i.price, 0);
@@ -203,27 +289,67 @@
       });
       logEvent('begin_checkout', {value: total, items: cart.length + ' items'});
     });
-    
-    // Purchase
-    document.getElementById('purchase-btn').addEventListener('click', () => {
+
+    const debouncedPurchase = debounce(() => {
+      // Check if purchase already tracked in this session
+      const existingTxnId = sessionStorage.getItem('last_purchase_txn');
+
+      if (existingTxnId) {
+        // Purchase already tracked - show message but don't re-fire
+        document.getElementById('purchase-status').style.display = 'block';
+        document.getElementById('purchase-status').innerHTML =
+          '⚠️ Purchase already tracked in this session: ' + existingTxnId +
+          '<br/><small>Transaction deduplication prevented duplicate event</small>';
+        logEvent('purchase_blocked', {reason: 'duplicate_prevention', transaction_id: existingTxnId});
+        return;
+      }
+
       const total = cart.reduce((sum, i) => sum + i.price, 0);
-      const txnId = 'TXN' + Date.now();
+
+      // Generate unique transaction ID (timestamp + random string for uniqueness)
+      const txnId = 'TXN' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+      // Clear previous ecommerce object
       window.dataLayer.push({ecommerce: null});
+
+      // Push purchase event
       window.dataLayer.push({
         event: 'purchase',
         ecommerce: {
           transaction_id: txnId,
           currency: 'USD',
           value: total,
+          tax: 0,
+          shipping: 0,
           items: cart
         }
       });
+
+      // Store transaction ID to prevent duplicates
+      sessionStorage.setItem('last_purchase_txn', txnId);
+
+      // Log event
       logEvent('purchase', {transaction_id: txnId, value: total, items: cart.length + ' items'});
+
+      // Show success message
       document.getElementById('purchase-status').style.display = 'block';
-      document.getElementById('purchase-status').innerHTML = '✅ Purchase completed! Transaction ID: ' + txnId;
+      document.getElementById('purchase-status').innerHTML =
+        '✅ Purchase completed! Transaction ID: ' + txnId +
+        '<br/><small>Refresh this page to test deduplication (transaction will NOT fire again)</small>';
+
+      // Clear cart
       cart = [];
       updateCartDisplay();
-    });
+
+      // Optional: Clear transaction ID after 30 minutes to allow legitimate repurchases
+      setTimeout(() => {
+        sessionStorage.removeItem('last_purchase_txn');
+        console.log('Transaction deduplication cleared - new purchases allowed');
+      }, 1800000); // 30 minutes
+    }, 500);
+
+    // Purchase button click handler with debounce
+    document.getElementById('purchase-btn').addEventListener('click', debouncedPurchase);
   </script>
 </body>
 </html>

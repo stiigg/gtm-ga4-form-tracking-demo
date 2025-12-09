@@ -4,7 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GTM/GA4 Form Tracking Demo - Good vs Bad</title>
-  
+
+  <!-- Consent Mode v2 Default -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    // Check for stored consent
+    const storedConsent = localStorage.getItem('user_consent_preferences');
+
+    if (storedConsent) {
+      gtag('consent', 'default', JSON.parse(storedConsent));
+    } else {
+      // Default to denied (GDPR compliant)
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 500
+      });
+    }
+  </script>
+
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
