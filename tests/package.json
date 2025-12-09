@@ -1,0 +1,14 @@
+{
+  "name": "ga4-validation-tests",
+  "version": "1.0.0",
+  "description": "Automated GA4 dataLayer validation tests",
+  "scripts": {
+    "test": "jest --verbose",
+    "test:ecommerce": "node validate-ecommerce-demo.js",
+    "test:limits": "node check-ga4-limits.js"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "puppeteer": "^21.6.0"
+  }
+}

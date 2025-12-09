@@ -1,0 +1,66 @@
+name: GA4 dataLayer Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run daily at 2 AM UTC to catch any demo page breaks
+    - cron: '0 2 * * *'
+
+jobs:
+  test-datalayer-structure:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Install dependencies
+      run: |
+        npm init -y
+        npm install --save-dev jest puppeteer
+    
+    - name: Run dataLayer validation tests
+      run: npm test
+      
+    - name: Test eCommerce demo page
+      run: node tests/validate-ecommerce-demo.js
+      
+    - name: Check parameter cardinality limits
+      run: node tests/check-ga4-limits.js
+      
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: test-results/
+
+  validate-code-quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Validate WooCommerce PHP syntax
+      run: |
+        php -l ecommerce-platforms/woocommerce-tracking.php
+    
+    - name: Check for hardcoded credentials
+      run: |
+        ! grep -r "G-XXXXXXXXXX\|GTM-XXXXXXX" --include="*.html" --include="*.php" --include="*.liquid" . || (echo "Found placeholder IDs that should be replaced" && exit 1)
+    
+    - name: Validate JSON files
+      run: |
+        for file in $(find . -name "*.json"); do
+          echo "Validating $file"
+          jq empty "$file" || exit 1
+        done
