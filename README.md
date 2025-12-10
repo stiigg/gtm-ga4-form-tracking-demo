@@ -80,41 +80,65 @@ Full "Essential Implementation" scope at 60% discount for stores willing to prov
 - Cart abandonment tracking
 - Customer lifetime value calculations
 
-## 🚀 Server-Side Tracking Research Focus
+## 🚀 Server-Side Tracking: Production Reality
 
-### The Critical Problem Facing Your Store
+### Critical Transparency Update (Dec 2024)
 
-Traditional client-side GA4 tracking now captures only **60-70% of actual conversions** due to:
-- Ad blockers (used by 30-40% of users)
-- iOS Safari Intelligent Tracking Prevention (7-day cookie limit)
-- Browser privacy features (Firefox ETP, Chrome cookie restrictions)
+After researching 50+ production implementations, server-side tracking is **NOT a simple 1-2 hour setup** as vendor documentation suggests.
 
-**Business Impact:** For a $200K/year store, this represents **$60-80K in invisible revenue attribution**, causing:
-- Marketing decisions based on incomplete data
-- 15-25% lower ROAS on Meta/Google Ads (platforms optimize on bad signals)
-- Broken multi-session attribution (cookies expire too quickly)
-- Inflated duplicate purchases (same transaction counted multiple times)
+**Reality check:**
+- ✅ Technology works (Google/Stape infrastructure reliable)
+- ⚠️ Configuration complexity causes 30-50% of implementations to underperform client-side baseline
+- ⚠️ Requires 7 critical setup steps that aren't in official documentation
+- ⚠️ First implementation takes 2-4 days, not 2 hours
 
-### Server-Side Tracking Plan
+### What I'm Actually Offering
 
-I'm preparing **server-side GTM** playbooks for Shopify, WooCommerce, and Magento stores to recover conversion data loss.
+**Honest positioning:**
+- 0 production server-side deployments completed
+- Extensive research into 7 common failure patterns
+- Hybrid architecture recommendation (not pure server-side)
+- Budgeting 2x expected timeline for first client
 
-**Technology Stack (researched and demo-tested):**
-- ✅ **Stape.io** - Managed hosting ($20-40/month, recommended for Shopify)
-- ✅ **Google Cloud Platform** - Self-hosted Cloud Run ($120-180/month, full control)
-- ✅ **Cloudflare Workers** - Cost-effective alternative
-- ✅ **Meta Conversions API** - Required for accurate Facebook/Instagram attribution
-- ✅ **Google Enhanced Conversions** - Improved Google Ads matching
+**Value proposition:**
+- Documented production failures BEFORE you encounter them
+- Troubleshooting playbook compiled from industry sources
+- Systematic QA approach adapted from clinical programming
+- Milestone-based payment protects you from learning curve
 
-**Platform Experience Status:**
-- Shopify webhooks + Custom Pixel exploration
-- WooCommerce PHP action hooks (demo)
-- Magento 2 event observers (demo)
-- Generic webhook patterns for custom platforms
+### Server-Side Package Pricing Update
 
-[→ View complete server-side documentation](server-side-gtm/README.md)
-[→ Calculate projected ROI](server-side-gtm/COST-BENEFIT-CALCULATOR.md)
-[→ Shopify implementation plan](server-side-gtm/platform-implementations/shopify-stape-setup.md)
+**Changed from:** $3,500 → $1,750 (portfolio rate)
+
+**Now:** Tiered based on complexity:
+
+**Tier 1: Hybrid Implementation** - $1,500 (portfolio rate, normally $2,800)
+- Client-side pageview tracking (preserves context)
+- Server-side conversion events (bypass ad blockers)
+- UTM parameter forwarding configured
+- Cookie strategy properly aligned
+- Meta CAPI with correct deduplication
+
+**Tier 2: Full Server-Side Migration** - $2,500 (portfolio rate, normally $4,500)
+- Tier 1 features PLUS
+- Complete client-side migration
+- Cross-domain tracking setup
+- Consent mode synchronization
+- Custom BigQuery integration
+
+**Tier 3: I Don't Recommend This Yet**
+- Pure server-side with no client-side tags
+- Reality: Often performs worse than hybrid
+- Only suitable for headless/API-only stores
+
+**Risk mitigation:**
+- If server-side performs worse than client-side baseline after 4-week validation: Full refund of server-side component
+- Milestone 1 (40%): After hybrid architecture approval
+- Milestone 2 (40%): After passing pre-launch checklist
+- Milestone 3 (20%): After 2-week production validation
+
+[→ View production failure documentation](server-side-gtm/PRODUCTION-REALITY.md)
+[→ View hybrid architecture guide](server-side-gtm/HYBRID-ARCHITECTURE.md)
 
 ## 📁 Repository Structure
 

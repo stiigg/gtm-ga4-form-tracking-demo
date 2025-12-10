@@ -9,6 +9,84 @@
 
 Comprehensive guide to deploy server-side tagging on Shopify using Stape managed hosting. This abridged version highlights the critical pieces: prerequisites, setup steps, deduplication, validation, troubleshooting, and cost analysis.
 
+## ⚠️ Critical Implementation Warnings
+
+### Before You Start
+
+**Estimated Time Reality Check:**
+- Official Stape docs: 1-2 hours
+- Actual first implementation: 2-4 days
+- Second implementation (after learning): 6-8 hours
+
+**Complexity Factors:**
+- Shopify theme custom code required: +1 day
+- Cross-domain tracking needed: +1-2 days
+- Multi-currency store: +4-6 hours
+- Consent mode compliance: +6-8 hours
+
+### UTM Parameter Forwarding (REQUIRED STEP)
+
+```
+// Add to ALL event tags sending to server GTM
+// Custom HTML tag - fires on All Pages
+<script>
+window.addEventListener('load', function() {
+  // Extract UTM parameters
+  var urlParams = new URLSearchParams(window.location.search);
+  var utmData = {};
+  
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function(param) {
+    if (urlParams.has(param)) {
+      utmData[param] = urlParams.get(param);
+    }
+  });
+  
+  // Store in sessionStorage for webhook enrichment
+  if (Object.keys(utmData).length > 0) {
+    sessionStorage.setItem('utm_data', JSON.stringify(utmData));
+  }
+  
+  // Add to every dataLayer push
+  var originalPush = dataLayer.push;
+  dataLayer.push = function() {
+    var args = Array.prototype.slice.call(arguments);
+    var storedUtm = sessionStorage.getItem('utm_data');
+    
+    if (storedUtm && args.event) {
+      var parsed = JSON.parse(storedUtm);
+      Object.assign(args, parsed);
+    }
+    
+    return originalPush.apply(dataLayer, args);
+  };
+});
+</script>
+```
+
+**Why this isn't in official docs:**
+Stape/Google documentation assumes you understand the fundamental difference between client JavaScript (has URL context) and server webhooks (POST body only, no URL). This is the #1 cause of "(direct)/(none)" attribution issues.
+
+### Cookie Strategy Decision Tree
+
+**Question 1: Do you have client-side GA4 tags still active?**
+- YES → Choose "JavaScript Managed" cookies
+- NO → Choose "Server Managed" cookies
+
+**Question 2: Are you using Shopify's native GA4 integration?**
+- YES → DISABLE it first, then choose "Server Managed"
+- NO → Proceed based on Question 1
+
+**Validation test:**
+```
+// In browser console on your site:
+document.cookie.split(';').filter(c => c.includes('_ga'));
+
+// Should show ONE _ga cookie, not multiple
+// Example correct output: ["_ga=GA1.2.123456789.1702377264"]
+```
+
+---
+
 ## Prerequisites Checklist
 - Shopify admin access with permission to manage apps and webhooks
 - GA4 property with Measurement ID
