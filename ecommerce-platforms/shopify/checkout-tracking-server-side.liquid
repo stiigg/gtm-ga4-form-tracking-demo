@@ -1,0 +1,80 @@
+{%- comment -%}
+  Shopify Checkout Tracking with Server-Side GTM
+  
+  Installation:
+  1. Settings → Checkout → Order Status Page → Additional Scripts
+  2. Paste this code
+  3. Replace GTM-XXXXXX with your web container ID
+  4. Server container will handle routing to GA4 + Meta CAPI
+{%- endcomment -%}
+
+<!-- Google Tag Manager -->
+<script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-XXXXXX');
+
+// Configure GA4 with server-side routing
+gtag('config', 'G-XXXXXXXXXX', {
+  'transport_url': 'https://track.{{ shop.domain }}',
+  'first_party_collection': true
+});
+</script>
+
+{% if first_time_accessed %}
+<script>
+// Generate unique transaction ID for deduplication
+var transactionId = '{{ order.order_number }}_{{ order.created_at | date: "%s" }}';
+
+// Check if already tracked (prevents double-fire on page refresh)
+var trackingKey = 'order_tracked_' + transactionId;
+if (!sessionStorage.getItem(trackingKey)) {
+  
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'purchase',
+    tracking_source: 'server',  // Server container will route this
+    transaction_id: transactionId,
+    ecommerce: {
+      transaction_id: transactionId,
+      affiliation: '{{ shop.name }}',
+      value: {{ order.subtotal_price | money_without_currency | remove: ',' }},
+      tax: {{ order.tax_price | money_without_currency | remove: ',' }},
+      shipping: {{ order.shipping_price | money_without_currency | remove: ',' }},
+      currency: '{{ order.currency }}',
+      items: [
+        {% for line_item in order.line_items %}
+        {
+          item_id: '{{ line_item.product_id }}',
+          item_name: {{ line_item.title | json }},
+          item_variant: {{ line_item.variant.title | json }},
+          price: {{ line_item.final_price | money_without_currency | remove: ',' }},
+          quantity: {{ line_item.quantity }},
+          item_category: {{ line_item.product.type | json }}
+        }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    },
+    // Meta CAPI enrichment (server container will use)
+    user_data: {
+      email_hash: '{{ order.email | downcase | sha256 }}',  // Pre-hashed for privacy
+      phone_hash: '{{ order.phone | sha256 }}',
+      address: {
+        city: {{ order.shipping_address.city | json }},
+        region: {{ order.shipping_address.province_code | json }},
+        postal_code: {{ order.shipping_address.zip | json }},
+        country: {{ order.shipping_address.country_code | json }}
+      }
+    }
+  });
+  
+  // Mark as tracked
+  sessionStorage.setItem(trackingKey, 'true');
+  
+  console.log('✅ Purchase event pushed to dataLayer (server-side routing)');
+  console.log('Transaction ID:', transactionId);
+}
+</script>
+{% endif %}
