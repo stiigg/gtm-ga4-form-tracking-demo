@@ -11,6 +11,131 @@ Common issues and solutions for GTM/GA4/BigQuery/Looker Studio setup.
 
 ---
 
+## Server-Side Tracking Issues
+
+### Issue: Server GTM Shows "(direct) / (none)" for All Traffic
+
+**Symptom:**
+- Webhooks fire successfully (Stape logs confirm)
+- Events reach GA4
+- But 80-100% show as "Direct" traffic instead of "Google / Organic"
+
+**Root Cause:**
+UTM parameters exist in URL on client-side but webhooks don't include URL context.
+
+**Solution:**
+[Link to full solution in server-side-gtm/PRODUCTION-REALITY.md section 1](server-side-gtm/PRODUCTION-REALITY.md#1-utm-parameters-dont-auto-forward-to-server-container)
+
+**Quick validation:**
+```
+// In Server GTM Preview Mode:
+// Click on webhook event
+// Go to "Variables" tab
+// Check Event Parameter - utm_source
+
+// Should show: "google" or actual source
+// If shows: undefined or null → UTM forwarding not configured
+```
+
+---
+
+### Issue: Revenue Doubled in GA4 After Enabling Server-Side
+
+**Symptom:**
+- Same transaction_id appears twice in reports
+- Revenue shows 200% of Shopify order total
+
+**Root Cause:**
+Both client-side tag AND server-side webhook fire purchase events without deduplication.
+
+**Diagnosis:**
+```
+-- BigQuery check
+SELECT 
+  (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'transaction_id') as txn,
+  COUNT(*) as count,
+  STRING_AGG(DISTINCT (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'ga_session_id')) as sessions
+FROM `project.dataset.events_*`
+WHERE _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+  AND event_name = 'purchase'
+GROUP BY txn
+HAVING count > 1
+```
+
+If returns rows: Deduplication failing
+
+**Solutions:**
+
+**Option 1: Disable client-side purchase event**
+- In Web GTM, disable the GA4 Purchase tag
+- Let server-side webhook handle ALL purchases
+- Pro: Simple, guaranteed no duplicates
+- Con: Loses real-time purchase tracking (webhook delayed 30-60 seconds)
+
+**Option 2: Implement proper deduplication**
+[Link to full solution in server-side-gtm/PRODUCTION-REALITY.md section 4](server-side-gtm/PRODUCTION-REALITY.md#4-deduplication-tokens-misconfigured)
+
+---
+
+### Issue: Meta Conversions API Shows Low Match Rate (<40%)
+
+**Symptom:**
+- Meta Events Manager → Event Match Quality shows 30-40%
+- Should be 60-70%+
+
+**Root Cause:**
+Server container sending server's IP address instead of user's IP.
+
+**Diagnosis:**
+1. Go to Meta Events Manager
+2. Click "Test Events"  
+3. Trigger purchase on your site
+4. In test events, expand "Customer Information"
+5. If shows "Iowa" or "Virginia" (cloud provider location): IP not forwarded
+
+**Solution:**
+[Link to full solution in server-side-gtm/PRODUCTION-REALITY.md section 5](server-side-gtm/PRODUCTION-REALITY.md#5-ip-address-and-user-agent-not-forwarded)
+
+---
+
+### Issue: GA4 Shows Massive "Unassigned" Traffic After Enabling Server-Side
+
+**Symptom:**
+- Acquisition reports show 30-50% "Unassigned" channel
+- Was <5% before server-side implementation
+
+**Root Cause:**
+Cookie management strategy misconfigured - server and client creating different _ga cookies.
+
+**Diagnosis:**
+```
+// On your site's homepage, open browser console:
+document.cookie.split(';').filter(c => c.trim().startsWith('_ga'));
+
+// If shows MULTIPLE _ga cookies (e.g., _ga, _ga_G123456): PROBLEM
+// Should only show ONE _ga cookie
+```
+
+**Solution:**
+[Link to full solution in server-side-gtm/PRODUCTION-REALITY.md section 2](server-side-gtm/PRODUCTION-REALITY.md#2-cookie-strategy-misconfiguration--unassigned-traffic-spike)
+
+---
+
+### Issue: Server Container Events Don't Fire When User Denies Cookies
+
+**Symptom:**
+- User denies consent via cookie banner
+- Client-side respects it (no tags fire)
+- Server-side still fires tags → GDPR violation
+
+**Root Cause:**
+Server container has no visibility into client-side CMP decisions.
+
+**Solution:**
+[Link to full solution in server-side-gtm/PRODUCTION-REALITY.md section 3](server-side-gtm/PRODUCTION-REALITY.md#3-consent-mode-not-synchronized-between-client-and-server)
+
+---
+
 ## GTM Issues
 
 ### Issue: GTM Container Not Loading

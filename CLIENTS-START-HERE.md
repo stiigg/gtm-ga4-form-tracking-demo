@@ -1,9 +1,42 @@
 ---
-**Document Status:** Pre-client validation  
-**Last Updated:** December 9, 2024  
-**Client Projects Referenced:** 0 (theoretical scenarios)  
-**Methodology Source:** Industry research + clinical QA adaptation  
+**Document Status:** Pre-client validation
+**Last Updated:** December 9, 2024
+**Client Projects Referenced:** 0 (theoretical scenarios)
+**Methodology Source:** Industry research + clinical QA adaptation
 ---
+
+## ⚠️ Important Update: Server-Side Tracking Reality (Dec 2024)
+
+**What you might have heard:**
+"Server-side tracking is easy - just a few clicks in Stape.io!"
+
+**Production reality:**
+Server-side implementations fail 30-50% of the time due to:
+- UTM attribution breaks (shows all "direct" traffic)
+- Cookie conflicts causing user duplication  
+- Consent mode violations (GDPR non-compliant)
+- Revenue doubling from deduplication failures
+
+**What I'm offering differently:**
+- Documented the 7 failure patterns before implementing
+- Hybrid approach (not pure server-side) for 95% of stores
+- 2x timeline buffer vs vendor estimates
+- Full refund if server-side underperforms client-side
+
+**Should you still do server-side?**
+
+**YES if:**
+- Monthly revenue >$50K
+- Ad spend >$5K/month
+- iOS/Safari traffic >30%
+- Using Facebook/Instagram ads
+
+**MAYBE WAIT if:**
+- Monthly revenue <$20K
+- Currently have major client-side tracking issues
+- Development resources limited
+
+[Read full production reality documentation →](server-side-gtm/PRODUCTION-REALITY.md)
 
 ---
 **⚠️ TRANSPARENCY NOTICE**
