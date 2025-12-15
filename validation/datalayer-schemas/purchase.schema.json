@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/stiigg/gtm-ga4-form-tracking-demo/schemas/purchase",
+  "title": "Purchase Event DataLayer",
+  "description": "GA4 purchase event schema with deduplication safeguards",
+  "type": "object",
+  "required": ["event", "ecommerce"],
+  "properties": {
+    "event": {
+      "type": "string",
+      "const": "purchase"
+    },
+    "ecommerce": {
+      "type": "object",
+      "required": ["transaction_id", "value", "currency", "items"],
+      "properties": {
+        "transaction_id": {
+          "type": "string",
+          "pattern": "^[A-Z0-9_-]+$",
+          "minLength": 5,
+          "maxLength": 100,
+          "description": "Unique order ID for deduplication"
+        },
+        "value": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000000,
+          "description": "Total transaction value (numeric, not string!)"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "ISO 4217 currency code",
+          "examples": ["USD", "EUR", "GBP", "CAD"]
+        },
+        "tax": {
+          "type": "number",
+          "minimum": 0
+        },
+        "shipping": {
+          "type": "number",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 200,
+          "items": {
+            "type": "object",
+            "required": ["item_id", "item_name", "price", "quantity"],
+            "properties": {
+              "item_id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Product SKU or unique identifier"
+              },
+              "item_name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "price": {
+                "type": "number",
+                "minimum": 0,
+                "exclusiveMaximum": 1000000,
+                "description": "Individual item price (must be number)"
+              },
+              "quantity": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "item_brand": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "item_category": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "item_variant": {
+                "type": "string",
+                "maxLength": 100
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
