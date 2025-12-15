@@ -22,7 +22,7 @@
 ### ✅ Working Code Examples
 - **[index.html](index.html)** - Good vs Bad client-side tracking
 - **[index-server-side.html](index-server-side.html)** - Complete server-side demo (NEW!)
-- **[ecommerce-platforms/](ecommerce-platforms/)** - Shopify, WooCommerce, Magento examples
+- **[platforms/](platforms/)** - Shopify, WooCommerce, Magento examples
 
 ### 📚 Complete Documentation (80+ pages)
 - Step-by-step GTM setup guides
@@ -257,19 +257,19 @@ After researching 50+ production implementations, server-side tracking is **NOT 
 - Milestone 2 (40%): After passing pre-launch checklist
 - Milestone 3 (20%): After 2-week production validation
 
-[→ View production failure documentation](server-side-gtm/PRODUCTION-REALITY.md)
-[→ View hybrid architecture guide](server-side-gtm/HYBRID-ARCHITECTURE.md)
+[→ View production failure documentation](server-side/PRODUCTION-REALITY.md)
+[→ View hybrid architecture guide](server-side/HYBRID-ARCHITECTURE.md)
 
 ## 📁 Repository Structure
 
 ```
-├── ecommerce-platforms/          # Platform-specific demo implementations
-├── case-studies/                 # Simulated case studies (seeking real data)
+├── platforms/                    # Platform-specific demo implementations
+├── deliverables/                 # Client-facing docs, templates, pricing
+├── qa-validation/                # Checklists, automated tests, schemas
+├── server-side/                  # Unified server-side GTM resources
+├── docs/                         # Centralized implementation guides
 ├── config/                       # GTM container exports and references
-├── sql/                          # BigQuery analysis queries
-├── qa-checklists/                # Testing & validation plans
-├── client-templates/             # Deliverable templates
-└── sops/                         # Standard procedures and runbooks
+└── sql/                          # BigQuery analysis queries
 ```
 
 ## 📊 Key Deliverables (Demo)
