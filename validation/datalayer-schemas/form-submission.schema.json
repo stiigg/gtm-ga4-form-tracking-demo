@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/stiigg/gtm-ga4-form-tracking-demo/schemas/form-submission",
+  "title": "Form Submission DataLayer Event",
+  "description": "Schema for validating form_submission_success events pushed to dataLayer",
+  "type": "object",
+  "required": ["event", "form_id", "form_type", "form_location"],
+  "properties": {
+    "event": {
+      "type": "string",
+      "const": "form_submission_success",
+      "description": "GTM event trigger name"
+    },
+    "form_id": {
+      "type": "string",
+      "pattern": "^[a-z_]+$",
+      "minLength": 3,
+      "maxLength": 50,
+      "description": "Unique form identifier (snake_case)",
+      "examples": ["contact_us", "newsletter_signup", "lead_capture"]
+    },
+    "form_type": {
+      "type": "string",
+      "enum": ["lead", "support", "sales", "newsletter", "download"],
+      "description": "Form category for segmentation"
+    },
+    "form_location": {
+      "type": "string",
+      "pattern": "^[a-z0-9_/]+$",
+      "description": "Page location or section where form appears",
+      "examples": ["homepage", "pricing_page", "blog_sidebar"]
+    },
+    "form_fields": {
+      "type": "object",
+      "description": "Non-PII field values for analysis",
+      "properties": {
+        "topic": {
+          "type": "string",
+          "enum": ["support", "sales", "partnership", "other"]
+        },
+        "plan": {
+          "type": "string",
+          "enum": ["basic", "pro", "enterprise"]
+        },
+        "company_size": {
+          "type": "string",
+          "enum": ["1-10", "11-50", "51-200", "201-500", "500+"]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "event": "form_submission_success",
+      "form_id": "contact_us",
+      "form_type": "lead",
+      "form_location": "homepage",
+      "form_fields": {
+        "topic": "sales",
+        "plan": "pro"
+      }
+    }
+  ]
+}
