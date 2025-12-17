@@ -84,21 +84,22 @@
 ## Repository Structure
 
 ```
-server-side-gtm/
+docs/advanced/server-side/
 ├── README.md (You are here)
-├── RESEARCH-REFERENCES.md (Academic citations + case studies)
-├── VENDOR-COMPARISON.md (Stape vs. JENTIS vs. Self-hosted)
+├── PRODUCTION-REALITY.md (Real-world risks and mitigations)
+├── theoretical-impact.md (Modeled outcomes before launch)
 ├── COST-BENEFIT-CALCULATOR.md (ROI models with benchmarks)
-├── DECISION-TREE.md (Visual flowchart for vendor selection)
+├── COMPLETE-SETUP-GUIDE.md (End-to-end build steps)
 ├── PRE-LAUNCH-CHECKLIST.md (Final validation before go-live)
-├── platform-implementations/
-│   └── shopify-stape-setup.md (Step-by-step Shopify guide)
-├── compliance/
-│   └── GDPR-GTM-AUDIT-CHECKLIST.md (Tag isolation + IP anonymization)
-├── testing-validation/
-│   └── SHOPIFY-TESTING-PROTOCOL.md (GA4 DebugView, Meta Test Events)
-├── case-studies/
-│   └── shopify-fashion-retailer-denmark.md (Anonymous client results)
+├── architecture-diagram.md (High-level system flow)
+├── container-configs/ (Importable server GTM containers)
+├── conversions-api/ (Meta/Google CAPI notes)
+├── platform-implementations/ (Shopify, WooCommerce, Magento)
+├── platforms/ (Webhooks, measurement clients, security)
+├── infrastructure/ (Cloud Run setup, cost comparisons)
+├── compliance/ (GDPR-focused guardrails)
+├── testing-validation/ (Debugging, QA queries)
+├── case-studies/ (Scenario outlines and metrics)
 └── demo-container-export.json (Importable GTM container)
 ```
 

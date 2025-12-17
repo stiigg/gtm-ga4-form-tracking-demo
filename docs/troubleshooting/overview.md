@@ -24,7 +24,7 @@ Common issues and solutions for GTM/GA4/BigQuery/Looker Studio setup.
 UTM parameters exist in URL on client-side but webhooks don't include URL context.
 
 **Solution:**
-[Link to full solution in server-side-gtm/PRODUCTION-REALITY.md section 1](server-side-gtm/PRODUCTION-REALITY.md#1-utm-parameters-dont-auto-forward-to-server-container)
+[Link to full solution in docs/advanced/server-side/PRODUCTION-REALITY.md section 1](../advanced/server-side/PRODUCTION-REALITY.md#1-utm-parameters-dont-auto-forward-to-server-container)
 
 **Quick validation:**
 ```
@@ -73,7 +73,7 @@ If returns rows: Deduplication failing
 - Con: Loses real-time purchase tracking (webhook delayed 30-60 seconds)
 
 **Option 2: Implement proper deduplication**
-[Link to full solution in server-side-gtm/PRODUCTION-REALITY.md section 4](server-side-gtm/PRODUCTION-REALITY.md#4-deduplication-tokens-misconfigured)
+[Link to full solution in docs/advanced/server-side/PRODUCTION-REALITY.md section 4](../advanced/server-side/PRODUCTION-REALITY.md#4-deduplication-tokens-misconfigured)
 
 ---
 
@@ -94,7 +94,7 @@ Server container sending server's IP address instead of user's IP.
 5. If shows "Iowa" or "Virginia" (cloud provider location): IP not forwarded
 
 **Solution:**
-[Link to full solution in server-side-gtm/PRODUCTION-REALITY.md section 5](server-side-gtm/PRODUCTION-REALITY.md#5-ip-address-and-user-agent-not-forwarded)
+[Link to full solution in docs/advanced/server-side/PRODUCTION-REALITY.md section 5](../advanced/server-side/PRODUCTION-REALITY.md#5-ip-address-and-user-agent-not-forwarded)
 
 ---
 
@@ -117,7 +117,7 @@ document.cookie.split(';').filter(c => c.trim().startsWith('_ga'));
 ```
 
 **Solution:**
-[Link to full solution in server-side-gtm/PRODUCTION-REALITY.md section 2](server-side-gtm/PRODUCTION-REALITY.md#2-cookie-strategy-misconfiguration--unassigned-traffic-spike)
+[Link to full solution in docs/advanced/server-side/PRODUCTION-REALITY.md section 2](../advanced/server-side/PRODUCTION-REALITY.md#2-cookie-strategy-misconfiguration--unassigned-traffic-spike)
 
 ---
 
@@ -132,7 +132,7 @@ document.cookie.split(';').filter(c => c.trim().startsWith('_ga'));
 Server container has no visibility into client-side CMP decisions.
 
 **Solution:**
-[Link to full solution in server-side-gtm/PRODUCTION-REALITY.md section 3](server-side-gtm/PRODUCTION-REALITY.md#3-consent-mode-not-synchronized-between-client-and-server)
+[Link to full solution in docs/advanced/server-side/PRODUCTION-REALITY.md section 3](../advanced/server-side/PRODUCTION-REALITY.md#3-consent-mode-not-synchronized-between-client-and-server)
 
 ---
 

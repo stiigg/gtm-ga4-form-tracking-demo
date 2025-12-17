@@ -532,7 +532,7 @@ Privacy Sandbox conversions appear in:
 2. **Accept cross-device loss**:
    - 15-20% of conversions are cross-device (industry avg)
    - Privacy Sandbox cannot track cross-device by design
-   - Compensate with server-side measurement (see `server-side-gtm/`)
+   - Compensate with server-side measurement (see `docs/advanced/server-side/`)
 
 3. **Validate test group assignment**:
    - Ensure 50/50 traffic split

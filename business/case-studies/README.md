@@ -11,11 +11,11 @@ I'm currently seeking 2-3 portfolio-building clients to generate real case studi
 
 **Simulated scenarios available:**
 - [Multi-store implementation (theoretical)](multi-store-implementation.md)
-- [Server-side tracking (projected ROI)](../server-side-gtm/theoretical-impact.md)
+- [Server-side tracking (projected ROI)](../../docs/advanced/server-side/theoretical-impact.md)
 
 **Real case studies will be published here after:**
 1. Client project completion
 2. 30-day validation period
 3. Client approval to share anonymized metrics
 
-[Become a case study client →](../CLIENTS-START-HERE.md#portfolio-building)
+[Become a case study client →](../clients-start-here.md#portfolio-building)
