@@ -1,92 +1,60 @@
-# 🎯 GTM/GA4 Form Tracking Demo
+# GTM/GA4 Form Tracking Demo (Good vs Bad)
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Here-success?style=flat-square)](https://stiigg.github.io/gtm-ga4-form-tracking-demo/demos/)
-[![Portfolio](https://img.shields.io/badge/Status-Portfolio%20Project-blue?style=flat-square)](guides/for-business-owners.md#transparency)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
+Production-ready examples of **robust vs fragile** form tracking patterns in Google Tag Manager (GTM) and Google Analytics 4 (GA4), with dataLayer push examples and QA-style validation.
 
-Production-ready Google Analytics 4 and Google Tag Manager form tracking implementations for Shopify, WooCommerce, and Magento. Built with clinical-trial-grade QA standards.
+**Live demo:** https://stiigg.github.io/gtm-ga4-form-tracking-demo/
 
 ---
 
-## 🚀 Choose Your Path
+## What this is
 
-| Audience | What You Get | Start Here |
-|----------|--------------|------------|
-| 👔 **Business Owner** | See pricing, case studies, ROI calculator | [Business Guide →](guides/for-business-owners.md) |
-| 👨‍💻 **Developer** | Code examples, implementation guide, GTM containers | [Developer Guide →](guides/for-developers.md) |
-| 🎨 **Just Browsing** | Live working demos you can test right now | [View Demos →](demos/) |
-| 🚀 **Advanced** | Server-side GTM architecture, hybrid setup | [Server-Side Guide →](server-side/) |
-
----
-
-## 📂 Repository Structure
-
-```
-├── demos/              # Live HTML demos (test in browser)
-├── platforms/          # Shopify, WooCommerce, Magento code
-├── guides/             # Step-by-step tutorials
-├── server-side/        # Advanced server-side GTM
-├── qa-testing/         # Validation checklists, test procedures
-├── reference/          # GTM containers, SQL queries, schemas
-├── business/           # Pricing, contracts, case studies
-└── snippets/           # Reusable code snippets
-```
-
-[Full documentation index →](guides/)
+A reference implementation you can browse, copy, and test:
+- Side-by-side “good vs bad” form tracking patterns
+- Demo pages you can run instantly
+- Platform notes for Shopify / WooCommerce / Magento
+- Validation and troubleshooting documentation
 
 ---
 
-## ⚡ Quick Links
+## Start here
 
-- 📖 [Implementation Checklist](guides/implementation-checklist.md)
-- ✅ [QA Validation Process](qa-testing/)
-- 🛠️ [Troubleshooting Guide](guides/troubleshooting.md)
-- 💰 [Pricing & Portfolio Offer](business/pricing.md)
-- 📞 [Hire Me](business/portfolio-offer.md)
+**Business / hiring**
+- `business/clients-start-here.md`
+- `business/case-studies/`
 
----
+**Developers**
+- `demos/` (open in browser, test behavior)
+- `platforms/` (platform-specific implementations)
+- `templates/gtm/` (container exports)
 
-## 🎯 Repository Status
-
-**Completed Client Projects:** 0 (transitioning from clinical statistical programming)  
-**Purpose:** Technical demonstration + methodology showcase  
-**Seeking:** First 3 portfolio clients at $1,200 (normally $2,500)
-
-[Full transparency disclosure →](guides/for-business-owners.md#repository-status-pre-client-portfolio)
-
----
-
-## 📊 What's Included
-
-**✅ Working Code Examples**
-- Good vs bad form tracking implementations
-- Complete eCommerce event tracking (8+ events)
-- Server-side GTM comparison demos
-
-**✅ Platform-Specific Code**
-- Shopify Liquid templates
-- WooCommerce PHP hooks
-- Magento 2 PHTML templates
-
-**✅ Complete Documentation**
-- 80+ pages of setup guides
-- QA checklists and validation procedures
-- Troubleshooting playbooks
-- BigQuery SQL queries
+**Analytics / measurement teams**
+- `docs/implementation/`
+- `docs/qa/`
+- `docs/troubleshooting/`
+- `docs/reporting/`
 
 ---
 
-## 🔄 Recent Updates
+## What makes this different
 
-**Dec 16, 2024:** Repository reorganized for improved navigation  
-→ [See CHANGELOG.md for details](CHANGELOG.md)
-
----
-
-## 📜 License
-
-MIT License - Free to use in commercial and personal projects. Attribution appreciated but not required.
+- **Good vs bad comparisons** (shows judgment, not just setup steps)
+- **dataLayer-first approach** (portable across platforms/tools)
+- **QA mindset** (validation + troubleshooting included)
+- **Practical assets** (templates and queries you can reuse)
 
 ---
 
-**Questions?** [Open an issue](https://github.com/stiigg/gtm-ga4-form-tracking-demo/issues/new/choose) or [book a discovery call](https://calendly.com/your-link)
+## Repo map
+
+- `demos/` — runnable demo HTML
+- `docs/` — documentation hub (implementation, QA, troubleshooting, reporting)
+- `platforms/` — Shopify / WooCommerce / Magento examples
+- `templates/` — GTM exports, SQL queries, reusable snippets/config
+- `business/` — client-facing packaging (offer, case studies, start-here)
+- `assets/` — screenshots and diagrams used in docs/README
+
+---
+
+## License
+
+MIT — see `LICENSE`.

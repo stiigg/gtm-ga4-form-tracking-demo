@@ -36,7 +36,7 @@ Server-side implementations fail 30-50% of the time due to:
 - Currently have major client-side tracking issues
 - Development resources limited
 
-[Read full production reality documentation →](server-side-gtm/PRODUCTION-REALITY.md)
+[Read full production reality documentation →](../docs/advanced/server-side/PRODUCTION-REALITY.md)
 
 ---
 **⚠️ TRANSPARENCY NOTICE**
