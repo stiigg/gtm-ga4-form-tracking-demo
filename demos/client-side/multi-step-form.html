@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Step Form Tracking Demo - GTM/GA4</title>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MM6H8SQW');</script>
+  <!-- End Google Tag Manager -->
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      text-align: center;
+      color: white;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .info-banner {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .info-banner h2 {
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+    
+    .info-banner ul {
+      margin-left: 20px;
+      line-height: 1.8;
+      color: #555;
+    }
+    
+    .form-container {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    .progress-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    
+    .progress-bar::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #e0e0e0;
+      z-index: 0;
+    }
+    
+    .progress-step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .progress-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #e0e0e0;
+      color: #999;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .progress-step.active .progress-circle {
+      background: #667eea;
+      color: white;
+    }
+    
+    .progress-step.completed .progress-circle {
+      background: #28a745;
+      color: white;
+    }
+    
+    .progress-label {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .step {
+      display: none;
+    }
+    
+    .step.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    input.error, select.error {
+      border-color: #dc3545;
+    }
+    
+    .error-message {
+      color: #dc3545;
+      font-size: 13px;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    .error-message.visible {
+      display: block;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 30px;
+    }
+    
+    button {
+      flex: 1;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #764ba2;
+    }
+    
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #333;
+    }
+    
+    .btn-secondary:hover {
+      background: #e0e0e0;
+    }
+    
+    .success-message {
+      display: none;
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+      padding: 20px;
+      border-radius: 6px;
+      text-align: center;
+    }
+    
+    .success-message.visible {
+      display: block;
+    }
+    
+    .debug-panel {
+      background: #f8f9fa;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 30px;
+    }
+    
+    .debug-panel h3 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    .debug-output {
+      background: #282c34;
+      color: #61dafb;
+      padding: 15px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      max-height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    
+    .event-log {
+      margin-bottom: 8px;
+      padding: 8px;
+      background: #1e2126;
+      border-left: 3px solid #61dafb;
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MM6H8SQW"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  
+  <div class="container">
+    <h1>🔄 Multi-Step Form Tracking Demo</h1>
+    
+    <div class="info-banner">
+      <h2>ℹ️ What This Demo Shows</h2>
+      <ul>
+        <li><strong>Event Sequencing</strong>: Proper order of form events (start → steps → completion)</li>
+        <li><strong>instance_id Correlation</strong>: Same ID across all steps enables funnel analysis</li>
+        <li><strong>Step-Level Tracking</strong>: Identify where users drop off in multi-step flows</li>
+        <li><strong>Error Handling</strong>: Track validation failures without breaking the flow</li>
+        <li><strong>GA4 Funnel Ready</strong>: Events structured for GA4 funnel exploration reports</li>
+      </ul>
+    </div>
+    
+    <div class="form-container">
+      <div class="progress-bar">
+        <div class="progress-step active" data-step="1">
+          <div class="progress-circle">1</div>
+          <div class="progress-label">Account</div>
+        </div>
+        <div class="progress-step" data-step="2">
+          <div class="progress-circle">2</div>
+          <div class="progress-label">Profile</div>
+        </div>
+        <div class="progress-step" data-step="3">
+          <div class="progress-circle">3</div>
+          <div class="progress-label">Preferences</div>
+        </div>
+      </div>
+      
+      <form id="multi-step-form">
+        <!-- Step 1: Account Info -->
+        <div class="step active" data-step="1">
+          <h2>Step 1: Account Information</h2>
+          
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" required>
+            <div class="error-message">Please enter a valid email address</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Password *</label>
+            <input type="password" id="password" minlength="8" required>
+            <div class="error-message">Password must be at least 8 characters</div>
+          </div>
+          
+          <div class="button-group">
+            <button type="button" class="btn-primary" onclick="nextStep()">Continue</button>
+          </div>
+        </div>
+        
+        <!-- Step 2: Profile -->
+        <div class="step" data-step="2">
+          <h2>Step 2: Profile Details</h2>
+          
+          <div class="form-group">
+            <label for="firstName">First Name *</label>
+            <input type="text" id="firstName" required>
+            <div class="error-message">First name is required</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="lastName">Last Name *</label>
+            <input type="text" id="lastName" required>
+            <div class="error-message">Last name is required</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" id="company">
+          </div>
+          
+          <div class="button-group">
+            <button type="button" class="btn-secondary" onclick="prevStep()">Back</button>
+            <button type="button" class="btn-primary" onclick="nextStep()">Continue</button>
+          </div>
+        </div>
+        
+        <!-- Step 3: Preferences -->
+        <div class="step" data-step="3">
+          <h2>Step 3: Preferences</h2>
+          
+          <div class="form-group">
+            <label for="plan">Plan *</label>
+            <select id="plan" required>
+              <option value="">Select a plan...</option>
+              <option value="free">Free</option>
+              <option value="pro">Pro ($29/mo)</option>
+              <option value="enterprise">Enterprise ($99/mo)</option>
+            </select>
+            <div class="error-message">Please select a plan</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="industry">Industry *</label>
+            <select id="industry" required>
+              <option value="">Select industry...</option>
+              <option value="tech">Technology</option>
+              <option value="finance">Finance</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="retail">Retail</option>
+              <option value="other">Other</option>
+            </select>
+            <div class="error-message">Please select an industry</div>
+          </div>
+          
+          <div class="button-group">
+            <button type="button" class="btn-secondary" onclick="prevStep()">Back</button>
+            <button type="submit" class="btn-primary">Complete Signup</button>
+          </div>
+        </div>
+      </form>
+      
+      <div class="success-message" id="success-message">
+        <h2>✅ Signup Complete!</h2>
+        <p>Your account has been created successfully.</p>
+        <p style="margin-top:10px;font-size:14px;color:#666;">Check the event log below to see all tracking events.</p>
+      </div>
+    </div>
+    
+    <div class="debug-panel">
+      <h3>📊 Event Log (dataLayer Pushes)</h3>
+      <div class="debug-output" id="event-log">Waiting for form interaction...</div>
+    </div>
+  </div>
+  
+  <script>
+    // Initialize dataLayer
+    window.dataLayer = window.dataLayer || [];
+    
+    // Generate unique instance ID once per form load
+    const formInstanceId = `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+    const formId = 'multi_step_signup';
+    const totalSteps = 3;
+    let currentStep = 1;
+    let hasStarted = false;
+    const completedSteps = new Set();
+    
+    // Event log display
+    function logEvent(eventData) {
+      const logContainer = document.getElementById('event-log');
+      const timestamp = new Date().toLocaleTimeString();
+      const eventDiv = document.createElement('div');
+      eventDiv.className = 'event-log';
+      eventDiv.textContent = `[${timestamp}] ${JSON.stringify(eventData, null, 2)}`;
+      
+      if (logContainer.textContent === 'Waiting for form interaction...') {
+        logContainer.textContent = '';
+      }
+      logContainer.appendChild(eventDiv);
+      logContainer.scrollTop = logContainer.scrollHeight;
+    }
+    
+    // Fire form_start on first interaction
+    document.getElementById('multi-step-form').addEventListener('focus', function(e) {
+      if (!hasStarted && e.target.tagName === 'INPUT') {
+        hasStarted = true;
+        
+        const eventData = {
+          event: 'form_start',
+          form_id: formId,
+          instance_id: formInstanceId,
+          total_steps: totalSteps,
+          form_type: 'signup',
+          form_location: 'demo_page'
+        };
+        
+        window.dataLayer.push(eventData);
+        logEvent(eventData);
+      }
+    }, true);
+    
+    // Fire form_step_view when step becomes visible
+    function fireStepView(step) {
+      const stepNames = {
+        1: 'account_information',
+        2: 'profile_details',
+        3: 'preferences'
+      };
+      
+      const eventData = {
+        event: 'form_step_view',
+        form_id: formId,
+        instance_id: formInstanceId,
+        step_number: step,
+        step_name: stepNames[step],
+        total_steps: totalSteps
+      };
+      
+      window.dataLayer.push(eventData);
+      logEvent(eventData);
+    }
+    
+    // Fire form_step_complete when validation passes
+    function fireStepComplete(step) {
+      const eventData = {
+        event: 'form_step_complete',
+        form_id: formId,
+        instance_id: formInstanceId,
+        step_number: step,
+        total_steps: totalSteps
+      };
+      
+      window.dataLayer.push(eventData);
+      logEvent(eventData);
+      completedSteps.add(step);
+    }
+    
+    // Fire form_error when validation fails
+    function fireError(step, errorFields) {
+      const eventData = {
+        event: 'form_error',
+        form_id: formId,
+        instance_id: formInstanceId,
+        step_number: step,
+        error_fields: errorFields,
+        error_count: errorFields.length
+      };
+      
+      window.dataLayer.push(eventData);
+      logEvent(eventData);
+    }
+    
+    // Validate step fields
+    function validateStep(step) {
+      const stepElement = document.querySelector(`.step[data-step="${step}"]`);
+      const inputs = stepElement.querySelectorAll('input[required], select[required]');
+      const errorFields = [];
+      let isValid = true;
+      
+      inputs.forEach(input => {
+        const errorMsg = input.nextElementSibling;
+        
+        if (!input.value || (input.type === 'email' && !input.validity.valid) || 
+            (input.minLength && input.value.length < input.minLength)) {
+          isValid = false;
+          input.classList.add('error');
+          if (errorMsg) errorMsg.classList.add('visible');
+          errorFields.push(input.id);
+        } else {
+          input.classList.remove('error');
+          if (errorMsg) errorMsg.classList.remove('visible');
+        }
+      });
+      
+      if (!isValid) {
+        fireError(step, errorFields);
+      }
+      
+      return isValid;
+    }
+    
+    // Navigate to next step
+    function nextStep() {
+      if (!validateStep(currentStep)) {
+        return;
+      }
+      
+      fireStepComplete(currentStep);
+      
+      // Hide current step
+      document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+      document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.remove('active');
+      document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.add('completed');
+      
+      // Show next step
+      currentStep++;
+      document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+      document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.add('active');
+      
+      fireStepView(currentStep);
+    }
+    
+    // Navigate to previous step
+    function prevStep() {
+      // Hide current step
+      document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+      document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.remove('active');
+      
+      // Show previous step
+      currentStep--;
+      document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+      document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.add('active');
+      document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.remove('completed');
+      
+      fireStepView(currentStep);
+    }
+    
+    // Handle form submission
+    document.getElementById('multi-step-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      if (!validateStep(currentStep)) {
+        return;
+      }
+      
+      fireStepComplete(currentStep);
+      
+      // Final success event
+      const eventData = {
+        event: 'form_submit_success',
+        form_id: formId,
+        instance_id: formInstanceId,
+        total_steps_completed: completedSteps.size,
+        plan: document.getElementById('plan').value,
+        industry: document.getElementById('industry').value,
+        form_type: 'signup',
+        form_location: 'demo_page'
+      };
+      
+      window.dataLayer.push(eventData);
+      logEvent(eventData);
+      
+      // Show success message
+      document.querySelector('.form-container form').style.display = 'none';
+      document.querySelector('.progress-bar').style.display = 'none';
+      document.getElementById('success-message').classList.add('visible');
+      
+      // Mark all steps as completed
+      document.querySelectorAll('.progress-step').forEach(step => {
+        step.classList.add('completed');
+        step.classList.remove('active');
+      });
+    });
+    
+    // Fire initial step view
+    fireStepView(1);
+  </script>
+</body>
+</html>
