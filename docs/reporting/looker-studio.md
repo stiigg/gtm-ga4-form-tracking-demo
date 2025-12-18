@@ -9,19 +9,41 @@
 
 This guide shows how to connect your GA4 BigQuery export to Looker Studio and build dashboards.
 
+## Important: Enable Looker Studio date range parameters (required)
+
+If you're using **BigQuery → Custom Query** in Looker Studio, enable **Date range parameters** so your SQL receives the report’s selected date range via:
+
+- `@DS_START_DATE` (DATE)
+- `@DS_END_DATE` (DATE)
+
+Docs: Looker Studio “Use parameters in a custom query”.
+
+### Recommended GA4 `_TABLE_SUFFIX` filter
+
+GA4 daily export tables are sharded as `events_YYYYMMDD`. Use:
+
+```sql
+WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', @DS_START_DATE)
+                        AND FORMAT_DATE('%Y%m%d', @DS_END_DATE)
+```
+
 ## Prerequisites
 
 - ✅ GTM container published with GA4 tags
 - ✅ GA4 receiving events (check DebugView)
 - ✅ BigQuery export enabled in GA4
 - ✅ At least 24-48 hours of data collected
-- ✅ BigQuery dataset contains `events_YYYYMMDD` tables
+- ✅ BigQuery dataset contains `events_YYYYMMDD` (daily) and `events_intraday_YYYYMMDD` (streaming) tables
 
 ---
 
 ## Part 1: Verify BigQuery Data
 
 Before building dashboards, confirm data is flowing correctly.
+
+GA4 export creates two canonical event table types:
+- `events_YYYYMMDD` (daily)
+- `events_intraday_YYYYMMDD` (streaming; dropped once the daily table finalizes)
 
 ### Check Tables Exist
 
@@ -51,7 +73,8 @@ events_20251206     | 2025-12-06 01:30:00 | 892       | 0.009
 -- Quick test: Count form submissions
 SELECT COUNT(*) as form_submissions
 FROM `gtm-ga4-analytics.analytics_514638991.events_*`
-WHERE _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
+WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', @DS_START_DATE)
+                        AND FORMAT_DATE('%Y%m%d', @DS_END_DATE)
   AND event_name = 'generate_lead';
 ```
 
@@ -89,8 +112,8 @@ SELECT
   COUNT(*) as submissions,
   COUNT(DISTINCT user_pseudo_id) as unique_users
 FROM `gtm-ga4-analytics.analytics_514638991.events_*`
-WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
-  AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', @DS_START_DATE)
+                        AND FORMAT_DATE('%Y%m%d', @DS_END_DATE)
   AND event_name = 'generate_lead'
 GROUP BY submission_date, form_id, form_type, form_location, form_topic, form_plan;
 ```
@@ -111,8 +134,8 @@ WITH user_events AS (
     event_name,
     event_timestamp
   FROM `gtm-ga4-analytics.analytics_514638991.events_*`
-  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY))
-    AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', @DS_START_DATE)
+    AND FORMAT_DATE('%Y%m%d', @DS_END_DATE)
     AND event_name IN ('view_item_list', 'view_item', 'add_to_cart', 'begin_checkout', 'purchase')
 )
 SELECT
@@ -262,14 +285,18 @@ checkout_to_purchase_rate = purchase_count / checkout_count * 100
    - Reduces BigQuery costs by 90%+
    - Acceptable for most analytics use cases
 
-### Create Scheduled Queries (Advanced)
+### Create Materialized Views (Advanced)
 
-For frequently-used dashboards, create materialized views:
+For frequently-used dashboards, create materialized views (MVs). BigQuery refreshes MVs reactively when base tables change (typically within ~5–30 minutes, best-effort). `refresh_interval_minutes` is a **minimum interval cap**, not a cron schedule.
 
 ```
--- Create materialized form submissions table
-CREATE OR REPLACE TABLE `gtm-ga4-analytics.reporting.form_submissions_daily`
-PARTITION BY submission_date
+-- Materialized view for faster dashboards
+CREATE MATERIALIZED VIEW `gtm-ga4-analytics.reporting.form_submissions_daily`
+OPTIONS (
+  enable_refresh = TRUE,
+  refresh_interval_minutes = 60,
+  description = 'Daily form submissions by date + form_id (GA4 generate_lead)'
+)
 AS
 SELECT
   PARSE_DATE('%Y%m%d', event_date) as submission_date,
@@ -279,21 +306,16 @@ SELECT
   COUNT(*) as submissions,
   COUNT(DISTINCT user_pseudo_id) as unique_users
 FROM `gtm-ga4-analytics.analytics_514638991.events_*`
-WHERE _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', @DS_START_DATE)
+                        AND FORMAT_DATE('%Y%m%d', @DS_END_DATE)
   AND event_name = 'generate_lead'
 GROUP BY submission_date, form_id, form_topic, form_plan;
 ```
 
-**Schedule this query:**
-1. In BigQuery, save query
-2. Click **Schedule** → **Create new scheduled query**
-3. Repeat: Daily at 2:00 AM
-4. Update Looker Studio to use `reporting.form_submissions_daily` table
-
 **Benefits:**
-- ⚡ Instant dashboard loading (queries pre-computed table)
-- 💰 95% cost reduction
-- 🔄 Always fresh (runs daily)
+- ⚡ Instant dashboard loading (queries pre-computed view)
+- 💰 Major cost reduction when dashboards run often
+- 🔄 Auto-refreshes when source tables change
 
 ---
 
