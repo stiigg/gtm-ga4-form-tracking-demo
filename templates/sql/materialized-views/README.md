@@ -27,9 +27,14 @@ Pre-computed aggregations that dramatically reduce query costs and execution tim
 **Use Case**: Powers executive dashboards, KPI scorecards, traffic reports.
 
 **Cost Savings Example**:
-- Without MV: Dashboard queries 100x/day × 45MB = 4.5GB/day = **$8.25/month**
-- With MV: Dashboard queries 100x/day × 10MB = 1GB/day = **$1.84/month**
-- **Savings: $6.41/month (78%)**
+- Without MV: 100 queries/day × 45 MB ≈ 4.5 GB/day
+  - Monthly scanned ≈ 4.5 GB/day × 30 ≈ 135 GB/month
+  - BigQuery on-demand analysis pricing is billed per **TiB processed**
+  - Rough conversion: $6.25 / 1024 GB ≈ $0.0061 per GB (after free tier)
+  - Monthly cost estimate: 135 GB × $0.0061 ≈ **$0.82/month** (after free tier)
+
+> Note: The **first 1 TiB per month is free** on on-demand analysis pricing (account-level),
+> so many small demo dashboards will effectively be $0. Pricing: BigQuery pricing page.
 
 ### 2. `ecommerce_product_performance_mv.sql`
 
@@ -47,6 +52,11 @@ Pre-computed aggregations that dramatically reduce query costs and execution tim
 - Without MV: Product reports 50x/day × 12MB = 600MB/day = **$4.50/month**
 - With MV: Product reports 50x/day × 0.6MB = 30MB/day = **$0.23/month**
 - **Savings: $4.27/month (95%)**
+
+## How to measure bytes scanned (recommended)
+
+- Use **Dry run** (e.g., `bq query --dry_run`) or check `INFORMATION_SCHEMA.JOBS` to see
+  `total_bytes_processed` for your queries before publishing cost claims.
 
 ## When to Use Materialized Views
 
