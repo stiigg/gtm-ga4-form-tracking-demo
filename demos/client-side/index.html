@@ -223,6 +223,7 @@
           • Fires only on success<br/>
           • Clean dataLayer push<br/>
           • Anti-double-fire guard<br/>
+          • Instance ID for SPA support<br/>
           • Standard GA4 event</p>
         </div>
         
@@ -316,6 +317,9 @@
     // Initialize dataLayer (required before any pushes)
     window.dataLayer = window.dataLayer || [];
     
+    // Generate unique instance ID once per form load (PRODUCTION READY)
+    const goodFormInstanceId = Date.now() + '_' + Math.random().toString(16).slice(2);
+    
     // Anti-double-fire guard
     let goodSent = false;
     
@@ -348,6 +352,7 @@
       window.dataLayer.push({
         event: 'form_submission_success',
         form_id: 'contact_us',
+        instance_id: goodFormInstanceId,  // ✅ Unique instance ID
         form_type: 'lead',
         form_location: 'demo_page',
         form_fields: {
@@ -363,6 +368,7 @@
       document.getElementById('good-debug').textContent = JSON.stringify({
         event: 'form_submission_success',
         form_id: 'contact_us',
+        instance_id: goodFormInstanceId,
         form_type: 'lead',
         form_location: 'demo_page',
         form_fields: {
