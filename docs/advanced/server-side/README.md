@@ -79,6 +79,17 @@
 - Break-even analysis ($3K/month threshold)
 - Attribution improvement modeling (Direct → proper channels)
 
+## Event Deduplication (Required)
+
+When sending the same event from both client-side GTM and server-side GTM (GA4 or Meta CAPI), include the same `event_id` value.
+
+GA4 and Meta deduplicate events using:
+- `event_name`
+- `event_id`
+- Timestamp proximity
+
+Use a consistent pattern to generate the ID once and reuse it across channels to prevent double-counting.
+
 ---
 
 ## Repository Structure

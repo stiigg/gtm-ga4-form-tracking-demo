@@ -315,6 +315,9 @@
   <script>
     // Initialize dataLayer (required before any pushes)
     window.dataLayer = window.dataLayer || [];
+
+    // Unique per form load to correlate attempts
+    const instanceId = `${Date.now()}_${Math.random().toString(16).slice(2)}`;
     
     // Anti-double-fire guard
     let goodSent = false;
@@ -348,6 +351,7 @@
       window.dataLayer.push({
         event: 'form_submission_success',
         form_id: 'contact_us',
+        instance_id: instanceId,
         form_type: 'lead',
         form_location: 'demo_page',
         form_fields: {
@@ -363,6 +367,7 @@
       document.getElementById('good-debug').textContent = JSON.stringify({
         event: 'form_submission_success',
         form_id: 'contact_us',
+        instance_id: instanceId,
         form_type: 'lead',
         form_location: 'demo_page',
         form_fields: {

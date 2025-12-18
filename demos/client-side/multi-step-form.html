@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GTM/GA4 Multi-Step Form Tracking Demo</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f7fb;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: #222;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #555;
+      margin-bottom: 30px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+    .steps {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .step-pill {
+      padding: 10px 14px;
+      border-radius: 20px;
+      background: #eef2ff;
+      color: #4a4ab6;
+      font-weight: 600;
+    }
+    .step-pill.active {
+      background: #4a4ab6;
+      color: #fff;
+    }
+    .form-step {
+      display: none;
+    }
+    .form-step.active {
+      display: block;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #333;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #dce1ec;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    button {
+      padding: 12px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn-secondary {
+      background: #e7eaf3;
+      color: #333;
+    }
+    .btn-primary {
+      background: #4a4ab6;
+      color: #fff;
+      flex: 1;
+    }
+    .error {
+      background: #ffecec;
+      border: 1px solid #ffb3b3;
+      color: #c0392b;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 8px;
+    }
+    .success {
+      background: #e9f8ec;
+      border: 1px solid #b9e2c9;
+      color: #1d7a38;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 16px;
+      display: none;
+    }
+    .debug {
+      background: #111827;
+      color: #c7d2fe;
+      padding: 16px;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-family: 'Courier New', monospace;
+      max-height: 280px;
+      overflow-y: auto;
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Multi-Step Form Tracking (GOOD)</h1>
+    <p class="subtitle">Shows event sequencing + drop-off visibility with a single instance_id.</p>
+
+    <div class="card">
+      <div class="steps" id="stepPills">
+        <div class="step-pill active" data-step="1">Step 1: Contact</div>
+        <div class="step-pill" data-step="2">Step 2: Details</div>
+        <div class="step-pill" data-step="3">Step 3: Confirm</div>
+      </div>
+
+      <div id="step-1" class="form-step active">
+        <div class="form-group">
+          <label for="ms-name">Name *</label>
+          <input type="text" id="ms-name" required>
+        </div>
+        <div class="form-group">
+          <label for="ms-email">Email *</label>
+          <input type="email" id="ms-email" required>
+        </div>
+        <div id="error-1" class="error" style="display:none"></div>
+        <div class="actions">
+          <div></div>
+          <button class="btn-primary" id="next-1">Next →</button>
+        </div>
+      </div>
+
+      <div id="step-2" class="form-step">
+        <div class="form-group">
+          <label for="ms-plan">Plan *</label>
+          <select id="ms-plan" required>
+            <option value="">Select...</option>
+            <option value="basic">Basic</option>
+            <option value="pro">Pro</option>
+            <option value="enterprise">Enterprise</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="ms-team">Team Size *</label>
+          <input type="number" id="ms-team" min="1" required>
+        </div>
+        <div id="error-2" class="error" style="display:none"></div>
+        <div class="actions">
+          <button class="btn-secondary" id="back-2">← Back</button>
+          <button class="btn-primary" id="next-2">Next →</button>
+        </div>
+      </div>
+
+      <div id="step-3" class="form-step">
+        <p><strong>Review:</strong> Confirm your details before submitting.</p>
+        <ul>
+          <li><strong>Name:</strong> <span id="review-name"></span></li>
+          <li><strong>Email:</strong> <span id="review-email"></span></li>
+          <li><strong>Plan:</strong> <span id="review-plan"></span></li>
+          <li><strong>Team Size:</strong> <span id="review-team"></span></li>
+        </ul>
+        <div id="error-3" class="error" style="display:none"></div>
+        <div class="actions">
+          <button class="btn-secondary" id="back-3">← Back</button>
+          <button class="btn-primary" id="submit">Submit</button>
+        </div>
+      </div>
+
+      <div id="success" class="success">✅ Success! dataLayer event sent for GA4 funnel.</div>
+      <div class="debug" id="debug">Awaiting interaction...</div>
+    </div>
+  </div>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    const instanceId = Date.now() + '_' + Math.random().toString(16).slice(2);
+    const formId = 'multi_step_signup';
+    const totalSteps = 3;
+    let currentStep = 1;
+    let formStarted = false;
+
+    function logAndPush(eventObject) {
+      window.dataLayer.push(eventObject);
+      const debug = document.getElementById('debug');
+      debug.textContent += '\\n' + JSON.stringify(eventObject, null, 2);
+      debug.scrollTop = debug.scrollHeight;
+    }
+
+    function updateStep(step) {
+      document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+      document.getElementById(`step-${step}`).classList.add('active');
+      document.querySelectorAll('.step-pill').forEach(pill => {
+        pill.classList.toggle('active', Number(pill.dataset.step) === step);
+      });
+      currentStep = step;
+    }
+
+    function stepView(step, name) {
+      logAndPush({
+        event: 'form_step_view',
+        form_id: formId,
+        instance_id: instanceId,
+        step_number: step,
+        step_name: name
+      });
+    }
+
+    function stepComplete(step) {
+      logAndPush({
+        event: 'form_step_complete',
+        form_id: formId,
+        instance_id: instanceId,
+        step_number: step
+      });
+    }
+
+    function stepError(step, fields) {
+      logAndPush({
+        event: 'form_error',
+        form_id: formId,
+        instance_id: instanceId,
+        step_number: step,
+        error_fields: fields
+      });
+    }
+
+    function fireFormStart() {
+      if (formStarted) return;
+      formStarted = true;
+      logAndPush({
+        event: 'form_start',
+        form_id: formId,
+        instance_id: instanceId,
+        total_steps: totalSteps
+      });
+    }
+
+    function showError(step, message) {
+      const errorEl = document.getElementById(`error-${step}`);
+      errorEl.textContent = message;
+      errorEl.style.display = 'block';
+    }
+
+    function clearError(step) {
+      const errorEl = document.getElementById(`error-${step}`);
+      errorEl.textContent = '';
+      errorEl.style.display = 'none';
+    }
+
+    function goToStep2() {
+      fireFormStart();
+      const name = document.getElementById('ms-name').value.trim();
+      const email = document.getElementById('ms-email').value.trim();
+      const errors = [];
+
+      if (!name) errors.push('name');
+      if (!email) errors.push('email');
+
+      if (errors.length) {
+        showError(1, 'Please complete all required fields.');
+        stepError(1, errors);
+        return;
+      }
+
+      clearError(1);
+      stepComplete(1);
+      updateStep(2);
+      stepView(2, 'Plan Selection');
+    }
+
+    function goToStep3() {
+      fireFormStart();
+      const plan = document.getElementById('ms-plan').value;
+      const team = document.getElementById('ms-team').value;
+      const errors = [];
+
+      if (!plan) errors.push('plan');
+      if (!team) errors.push('team_size');
+
+      if (errors.length) {
+        showError(2, 'Please select a plan and add your team size.');
+        stepError(2, errors);
+        return;
+      }
+
+      clearError(2);
+      stepComplete(2);
+      document.getElementById('review-name').textContent = document.getElementById('ms-name').value;
+      document.getElementById('review-email').textContent = document.getElementById('ms-email').value;
+      document.getElementById('review-plan').textContent = plan;
+      document.getElementById('review-team').textContent = team;
+      updateStep(3);
+      stepView(3, 'Review & Submit');
+    }
+
+    function submitForm() {
+      fireFormStart();
+      const errors = [];
+
+      if (!document.getElementById('ms-name').value.trim()) errors.push('name');
+      if (!document.getElementById('ms-email').value.trim()) errors.push('email');
+      if (!document.getElementById('ms-plan').value) errors.push('plan');
+      if (!document.getElementById('ms-team').value) errors.push('team_size');
+
+      if (errors.length) {
+        showError(3, 'Missing required fields.');
+        stepError(3, errors);
+        return;
+      }
+
+      clearError(3);
+      stepComplete(3);
+      logAndPush({
+        event: 'form_submit_success',
+        form_id: formId,
+        instance_id: instanceId,
+        total_steps_completed: totalSteps
+      });
+      document.getElementById('success').style.display = 'block';
+    }
+
+    document.getElementById('next-1').addEventListener('click', goToStep2);
+    document.getElementById('next-2').addEventListener('click', goToStep3);
+    document.getElementById('submit').addEventListener('click', submitForm);
+    document.getElementById('back-2').addEventListener('click', () => {
+      updateStep(1);
+      stepView(1, 'Contact Info');
+    });
+    document.getElementById('back-3').addEventListener('click', () => {
+      updateStep(2);
+      stepView(2, 'Plan Selection');
+    });
+
+    // First visible step view on load
+    stepView(1, 'Contact Info');
+  </script>
+</body>
+</html>

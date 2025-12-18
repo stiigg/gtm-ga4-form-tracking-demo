@@ -29,6 +29,24 @@ Before starting this guide, ensure you have:
 
 ---
 
+## instance_id (Required for Production)
+
+Each form attempt should generate a unique `instance_id` when the form loads.
+
+This allows you to:
+- Distinguish multiple attempts in the same session
+- Correlate multi-step progression
+- Support SPA rendering
+- Enable server-side deduplication later
+
+**Implementation pattern:**
+```js
+const instance_id = Date.now() + '_' + Math.random().toString(16).slice(2);
+// Include this value in all form-related dataLayer events.
+```
+
+---
+
 ## Step 1: Create GTM Container
 
 1. Go to [tagmanager.google.com](https://tagmanager.google.com)
@@ -269,6 +287,20 @@ After creating the tag:
    - **Parameter Name:** `items` → **Value:** `{{DLV - ecommerce.items}}`
 6. **Triggering:** `CE - purchase`
 7. **Save**
+
+---
+
+## Multi-Step Form Funnels in GA4
+
+Recommended funnel steps for multi-step forms:
+
+1. `form_start`
+2. `form_step_complete` (step 1)
+3. `form_step_complete` (step 2)
+4. `form_step_complete` (step 3)
+5. `form_submit_success`
+
+This sequence reveals exactly where users abandon the form and how far they progress before dropping off.
 
 ---
 
