@@ -223,7 +223,8 @@
           • Fires only on success<br/>
           • Clean dataLayer push<br/>
           • Anti-double-fire guard<br/>
-          • Standard GA4 event</p>
+          • Standard GA4 event<br/>
+          • Unique instance_id (SPA-ready)</p>
         </div>
         
         <form id="good-form">
@@ -278,7 +279,8 @@
           • Fires on click (not success)<br/>
           • No validation<br/>
           • High cardinality fields<br/>
-          • Counts failures</p>
+          • Counts failures<br/>
+          • No instance tracking</p>
         </div>
         
         <form id="bad-form" onsubmit="return false">
@@ -316,6 +318,9 @@
     // Initialize dataLayer (required before any pushes)
     window.dataLayer = window.dataLayer || [];
     
+    // Generate unique instance ID once per page load (SPA-ready)
+    const goodFormInstanceId = `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+    
     // Anti-double-fire guard
     let goodSent = false;
     
@@ -348,6 +353,7 @@
       window.dataLayer.push({
         event: 'form_submission_success',
         form_id: 'contact_us',
+        instance_id: goodFormInstanceId,  // Unique per form load (enables multi-step correlation)
         form_type: 'lead',
         form_location: 'demo_page',
         form_fields: {
@@ -363,6 +369,7 @@
       document.getElementById('good-debug').textContent = JSON.stringify({
         event: 'form_submission_success',
         form_id: 'contact_us',
+        instance_id: goodFormInstanceId,
         form_type: 'lead',
         form_location: 'demo_page',
         form_fields: {
