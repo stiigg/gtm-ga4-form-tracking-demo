@@ -61,6 +61,85 @@
       margin: 0 auto;
     }
 
+    .educational-notice {
+      background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+      border: 3px solid #856404;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .educational-notice-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .educational-notice-icon {
+      font-size: 42px;
+      margin-right: 15px;
+    }
+
+    .educational-notice h2 {
+      margin: 0;
+      color: #856404;
+      font-size: 22px;
+    }
+
+    .educational-notice p {
+      margin: 0 0 15px 0;
+      color: #333;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .notice-section {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 12px;
+    }
+
+    .notice-section p {
+      margin: 0 0 8px 0;
+      color: #333;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .notice-section ul {
+      margin: 0;
+      padding-left: 25px;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .notice-section li {
+      margin-bottom: 5px;
+    }
+
+    .notice-footer {
+      background: #e7f3ff;
+      border-left: 4px solid #0066cc;
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 15px;
+    }
+
+    .notice-footer p {
+      margin: 0;
+      color: #333;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .notice-footer a {
+      color: #0066cc;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
     h1 {
       text-align: center;
       color: white;
@@ -249,6 +328,45 @@
   <!-- End Google Tag Manager (noscript) -->
 
   <div class="container">
+    <!-- Educational Demo Notice -->
+    <div class="educational-notice">
+      <div class="educational-notice-header">
+        <span class="educational-notice-icon">📚</span>
+        <h2>Educational Demonstration</h2>
+      </div>
+      
+      <p><strong>This demonstrates server-side tracking architecture and code patterns.</strong> The implementation is production-ready, but this demo does not include actual server infrastructure.</p>
+      
+      <div class="notice-section">
+        <p>✅ What This Demo Provides:</p>
+        <ul>
+          <li>Correct client-side code structure</li>
+          <li>Proper validation patterns</li>
+          <li>Transaction ID generation for deduplication</li>
+          <li>DataLayer event architecture</li>
+        </ul>
+      </div>
+      
+      <div class="notice-section">
+        <p>❌ What's Not Included (For Full Production):</p>
+        <ul>
+          <li>Deployed server container (requires Google Cloud Run/AWS)</li>
+          <li>Custom domain configuration (<code>track.yourdomain.com</code>)</li>
+          <li>DNS CNAME records and SSL certificates</li>
+          <li>Server-side tag configuration in GTM</li>
+        </ul>
+      </div>
+      
+      <div class="notice-footer">
+        <p>
+          <strong>📖 Full Implementation Guide:</strong> 
+          See <a href="https://github.com/stiigg/gtm-ga4-form-tracking-demo">repository documentation</a><br/>
+          <strong>⏱️ Setup Time:</strong> ~3-5 hours | 
+          <strong>💰 Monthly Cost:</strong> $50-100 (DIY) or $19-99 (managed solutions like Stape.io)
+        </p>
+      </div>
+    </div>
+
     <h1>🎯 GTM/GA4 Form Tracking: Complete Comparison</h1>
     
     <div class="demo-grid">
@@ -466,7 +584,7 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     
-    // BAD FORM (same as current)
+    // BAD FORM
     document.getElementById('bad-submit').addEventListener('click', function() {
       window.dataLayer.push({
         event: 'contact_form',
@@ -489,7 +607,7 @@
       `;
     });
     
-    // GOOD FORM (same as current)
+    // GOOD FORM
     let goodSent = false;
     document.getElementById('good-form').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -540,7 +658,7 @@
       `;
     });
     
-    // SERVER-SIDE FORM (NEW)
+    // SERVER-SIDE FORM
     let serverSent = false;
     document.getElementById('server-form').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -564,26 +682,19 @@
       await new Promise(resolve => setTimeout(resolve, 500));
       serverSent = true;
       
-      // Generate unique transaction ID for deduplication
       const transactionId = `form_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
-      // Push to dataLayer with server-side routing
       window.dataLayer.push({
         event: 'form_submission_success',
         form_id: 'contact_us',
         form_type: 'lead',
         form_location: 'demo_page',
-        tracking_source: 'server',  // Indicates server-side tracking
-        transaction_id: transactionId,  // For deduplication
+        tracking_source: 'server',
+        transaction_id: transactionId,
         form_fields: {
           topic: topic,
           plan: plan
-        },
-        // Server container will enrich with:
-        // - Server-side timestamp
-        // - IP-based geolocation (GDPR-compliant hashing)
-        // - User-agent parsing
-        // - Custom event parameters
+        }
       });
       
       document.getElementById('server-success').style.display = 'block';
