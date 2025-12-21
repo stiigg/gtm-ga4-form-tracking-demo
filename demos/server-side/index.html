@@ -331,14 +331,13 @@
     <!-- Educational Demo Notice -->
     <div class="educational-notice">
       <div class="educational-notice-header">
-        <span class="educational-notice-icon">📚</span>
         <h2>Educational Demonstration</h2>
       </div>
       
       <p><strong>This demonstrates server-side tracking architecture and code patterns.</strong> The implementation is production-ready, but this demo does not include actual server infrastructure.</p>
       
       <div class="notice-section">
-        <p>✅ What This Demo Provides:</p>
+        <p>What This Demo Provides:</p>
         <ul>
           <li>Correct client-side code structure</li>
           <li>Proper validation patterns</li>
@@ -348,7 +347,7 @@
       </div>
       
       <div class="notice-section">
-        <p>❌ What's Not Included (For Full Production):</p>
+        <p>What's Not Included (For Full Production):</p>
         <ul>
           <li>Deployed server container (requires Google Cloud Run/AWS)</li>
           <li>Custom domain configuration (<code>track.yourdomain.com</code>)</li>
@@ -359,20 +358,20 @@
       
       <div class="notice-footer">
         <p>
-          <strong>📖 Full Implementation Guide:</strong> 
+          <strong>Full Implementation Guide:</strong> 
           See <a href="https://github.com/stiigg/gtm-ga4-form-tracking-demo">repository documentation</a><br/>
-          <strong>⏱️ Setup Time:</strong> ~3-5 hours | 
-          <strong>💰 Monthly Cost:</strong> $50-100 (DIY) or $19-99 (managed solutions like Stape.io)
+          <strong>Setup Time:</strong> ~3-5 hours | 
+          <strong>Monthly Cost:</strong> $50-100 (DIY) or $19-99 (managed solutions like Stape.io)
         </p>
       </div>
     </div>
 
-    <h1>🎯 GTM/GA4 Form Tracking: Complete Comparison</h1>
+    <h1>GTM/GA4 Form Tracking: Complete Comparison</h1>
     
     <div class="demo-grid">
       <!-- BAD: Client-Side Only (No Validation) -->
       <div class="demo-card">
-        <h2>❌ BAD: Client-Side (No Validation)</h2>
+        <h2>BAD: Client-Side (No Validation)</h2>
         <span class="badge badge-bad">Anti-pattern</span>
         
         <div class="info-box">
@@ -400,20 +399,20 @@
         </form>
         
         <div class="success-message" id="bad-success">
-          ⚠️ Fired! (Even if invalid)
+          Fired! (Even if invalid)
         </div>
         
         <div class="debug-section">
           <h3>Tracking Method</h3>
-          <p>❌ Direct GA4 call (blocked by ad blockers)</p>
-          <p>❌ No validation</p>
+          <p>Direct GA4 call (blocked by ad blockers)</p>
+          <p>No validation</p>
           <div class="debug-output" id="bad-debug">Waiting for button click...</div>
         </div>
       </div>
       
       <!-- GOOD: Client-Side with Validation -->
       <div class="demo-card">
-        <h2>✅ GOOD: Client-Side (Validated)</h2>
+        <h2>GOOD: Client-Side (Validated)</h2>
         <span class="badge badge-good">Best Practice</span>
         
         <div class="info-box">
@@ -453,20 +452,20 @@
         </form>
         
         <div class="success-message" id="good-success">
-          ✅ Success! Event pushed to dataLayer (GTM will send to GA4)
+          Success! Event pushed to dataLayer (GTM will send to GA4)
         </div>
         
         <div class="debug-section">
           <h3>Tracking Method</h3>
-          <p>✅ Validated dataLayer push</p>
-          <p>⚠️ Still client-side (25-35% loss)</p>
+          <p>Validated dataLayer push</p>
+          <p>Still client-side (25-35% loss)</p>
           <div class="debug-output" id="good-debug">Waiting for form submission...</div>
         </div>
       </div>
       
       <!-- BEST: Server-Side with Hybrid Architecture -->
       <div class="demo-card">
-        <h2>🚀 BEST: Server-Side (Hybrid)</h2>
+        <h2>BEST: Server-Side (Hybrid)</h2>
         <span class="badge badge-server">Enterprise</span>
         
         <div class="info-box">
@@ -507,15 +506,15 @@
         </form>
         
         <div class="success-message" id="server-success">
-          ✅ Server-side event pushed with deduplication ID
+          Server-side event pushed with deduplication ID
         </div>
         
         <div class="debug-section">
           <h3>Tracking Method</h3>
-          <p>✅ Validated dataLayer push</p>
-          <p>✅ Routed through server container</p>
-          <p>✅ Ad blocker resistant</p>
-          <p>✅ Transaction ID deduplication</p>
+          <p>Validated dataLayer push</p>
+          <p>Routed through server container</p>
+          <p>Ad blocker resistant</p>
+          <p>Transaction ID deduplication</p>
           <div class="debug-output" id="server-debug">Waiting for validated submission...</div>
         </div>
       </div>
@@ -523,7 +522,7 @@
     
     <!-- Comparison Table -->
     <div class="comparison-section">
-      <h2>📊 Implementation Comparison</h2>
+      <h2>Implementation Comparison</h2>
       <table class="comparison-table">
         <thead>
           <tr>
@@ -536,15 +535,15 @@
         <tbody>
           <tr>
             <td>Validation</td>
-            <td>❌ None</td>
-            <td>✅ Yes</td>
-            <td>✅ Yes</td>
+            <td>None</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
             <td>Ad Blocker Resistance</td>
-            <td>❌ 0%</td>
-            <td>❌ 0%</td>
-            <td>✅ 95%+</td>
+            <td>0%</td>
+            <td>0%</td>
+            <td>95%+</td>
           </tr>
           <tr>
             <td>Data Accuracy</td>
@@ -554,15 +553,15 @@
           </tr>
           <tr>
             <td>Deduplication</td>
-            <td>❌ No</td>
-            <td>✅ Yes</td>
-            <td>✅ Yes (Enhanced)</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes (Enhanced)</td>
           </tr>
           <tr>
             <td>GDPR Compliance</td>
-            <td>⚠️ Weak</td>
-            <td>✅ Good</td>
-            <td>✅ Excellent</td>
+            <td>Weak</td>
+            <td>Good</td>
+            <td>Excellent</td>
           </tr>
           <tr>
             <td>Setup Complexity</td>
@@ -595,9 +594,9 @@
       document.getElementById('bad-success').style.display = 'block';
       document.getElementById('bad-debug').innerHTML = `
         <strong>Tracking Status:</strong><br/>
-        ❌ Fired without validation<br/>
-        ⚠️ Likely blocked by ad blockers<br/>
-        📊 Estimated reach: ~50-65%<br/><br/>
+        Fired without validation<br/>
+        Likely blocked by ad blockers<br/>
+        Estimated reach: ~50-65%<br/><br/>
         <strong>Event pushed:</strong><br/>
         ${JSON.stringify({
           event: 'contact_form',
@@ -622,7 +621,7 @@
       if (!name || !email || !topic || !plan) {
         document.getElementById('good-debug').innerHTML = `
           <strong>Validation Failed:</strong><br/>
-          ❌ Event NOT sent<br/>
+          Event NOT sent<br/>
           Required fields missing
         `;
         return;
@@ -646,9 +645,9 @@
       document.getElementById('good-success').style.display = 'block';
       document.getElementById('good-debug').innerHTML = `
         <strong>Tracking Status:</strong><br/>
-        ✅ Validation passed<br/>
-        ⚠️ Still affected by ad blockers<br/>
-        📊 Estimated reach: ~65-75%<br/><br/>
+        Validation passed<br/>
+        Still affected by ad blockers<br/>
+        Estimated reach: ~65-75%<br/><br/>
         <strong>Event pushed:</strong><br/>
         ${JSON.stringify({
           event: 'form_submission_success',
@@ -673,7 +672,7 @@
       if (!name || !email || !topic || !plan) {
         document.getElementById('server-debug').innerHTML = `
           <strong>Validation Failed:</strong><br/>
-          ❌ Event NOT sent<br/>
+          Event NOT sent<br/>
           Required fields missing
         `;
         return;
@@ -700,11 +699,11 @@
       document.getElementById('server-success').style.display = 'block';
       document.getElementById('server-debug').innerHTML = `
         <strong>Tracking Status:</strong><br/>
-        ✅ Validation passed<br/>
-        ✅ Routed through server container<br/>
-        ✅ Ad blocker bypassed<br/>
-        ✅ Transaction ID: ${transactionId}<br/>
-        📊 Estimated reach: ~95%+<br/><br/>
+        Validation passed<br/>
+        Routed through server container<br/>
+        Ad blocker bypassed<br/>
+        Transaction ID: ${transactionId}<br/>
+        Estimated reach: ~95%+<br/><br/>
         <strong>Event pushed:</strong><br/>
         ${JSON.stringify({
           event: 'form_submission_success',
