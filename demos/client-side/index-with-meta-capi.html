@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GTM/GA4 + Meta CAPI Form Tracking Demo</title>
+
+  <!-- Consent Mode v2 Default -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    // Check for stored consent
+    const storedConsent = localStorage.getItem('user_consent_preferences');
+
+    if (storedConsent) {
+      gtag('consent', 'default', JSON.parse(storedConsent));
+    } else {
+      // Default to denied (GDPR compliant)
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 500
+      });
+    }
+  </script>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MM6H8SQW');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    
+    // DEMO MODE: Using demo Pixel ID - Replace with YOUR_PIXEL_ID in production
+    fbq('init', 'DEMO_PIXEL_ID');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=DEMO_PIXEL_ID&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Meta Pixel Code -->
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      text-align: center;
+      color: white;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      text-align: center;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 40px;
+      font-size: 18px;
+    }
+    
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    
+    .demo-card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    .demo-card h2 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      margin-right: 8px;
+    }
+    
+    .badge-good {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .badge-bad {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .badge-meta {
+      background: #e7f3ff;
+      color: #004085;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #555;
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    button {
+      background: #667eea;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s ease;
+    }
+    
+    button:hover {
+      background: #764ba2;
+    }
+    
+    .success-message {
+      display: none;
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 15px;
+    }
+    
+    .debug-section {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      padding: 20px;
+      margin-top: 30px;
+    }
+    
+    .debug-section h3 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    .debug-output {
+      background: #282c34;
+      color: #61dafb;
+      padding: 15px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
+    
+    .info-box {
+      background: #e7f3ff;
+      border-left: 4px solid #667eea;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+    
+    .info-box p {
+      color: #333;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .meta-info-box {
+      background: #fff3cd;
+      border-left: 4px solid #ff9800;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+
+    .alert-banner {
+      background: #d1ecf1;
+      border: 2px solid #0c5460;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+      color: #0c5460;
+    }
+
+    .alert-banner h3 {
+      margin-bottom: 10px;
+    }
+
+    .alert-banner code {
+      background: rgba(0,0,0,0.1);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+    
+    @media (max-width: 768px) {
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MM6H8SQW"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  
+  <div class="container">
+    <h1>🎯 GTM/GA4 + Meta CAPI Form Tracking Demo</h1>
+    <p class="subtitle">Multi-Platform Tracking with Event Deduplication</p>
+
+    <div class="alert-banner">
+      <h3>🔧 Setup Required</h3>
+      <p><strong>To test Meta Pixel tracking:</strong></p>
+      <p>1. Replace <code>DEMO_PIXEL_ID</code> in the &lt;head&gt; section with your actual Meta Pixel ID</p>
+      <p>2. Install <strong>Meta Pixel Helper</strong> Chrome extension to verify events</p>
+      <p>3. Check Meta Events Manager → Test Events to see live tracking</p>
+    </div>
+    
+    <div class="demo-grid">
+      <!-- GOOD Implementation with Meta CAPI -->
+      <div class="demo-card">
+        <h2>✅ GOOD: Multi-Platform Tracking</h2>
+        <span class="badge badge-good">Best Practice</span>
+        <span class="badge badge-meta">+ Meta CAPI</span>
+        
+        <div class="info-box">
+          <p><strong>Why this is good:</strong></p>
+          <p>✓ Fires only on successful submission<br/>
+          ✓ Clean dataLayer push for GA4<br/>
+          ✓ Meta Pixel with deduplication<br/>
+          ✓ Event ID prevents double-counting<br/>
+          ✓ User data for Enhanced Matching<br/>
+          ✓ Anti-double-fire protection</p>
+        </div>
+
+        <div class="meta-info-box">
+          <p><strong>🔵 Meta Tracking:</strong> Sends 'Lead' event to both browser (Pixel) and server (CAPI via GTM). Same Event ID ensures no duplicate counting.</p>
+        </div>
+        
+        <form id="good-form">
+          <div class="form-group">
+            <label for="good-name">Name *</label>
+            <input type="text" id="good-name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="good-email">Email *</label>
+            <input type="email" id="good-email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="good-topic">Topic *</label>
+            <select id="good-topic" required>
+              <option value="">Select...</option>
+              <option value="support">Support</option>
+              <option value="sales">Sales</option>
+              <option value="partnership">Partnership</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Plan *</label>
+            <input type="radio" id="good-basic" name="plan" value="basic" required>
+            <label for="good-basic" style="display:inline;margin-left:8px">Basic ($10)</label><br/>
+            <input type="radio" id="good-pro" name="plan" value="pro" required>
+            <label for="good-pro" style="display:inline;margin-left:8px">Pro ($50)</label>
+          </div>
+          
+          <button type="submit">Submit (Multi-Platform)</button>
+        </form>
+        
+        <div class="success-message" id="good-success">
+          ✅ Success! Sent to GA4 + Meta (Browser & Server)
+        </div>
+        
+        <div class="debug-section">
+          <h3>Multi-Platform Event Log</h3>
+          <div class="debug-output" id="good-debug">Waiting for form submission...</div>
+        </div>
+      </div>
+      
+      <!-- BAD Implementation -->
+      <div class="demo-card">
+        <h2>❌ BAD: No Meta + Poor GA4</h2>
+        <span class="badge badge-bad">Anti-pattern</span>
+        
+        <div class="info-box">
+          <p><strong>Why this is bad:</strong></p>
+          <p>✗ Fires on click (not success)<br/>
+          ✗ No validation check<br/>
+          ✗ No Meta Pixel tracking<br/>
+          ✗ No deduplication logic<br/>
+          ✗ High cardinality fields<br/>
+          ✗ Counts form failures</p>
+        </div>
+        
+        <form id="bad-form" onsubmit="return false">
+          <div class="form-group">
+            <label for="bad-name">Name</label>
+            <input type="text" id="bad-name">
+          </div>
+          
+          <div class="form-group">
+            <label for="bad-email">Email</label>
+            <input type="email" id="bad-email">
+          </div>
+          
+          <div class="form-group">
+            <label for="bad-message">Message</label>
+            <textarea id="bad-message"></textarea>
+          </div>
+          
+          <button type="button" id="bad-submit">Submit (Bad)</button>
+        </form>
+        
+        <div class="success-message" id="bad-success">
+          ⚠️ Fired! (Even if invalid - no Meta tracking)
+        </div>
+        
+        <div class="debug-section">
+          <h3>dataLayer Events</h3>
+          <div class="debug-output" id="bad-debug">Waiting for button click...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Initialize dataLayer (required before any pushes)
+    window.dataLayer = window.dataLayer || [];
+
+    // Unique per form load to correlate attempts
+    const instanceId = `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+    
+    // Anti-double-fire guard
+    let goodSent = false;
+    
+    // GOOD FORM: Multi-platform tracking with deduplication
+    document.getElementById('good-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Prevent double-firing
+      if (goodSent) return;
+      
+      // Get form values
+      const name = document.getElementById('good-name').value;
+      const email = document.getElementById('good-email').value;
+      const topic = document.getElementById('good-topic').value;
+      const plan = document.querySelector('input[name="plan"]:checked')?.value;
+      
+      // Validate before pushing to dataLayer
+      if (!name || !email || !topic || !plan) {
+        document.getElementById('good-debug').textContent = '❌ Validation failed - NO events sent to GA4 or Meta';
+        return;
+      }
+      
+      // Simulate async form submission (e.g., API call)
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Set guard
+      goodSent = true;
+      
+      // Generate unique event ID for deduplication (CRITICAL!)
+      const eventId = `${instanceId}_${Date.now()}_${Math.random().toString(16).slice(2,10)}`;
+      
+      // Calculate lead value based on plan
+      const leadValue = plan === 'pro' ? 50.00 : 10.00;
+      
+      // --- PUSH TO DATALAYER (for GTM → GA4 + Server-Side Meta CAPI) ---
+      window.dataLayer.push({
+        event: 'form_submission_success',
+        event_id: eventId,  // For deduplication
+        form_id: 'contact_us',
+        instance_id: instanceId,
+        form_type: 'lead',
+        form_location: 'demo_page',
+        form_fields: {
+          topic: topic,
+          plan: plan
+        },
+        // User data for server-side enhancement (Meta CAPI + Enhanced Conversions)
+        user_data: {
+          email_address: email,
+          first_name: name.split(' ')[0],
+          last_name: name.split(' ').slice(1).join(' ') || undefined
+        },
+        // E-commerce/value data
+        value: leadValue,
+        currency: 'USD'
+      });
+      
+      // --- PUSH TO META PIXEL (browser-side with deduplication) ---
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead', {
+          content_name: 'contact_us',
+          content_category: topic,
+          value: leadValue,
+          currency: 'USD',
+          predicted_ltv: plan === 'pro' ? 500.00 : 100.00
+        }, {
+          eventID: eventId  // SAME Event ID as dataLayer - prevents duplicate counting!
+        });
+      }
+      
+      // Show success message
+      document.getElementById('good-success').style.display = 'block';
+      
+      // Display pushed events for debugging
+      const debugOutput = `✅ MULTI-PLATFORM TRACKING SUCCESSFUL\n\n` +
+        `🔑 Event ID: ${eventId}\n` +
+        `   (Same ID used across all platforms for deduplication)\n\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+        `📊 GA4 (via dataLayer → GTM):\n` +
+        JSON.stringify({
+          event: 'form_submission_success',
+          event_id: eventId,
+          form_id: 'contact_us',
+          form_type: 'lead',
+          user_data: { email_address: email, first_name: name.split(' ')[0] },
+          value: leadValue,
+          currency: 'USD'
+        }, null, 2) +
+        `\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+        `🔵 Meta Pixel (Browser-Side):\n` +
+        JSON.stringify({
+          event: 'Lead',
+          eventID: eventId,
+          content_name: 'contact_us',
+          content_category: topic,
+          value: leadValue,
+          currency: 'USD'
+        }, null, 2) +
+        `\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+        `🚀 Server-Side Meta CAPI:\n` +
+        `   → Triggered via Server GTM\n` +
+        `   → Uses same Event ID: ${eventId}\n` +
+        `   → Auto-hashes user data (email)\n` +
+        `   → Bypasses ad blockers\n` +
+        `   → Deduplicates with browser Pixel\n\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+        `✓ Result: Meta sees 1 Lead (not 2)\n` +
+        `✓ Event Match Quality: Enhanced\n` +
+        `✓ Attribution: Accurate\n` +
+        `✓ Tracking: Ad-blocker resistant`;
+      
+      document.getElementById('good-debug').textContent = debugOutput;
+    });
+    
+    // BAD FORM: Fires on click without validation (NO Meta tracking)
+    document.getElementById('bad-submit').addEventListener('click', function() {
+      // Push to dataLayer with high-cardinality field (bad practice)
+      window.dataLayer.push({
+        event: 'contact_form',
+        form_name: 'Contact Form',
+        message: document.getElementById('bad-message').value  // High cardinality!
+      });
+      
+      // Show "success" even if form is invalid
+      document.getElementById('bad-success').style.display = 'block';
+      
+      // Display pushed event
+      const message = document.getElementById('bad-message').value;
+      const debugOutput = `⚠️ BAD IMPLEMENTATION FIRED\n\n` +
+        `Problems:\n` +
+        `✗ Fired on click (not validation)\n` +
+        `✗ No Meta Pixel tracking\n` +
+        `✗ No deduplication logic\n` +
+        `✗ High cardinality field included\n` +
+        `✗ No user data for matching\n\n` +
+        `Event sent to GA4:\n` +
+        JSON.stringify({
+          event: 'contact_form',
+          form_name: 'Contact Form',
+          message: message.substring(0, 50) + (message.length > 50 ? '...' : '')
+        }, null, 2);
+      
+      document.getElementById('bad-debug').textContent = debugOutput;
+    });
+  </script>
+</body>
+</html>
