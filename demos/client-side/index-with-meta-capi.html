@@ -46,12 +46,14 @@
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     
-    // DEMO MODE: Using demo Pixel ID - Replace with YOUR_PIXEL_ID in production
-    fbq('init', 'DEMO_PIXEL_ID');
+    // TODO: Replace 'YOUR_PIXEL_ID' with your actual Meta Pixel ID (15-16 digits)
+    // Get it from: https://business.facebook.com/events_manager2 → Settings → Pixel ID
+    // Example: fbq('init', '123456789012345');
+    fbq('init', 'YOUR_PIXEL_ID');
     fbq('track', 'PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=DEMO_PIXEL_ID&ev=PageView&noscript=1"/>
+  src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   </noscript>
   <!-- End Meta Pixel Code -->
   
@@ -234,16 +236,17 @@
     }
 
     .alert-banner {
-      background: #d1ecf1;
-      border: 2px solid #0c5460;
+      background: #fff4e5;
+      border: 2px solid #ff9800;
       border-radius: 8px;
       padding: 20px;
       margin-bottom: 30px;
-      color: #0c5460;
+      color: #663c00;
     }
 
     .alert-banner h3 {
       margin-bottom: 10px;
+      color: #e65100;
     }
 
     .alert-banner code {
@@ -251,6 +254,11 @@
       padding: 2px 6px;
       border-radius: 3px;
       font-family: 'Courier New', monospace;
+      color: #d84315;
+    }
+
+    .alert-banner strong {
+      color: #e65100;
     }
     
     @media (max-width: 768px) {
@@ -271,11 +279,13 @@
     <p class="subtitle">Multi-Platform Tracking with Event Deduplication</p>
 
     <div class="alert-banner">
-      <h3>🔧 Setup Required</h3>
-      <p><strong>To test Meta Pixel tracking:</strong></p>
-      <p>1. Replace <code>DEMO_PIXEL_ID</code> in the &lt;head&gt; section with your actual Meta Pixel ID</p>
-      <p>2. Install <strong>Meta Pixel Helper</strong> Chrome extension to verify events</p>
-      <p>3. Check Meta Events Manager → Test Events to see live tracking</p>
+      <h3>⚠️ Configuration Required</h3>
+      <p><strong>To enable Meta Pixel tracking, you must:</strong></p>
+      <p>1. Get your Meta Pixel ID from <a href="https://business.facebook.com/events_manager2" target="_blank" style="color: #e65100; text-decoration: underline;">Facebook Events Manager</a> → Settings → Pixel ID</p>
+      <p>2. Replace <code>YOUR_PIXEL_ID</code> on lines 45 and 52 with your actual 15-16 digit Pixel ID</p>
+      <p>3. Install <strong><a href="https://chrome.google.com/webstore/detail/meta-pixel-helper/" target="_blank" style="color: #e65100; text-decoration: underline;">Meta Pixel Helper</a></strong> Chrome extension to verify events</p>
+      <p>4. Test in Meta Events Manager → Test Events tab</p>
+      <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.1);"><strong>📖 Documentation:</strong> See <code>docs/implementation/2025-meta-capi-setup.md</code> for complete setup guide</p>
     </div>
     
     <div class="demo-grid">
@@ -468,6 +478,7 @@
       document.getElementById('good-success').style.display = 'block';
       
       // Display pushed events for debugging
+      const pixelStatus = typeof fbq !== 'undefined' ? '✅ Meta Pixel loaded' : '⚠️ Meta Pixel NOT loaded (check YOUR_PIXEL_ID)';
       const debugOutput = `✅ MULTI-PLATFORM TRACKING SUCCESSFUL\n\n` +
         `🔑 Event ID: ${eventId}\n` +
         `   (Same ID used across all platforms for deduplication)\n\n` +
@@ -483,7 +494,7 @@
           currency: 'USD'
         }, null, 2) +
         `\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
-        `🔵 Meta Pixel (Browser-Side):\n` +
+        `🔵 Meta Pixel (Browser-Side): ${pixelStatus}\n` +
         JSON.stringify({
           event: 'Lead',
           eventID: eventId,
