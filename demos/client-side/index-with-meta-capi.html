@@ -269,6 +269,149 @@
   </style>
 </head>
 <body>
+  <!-- Consent Banner -->
+  <div id="consent-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #2c3e50; color: white; padding: 20px; box-shadow: 0 -2px 10px rgba(0,0,0,0.3); z-index: 10000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+      <div style="flex: 1; min-width: 300px;">
+        <h3 style="margin: 0 0 8px 0; font-size: 18px; color: #fff;">🍪 Cookie Consent</h3>
+        <p style="margin: 0; font-size: 14px; color: #ecf0f1; line-height: 1.5;">
+          We use cookies to improve your experience, analyze site traffic, and personalize content. 
+          <a href="#" style="color: #3498db; text-decoration: underline;">Learn more</a>
+        </p>
+      </div>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button onclick="acceptAllConsent()" style="background: #27ae60; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; transition: background 0.3s;">
+          Accept All
+        </button>
+        <button onclick="rejectAllConsent()" style="background: transparent; color: white; border: 2px solid white; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.3s;">
+          Reject All
+        </button>
+        <button onclick="customizeConsent()" style="background: transparent; color: white; border: 2px solid white; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.3s;">
+          Customize
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Consent Customization Modal -->
+  <div id="consent-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 10001; padding: 20px; overflow-y: auto;">
+    <div style="max-width: 600px; margin: 50px auto; background: white; border-radius: 12px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+      <h2 style="margin: 0 0 20px 0; color: #2c3e50;">Customize Cookie Preferences</h2>
+      
+      <div style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+          <input type="checkbox" id="consent-necessary" checked disabled style="width: 18px; height: 18px;">
+          <div>
+            <strong style="color: #2c3e50;">Necessary Cookies (Required)</strong>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #7f8c8d;">Essential for website functionality and security.</p>
+          </div>
+        </label>
+      </div>
+      
+      <div style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+          <input type="checkbox" id="consent-analytics" style="width: 18px; height: 18px;">
+          <div>
+            <strong style="color: #2c3e50;">Analytics Cookies</strong>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #7f8c8d;">Help us understand how visitors interact with our website.</p>
+          </div>
+        </label>
+      </div>
+      
+      <div style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+          <input type="checkbox" id="consent-marketing" style="width: 18px; height: 18px;">
+          <div>
+            <strong style="color: #2c3e50;">Marketing Cookies</strong>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #7f8c8d;">Used to track visitors across websites for advertising purposes.</p>
+          </div>
+        </label>
+      </div>
+      
+      <div style="display: flex; gap: 10px; margin-top: 25px;">
+        <button onclick="saveConsentPreferences()" style="flex: 1; background: #27ae60; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer;">
+          Save Preferences
+        </button>
+        <button onclick="closeConsentModal()" style="flex: 1; background: #95a5a6; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer;">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check if user has already made consent choice
+    window.addEventListener('DOMContentLoaded', function() {
+      const storedConsent = localStorage.getItem('user_consent_preferences');
+      if (!storedConsent) {
+        // Show banner if no consent stored
+        document.getElementById('consent-banner').style.display = 'block';
+      }
+    });
+
+    function acceptAllConsent() {
+      const consentSettings = {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted',
+        'functionality_storage': 'granted',
+        'personalization_storage': 'granted',
+        'security_storage': 'granted'
+      };
+      
+      gtag('consent', 'update', consentSettings);
+      localStorage.setItem('user_consent_preferences', JSON.stringify(consentSettings));
+      document.getElementById('consent-banner').style.display = 'none';
+      location.reload();
+    }
+
+    function rejectAllConsent() {
+      const consentSettings = {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'functionality_storage': 'granted',
+        'personalization_storage': 'granted',
+        'security_storage': 'granted'
+      };
+      
+      gtag('consent', 'update', consentSettings);
+      localStorage.setItem('user_consent_preferences', JSON.stringify(consentSettings));
+      document.getElementById('consent-banner').style.display = 'none';
+    }
+
+    function customizeConsent() {
+      document.getElementById('consent-modal').style.display = 'block';
+    }
+
+    function closeConsentModal() {
+      document.getElementById('consent-modal').style.display = 'none';
+    }
+
+    function saveConsentPreferences() {
+      const analyticsChecked = document.getElementById('consent-analytics').checked;
+      const marketingChecked = document.getElementById('consent-marketing').checked;
+      
+      const consentSettings = {
+        'ad_storage': marketingChecked ? 'granted' : 'denied',
+        'ad_user_data': marketingChecked ? 'granted' : 'denied',
+        'ad_personalization': marketingChecked ? 'granted' : 'denied',
+        'analytics_storage': analyticsChecked ? 'granted' : 'denied',
+        'functionality_storage': 'granted',
+        'personalization_storage': 'granted',
+        'security_storage': 'granted'
+      };
+      
+      gtag('consent', 'update', consentSettings);
+      localStorage.setItem('user_consent_preferences', JSON.stringify(consentSettings));
+      document.getElementById('consent-modal').style.display = 'none';
+      document.getElementById('consent-banner').style.display = 'none';
+      location.reload();
+    }
+  </script>
+
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MM6H8SQW"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -307,6 +450,15 @@
 
         <div class="meta-info-box">
           <p><strong>🔵 Meta Tracking:</strong> Sends 'Lead' event to both browser (Pixel) and server (CAPI via GTM). Same Event ID ensures no duplicate counting.</p>
+          <p style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.1);">
+            <strong>📊 Event Match Quality (EMQ):</strong><br/>
+            <span style="font-size: 13px;">
+              Email only: <span style="color: #ff9800;">5/10</span> • 
+              Email + Phone: <span style="color: #4caf50;">7-8/10</span> • 
+              Complete data: <span style="color: #2196f3;">9/10</span>
+            </span><br/>
+            <span style="font-size: 12px; color: #666;">Higher EMQ = Better targeting = Lower ad costs (up to 40% savings)</span>
+          </p>
         </div>
         
         <form id="good-form">
@@ -318,6 +470,22 @@
           <div class="form-group">
             <label for="good-email">Email *</label>
             <input type="email" id="good-email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="good-phone">Phone (Optional - Improves Ad Targeting) 
+              <span style="font-size: 12px; color: #7f8c8d;">📊 +2-3 EMQ points</span>
+            </label>
+            <input 
+              type="tel" 
+              id="good-phone" 
+              placeholder="+33123456789 or +1234567890"
+              pattern="[\+]?[0-9]{10,15}"
+              title="Enter phone with country code (e.g., +33123456789)"
+            >
+            <small style="display: block; margin-top: 5px; font-size: 12px; color: #7f8c8d;">
+              Including phone improves Event Match Quality score from ~5 to ~7-8
+            </small>
           </div>
           
           <div class="form-group">
@@ -417,6 +585,7 @@
       // Get form values
       const name = document.getElementById('good-name').value;
       const email = document.getElementById('good-email').value;
+      const phone = document.getElementById('good-phone').value;
       const topic = document.getElementById('good-topic').value;
       const plan = document.querySelector('input[name="plan"]:checked')?.value;
       
@@ -453,8 +622,11 @@
         // User data for server-side enhancement (Meta CAPI + Enhanced Conversions)
         user_data: {
           email_address: email,
-          first_name: name.split(' ')[0],
-          last_name: name.split(' ').slice(1).join(' ') || undefined
+          phone_number: phone ? phone.replace(/\D/g, '') : undefined,
+          first_name: name.trim().split(/\s+/)[0],
+          last_name: name.trim().split(/\s+/).length > 1 
+            ? name.trim().split(/\s+/).slice(1).join(' ') 
+            : undefined
         },
         // E-commerce/value data
         value: leadValue,
@@ -463,6 +635,14 @@
       
       // --- PUSH TO META PIXEL (browser-side with deduplication) ---
       if (typeof fbq !== 'undefined') {
+        // Prepare user data for Advanced Matching
+        const advancedMatchData = {
+          em: email,  // Meta will auto-hash
+          ph: phone ? phone.replace(/\D/g, '') : undefined,
+          fn: name.trim().split(/\s+/)[0],
+          ln: name.trim().split(/\s+/).slice(1).join(' ') || undefined
+        };
+        
         fbq('track', 'Lead', {
           content_name: 'contact_us',
           content_category: topic,
@@ -470,7 +650,8 @@
           currency: 'USD',
           predicted_ltv: plan === 'pro' ? 500.00 : 100.00
         }, {
-          eventID: eventId  // SAME Event ID as dataLayer - prevents duplicate counting!
+          eventID: eventId,  // Deduplication
+          ...advancedMatchData  // Advanced Matching for better EMQ
         });
       }
       
@@ -479,6 +660,13 @@
       
       // Display pushed events for debugging
       const pixelStatus = typeof fbq !== 'undefined' ? '✅ Meta Pixel loaded' : '⚠️ Meta Pixel NOT loaded (check YOUR_PIXEL_ID)';
+      
+      // Calculate estimated EMQ score
+      let emqScore = 5; // Base with email
+      if (phone) emqScore += 2; // Phone adds 2 points
+      if (name.trim().split(/\s+/).length > 1) emqScore += 1; // Full name adds 1 point
+      const emqQuality = emqScore >= 8 ? '🟢 Excellent' : emqScore >= 6 ? '🟡 Good' : '🟠 Fair';
+      
       const debugOutput = `✅ MULTI-PLATFORM TRACKING SUCCESSFUL\n\n` +
         `🔑 Event ID: ${eventId}\n` +
         `   (Same ID used across all platforms for deduplication)\n\n` +
@@ -489,7 +677,11 @@
           event_id: eventId,
           form_id: 'contact_us',
           form_type: 'lead',
-          user_data: { email_address: email, first_name: name.split(' ')[0] },
+          user_data: { 
+            email_address: email, 
+            phone_number: phone || 'not provided',
+            first_name: name.trim().split(/\s+/)[0] 
+          },
           value: leadValue,
           currency: 'USD'
         }, null, 2) +
@@ -501,18 +693,30 @@
           content_name: 'contact_us',
           content_category: topic,
           value: leadValue,
-          currency: 'USD'
+          currency: 'USD',
+          user_data: {
+            em: email,
+            ph: phone || 'not provided',
+            fn: name.trim().split(/\s+/)[0]
+          }
         }, null, 2) +
         `\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+        `📈 Event Match Quality (EMQ):\n` +
+        `   Estimated Score: ${emqScore}/10 ${emqQuality}\n` +
+        `   Email: ✓ (+5 points baseline)\n` +
+        `   Phone: ${phone ? '✓' : '✗'} ${phone ? '(+2 points)' : '(0 points - add for better targeting)'}\n` +
+        `   Full Name: ${name.trim().split(/\s+/).length > 1 ? '✓' : '✗'} ${name.trim().split(/\s+/).length > 1 ? '(+1 point)' : '(0 points)'}\n\n` +
+        `   Impact: ${emqScore >= 8 ? 'Excellent ad targeting' : emqScore >= 6 ? 'Good targeting, could improve' : 'Fair - add phone for better results'}\n\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
         `🚀 Server-Side Meta CAPI:\n` +
         `   → Triggered via Server GTM\n` +
         `   → Uses same Event ID: ${eventId}\n` +
-        `   → Auto-hashes user data (email)\n` +
+        `   → Auto-hashes user data (email${phone ? ' + phone' : ''})\n` +
         `   → Bypasses ad blockers\n` +
         `   → Deduplicates with browser Pixel\n\n` +
         `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
         `✓ Result: Meta sees 1 Lead (not 2)\n` +
-        `✓ Event Match Quality: Enhanced\n` +
+        `✓ Event Match Quality: ${emqScore}/10 ${emqQuality}\n` +
         `✓ Attribution: Accurate\n` +
         `✓ Tracking: Ad-blocker resistant`;
       
